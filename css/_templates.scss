@@ -1,0 +1,24 @@
+$h1_size: 40px;
+$button_text_size: 21px;
+$main_font: Roboto;
+$geoshare_green: #4CAF50;
+$geoshare_green_dark: #388E3C;
+$off_white: #CCC;
+
+@mixin neon_button($color, $dark_colour, $size: 2px, $increase: 3) {
+    text-transform: uppercase;
+    color: $color;
+    background-color: rgba(0, 0, 0, 0);
+    border: 2px solid $color;
+    font: 400 $button_text_size $main_font;
+    display: inline-block;
+    box-shadow: 0 0 0 $dark_colour inset, 0 0 $size $dark_colour;
+    text-shadow: 0 0 1px $dark_colour;
+    transition-property: box-shadow, text-shadow;
+    transition-duration: 0.3s;
+
+    &:hover {
+      box-shadow: 0 0 5px $dark_colour inset, 0 0 $size $dark_colour;
+      text-shadow: 0 0 6px $dark_colour;
+    }
+}
