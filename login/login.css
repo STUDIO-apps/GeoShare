@@ -1,0 +1,139 @@
+body {
+  margin: 0;
+  background-color: #26262a;
+  min-width: 1020px;
+}
+
+#content {
+  background-image: url(../img/contactBackground.jpg);
+  height: 100%;
+  width: 100%;
+  background-position: center;
+  background-size: cover;
+}
+
+#wrapper {
+  background-color: rgba(0, 0, 0, 0.5);
+  margin: 0 auto;
+  max-width: 350px;
+  padding-left: 32px;
+  padding-right: 32px;
+  padding-top: 144px;
+  padding-bottom: 32px;
+}
+
+.form {
+  width: 100%;
+  margin: 0;
+}
+
+.field {
+  display: inline-block;
+  width: 100%;
+  margin-bottom: 12px;
+}
+
+.field label{
+  font: 13px 'Roboto', sans-serif;
+  color: rgba(26,26,26,.6);
+}
+
+.field input{
+  height: 48px;
+  width: 100%;
+  padding: 24px;
+  margin: 6px 0 4px;
+  font-size: 16px;
+  letter-spacing: 1px;
+  color: white;
+  border: 2px solid #4caf50;
+  border-radius: 100px;
+  background: transparent;
+  box-sizing: border-box;
+}
+
+.field textarea{
+  width: 100%;
+  min-height: 100px;
+  padding: 12px;
+  margin: 6px 0 4px;
+  font-size: 14px;
+  border: 1px solid #ccc;
+  background: #FAFAFA;
+  box-sizing: border-box;
+  resize: vertical;
+}
+
+.field input:focus{
+  -webkit-input-placeholder: #FFF;
+  outline: none;
+  transition: background .1s ease-in;
+}
+
+.login input {
+  height: 48px;
+  width: 100%;
+  margin-top: 12px;
+  padding: 15px 20px;
+  letter-spacing: 2px;
+  color: white;
+  border-radius: 100px;
+  border: 0px;
+  background: #4caf50;
+  outline: none;
+  font-size: 16px;
+  font-weight: 400;
+  text-decoration: none;
+  font-family: 'Roboto', sans-serif;
+  cursor: pointer;
+}
+
+.login input:hover {
+  background: #388E3C;
+  transition: all .15s ease-out;
+}
+
+.new-account input {
+  height: 48px;
+  width: 100%;
+  margin-top: 6px;
+  padding: 15px 20px;
+  letter-spacing: 2px;
+  color: white;
+  border-radius: 100px;
+  border: 0px;
+  background: transparent;
+  outline: none;
+  font-size: 16px;
+  font-weight: 400;
+  text-decoration: none;
+  font-family: 'Roboto', sans-serif;
+  cursor: pointer;
+}
+
+.new-account input:hover {
+  color: #4caf50;
+  transition: all .15s ease-out;
+}
+
+.forgot-password input {
+  height: 48px;
+  width: 100%;
+  padding: 15px 20px;
+  letter-spacing: 2px;
+  color: white;
+  border-radius: 100px;
+  border: 0px;
+  background: transparent;
+  outline: none;
+  font-size: 16px;
+  font-weight: 400;
+  text-decoration: none;
+  font-family: 'Roboto', sans-serif;
+  cursor: pointer;
+}
+
+.forgot-password input:hover {
+  color: #4caf50;
+  transition: all .15s ease-out;
+}

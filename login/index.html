@@ -1,71 +1,60 @@
-﻿<!DOCTYPE html>
-<html>
+<DOCTYPE html>
 <head>
-    <title>Login - GeoShare</title>
-    <link rel="stylesheet" href="../main.css" type="text/css" />
-    <link rel="stylesheet" href="login.css" />
-    <link rel="icon" href="../img/favicon.ico?" type="image/x-icon" />
-    <script src="https://apis.google.com/js/platform.js" async defer></script>
-    <link rel='stylesheet prefetch' href='https://fonts.googleapis.com/css?family=Roboto:400,100,300,500,700,900|RobotoDraft:400,100,300,500,700,900'>
-    <link rel='stylesheet prefetch' href='https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css'>
-	<meta charset="utf-8" />
+  <meta charset="utf-8">
+  <title>Login - GeoShare</title>
+
+  <link rel="stylesheet" type="text/css" href="../theme.css" />
+  <link rel="stylesheet" type="text/css" href="login.css" />
+
+  <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet" />
+
+  <script src="https://apis.google.com/js/platform.js" async defer></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular.min.js"></script>
+
+  <link rel="icon" type="image/x-icon" href="img/favicon.ico" />
 </head>
+
 <body>
-    <div class="pen-title">
-        <h1>GeoShare</h1>
-    </div>
-    <div class="container">
-        <div></div>
-        <div class="card">
-            <h1 class="title">Login</h1>
-            <form action="login.php" method="post">
-                <div class="input-container">
-                    <input name="username" type="text" id="Username" required/>
-                    <label for="Username">Username</label>
-                    <div class="bar"></div>
-                </div>
-                <div class="input-container">
-                    <input name="password" type="password" id="Password" required/>
-                    <label for="Password">Password</label>
-                    <div class="bar"></div>
-                </div>
-                <div class="button-container">
-                    <button><span>Go</span></button>
-                </div>
-                <div class="footer"><a href="#">Forgot password?</a> | <a href="#" class="toggle">Sign Up</a></div>
-            </form>
+
+  <div id="content">
+    <div id="wrapper">
+      <form class="form" action="" method="post" autocomplete="on">
+
+          <div id="email">
+            <div class="field">
+              <input type="email" name="email" placeholder="Email" required>
+            </div>
+          </div>
+
+          <div id="password">
+            <div class="field">
+              <input type="password" name="password" placeholder="Password" required>
+            </div>
+          </div>
+
+          <div id="login">
+            <div class="button login">
+              <input type="submit" value="LOGIN" class="g-recaptcha" data-sitekey="6Lf0cCkUAAAAAGfWmcyfOL3A0r7Ty7OA7FWkBI6u" data-callback="">
+            </div>
+          </div>
+
+        </form>
+
+        <div id="new-account">
+          <div class="button new-account">
+            <input type="submit" value="CREATE NEW ACCOUNT">
+          </div>
         </div>
 
-        <div class="card alt">
-            <div class="toggle" id="toggle"></div>
-            <h1 class="title" style="margin: 0 0 16px;">
-                Register <button class="close"></button>
-            </h1>
-            <form method="post" action="../api/user/index.php" enctype='application/json'>
-                <div class="input-container" style="margin: 0 60px 38px;">
-                    <input name="username" type="text" id="Username" required />
-                    <label for="Username">Username</label>
-                    <div class="bar"></div>
-                </div>
-                <div class="input-container" style="margin: 0 60px 38px;">
-                    <input name="email" type="text" id="Email" required />
-                    <label for="Username">Email</label>
-                    <div class="bar"></div>
-                </div>
-                <div class="input-container" style="margin: 0 60px 38px;">
-                    <input name="password" type="password" id="Password" required/>
-                    <label for="Password">Password</label>
-                    <div class="bar"></div>
-                </div>
-                <div class="button-container">
-                    <button><span>Next</span></button>
-                </div>
-            </form>
+        <div id="forgot-password">
+          <div class="button forgot-password">
+            <input type="submit" value="FORGOT PASSWORD?">
+          </div>
         </div>
         
-    </div>
-    <script src='https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js'></script>
-    <script src="js/login.js"></script>
+      </div>
+  </div>
+
 </body>
 
 </html>
