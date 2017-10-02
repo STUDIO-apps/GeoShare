@@ -14,7 +14,7 @@
 
   <script type="text/javascript" src="action.js"></script>
 
-  <link rel="icon" type="image/x-icon" href="img/favicon.ico" />
+  <link rel="icon" type="image/x-icon" href="../img/favicon.ico" />
 </head>
 
 <body>
