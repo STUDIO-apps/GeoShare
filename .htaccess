@@ -1,0 +1,13 @@
+RewriteEngine On
+
+# EXISTING FILE?
+RewriteCond %{DOCUMENT_ROOT}/%{REQUEST_URI} !-f
+RewriteCond %{DOCUMENT_ROOT}/%{REQUEST_URI} !-d
+
+# SESSION
+RewriteRule api/user/(.+?)/session/(index.php)?$ api/session/index.php?username=$1 [QSA,NC,L]
+RewriteRule api/user/(.+?)/session/(.+?)$ api/session/index.php?username=$1&id=$2 [QSA,NC,L]
+
+# USER
+RewriteRule api/user/index.php$ - [L]
+RewriteRule api/user/(.+?)$ api/user/index.php?username=$1 [QSA,NC,L]

@@ -1,16 +1,172 @@
-<!DOCTYPE html>
-<html lang="en">
+﻿<!DOCTYPE html>
+<html>
 <head>
-    <meta charset="UTF-8">
-    <meta name="application-name" content="GeoShare">
-    <meta name="msapplication-config" content="/config/ms.xml" />
-
-    <link rel="shortcut icon" sizes="16x16 24x24 32x32 48x48 64x64 128x128" href="img/favicon/favicon.ico" />
-    <link rel="stylesheet" type="text/css" href="css/login.css">
-
-    <title>GeoShare</title>
+    <title>GeoMaps - GeoShare</title>
+    <link rel="stylesheet" href="../main.css" type="text/css" />
+    <link rel="stylesheet" href="../navigation.css" type="text/css" />
+    <link rel="stylesheet" href="geomaps.css" type="text/css" />
+    <link rel="icon" href="img/favicon.ico?" type="image/x-icon" />
+    <script src="https://apis.google.com/js/platform.js" async defer></script>
+    <link rel='stylesheet prefetch' href='https://fonts.googleapis.com/css?family=Roboto:400,100,300,500,700,900|RobotoDraft:400,100,300,500,700,900'>
+    <link rel='stylesheet prefetch' href='https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css'>
+    <meta charset="utf-8" />
 </head>
 <body>
+    <div id="main">
+        <div class="content">
+            <div class="side_bar">
+                <div class="list_item" style="background-color: rgba(0,0,0,0.16);">
+                    <img src="../img/map_black.png" />
+                    <a>GeoMaps</a>
+                </div>
+                <div class="list_item">
+                    <img src="../img/people_black.png" />
+                    <a>Friends</a>
+                </div>
+                <div class="list_item">
+                    <img src="../img/settings_black.png" />
+                    <a>Settings</a>
+                </div>
+                <div class="list_item" onclick="location.href='/logout'">
+                    <img src="../img/lock_black.png" />
+                    <a>Log out</a>
+                </div>
+            </div>
+            <div class="main_content">
+                <div id="searchContainer">
+                    <div class="controls">
+                        <input id="pac-input" class="input" type="text" placeholder="Search...">
+                        <div class="searchbox-searchbutton-container">
+                        	<button id="searchbutton" aria-label="Search" class="searchbox-searchbutton">
+                            	<span aria-hidden="true" class="controls-tooltip tooltip-dark">Search</span>
+                        	</button>
+                    	</div>
+                        <div class="navigationbutton-container">
+                        	<img src="../img/directions.png">
+                            	<span aria-hidden="true" class="controls-tooltip tooltip-dark">Directions</span>
+                            </img>
+                        </div>
+                    </div>
+                    
+                </div>
+                <div class="map" id="map"></div>
+            </div>
+        </div>
+    </div>
 
+    <script type="text/javascript">
+
+var map;
+function initAutocomplete() {
+    var map = new google.maps.Map(document.getElementById('map'), {
+        center: { lat: 51.4803872, lng: -0.0650901 },
+        zoom: 6,
+        scaleControl: true,
+        mapTypeControl: true,
+        mapTypeControlOptions: {
+            style: google.maps.MapTypeControlStyle.HORIZONTAL_BAR,
+            mapTypeId: [
+                google.maps.MapTypeId.ROADMAP,
+                google.maps.MapTypeId.SATELLITE,
+                google.maps.MapTypeId.TERRAIN,
+                google.maps.MapTypeId.HYBRID
+            ],
+            position: google.maps.ControlPosition.BOTTOM_LEFT
+        }
+    });
+
+    var input = document.getElementById('pac-input');
+    var searchContainer = document.getElementById('searchContainer');
+    var searchBox = new google.maps.places.SearchBox(input);
+    map.controls[google.maps.ControlPosition.TOP_LEFT].push(searchContainer);
+	map.setOptions({draggableCursor:'default'});
+
+    google.maps.event.addListener(map, 'zoom_changed', function () {
+        if (map.getZoom() < 3) {
+            map.setZoom(3);
+        }
+    });
+
+    map.addListener('bounds_changed', function () {
+        searchBox.setBounds(map.getBounds());
+    });
+
+    var gpsLocation = null;
+
+    // Try HTML5 geolocation.
+    function getCurrentLocation() {
+        if (navigator.geolocation) {
+            navigator.geolocation.getCurrentPosition(function (position) {
+                var currentPos = {
+                    lat: position.coords.latitude,
+                    lng: position.coords.longitude
+                };
+
+                gpsLocation = new google.maps.Marker({
+                    position: currentPos,
+                    map: map,
+                    icon: '../img/location.png',
+                    title: "Location"
+                });
+
+                map.setCenter(currentPos);
+                map.setZoom(15);
+            });
+        } else {
+            // Browser doesn't support Geolocation
+        }
+    }
+
+    getCurrentLocation();
+
+    var markers = [];
+
+    searchBox.addListener('places_changed', function () {
+        var places = searchBox.getPlaces();
+
+        if (places.length == 0) {
+            return;
+        }
+
+        // Clear out the old markers.
+        markers.forEach(function (marker) {
+            marker.setMap(null);
+        });
+        markers = [];
+
+        // For each place, get the icon, name and location.
+        var bounds = new google.maps.LatLngBounds();
+        places.forEach(function (place) {
+            var icon = {
+                url: place.icon,
+                size: new google.maps.Size(71, 71),
+                origin: new google.maps.Point(0, 0),
+                anchor: new google.maps.Point(17, 34),
+                scaledSize: new google.maps.Size(25, 25)
+            };
+
+            // Create a marker for each place.
+            markers.push(new google.maps.Marker({
+                map: map,
+                icon: icon,
+                title: place.name,
+                position: place.geometry.location
+            }));
+
+            if (place.geometry.viewport) {
+                // Only geocodes have viewport.
+                bounds.union(place.geometry.viewport);
+            } else {
+                bounds.extend(place.geometry.location);
+            }
+        });
+        map.fitBounds(bounds);
+    });
+}
+
+    </script>
+    
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyB-xt0L0p-ZRNGFyt7asiV_2e9KeNQQWho&libraries=places&callback=initAutocomplete" async defer>
+    </script>
 </body>
 </html>
