@@ -1,5 +1,5 @@
 body, main::before {
-  background: url(../img/contactBackground.jpg) 0 / cover fixed;
+  background: url(../../img/contactBackground.jpg) 0 / cover fixed;
   margin: 0;
 }
 

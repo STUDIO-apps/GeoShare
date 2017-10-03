@@ -1,0 +1,33 @@
+html, body {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+}
+
+.left-nav {
+  display: inline-block;
+  width: 416px;
+  height: 100%;
+  margin: 0;
+}
+
+.map-container {
+  display: inline-block;
+  width: 60%;
+  height: 100%;
+  margin-left: -4px;
+}
+
+#map {
+  position: absolute;
+  width: 60%;
+  height: 100%;
+}
+
+.right-nav {
+  display: inline-block;
+  width: calc(100% - 416px - 60%);
+  height: 100%;
+  margin: 0;
+  float: right;
+}
