@@ -3,12 +3,13 @@
   <title>GeoMaps - GeoShare</title>
   <link rel="stylesheet" href="theme.css" type="text/css" />
 
+  <link rel="stylesheet" href="geomaps-styles/main.css" type="text/css" />
   <link rel="stylesheet" href="geomaps-styles/navbar.css" type="text/css" />
   <link rel="stylesheet" href="geomaps-styles/map.css" type="text/css" />
   <link rel="stylesheet" href="geomaps-styles/friendsbar.css" type="text/css" />
   <link rel="stylesheet" href="geomaps-styles/search.css" type="text/css" />
 
-  <link rel="icon" href="img/favicon.ico?" type="image/x-icon" />
+  <link rel="icon" href="img/favicon.ico" type="image/x-icon" />
   <script src="https://apis.google.com/js/platform.js" async defer></script>
   <meta charset="utf-8" />
 
@@ -32,6 +33,67 @@
 <body>
 
   <div class="left-nav">
+    <div class="header">
+      <div class="header-image">
+        <img src="img/header.jpg"/>
+        <div class="user-info">
+          <img id="profile-picture" src="img/dummy-profile.png"/>
+          <h2 id="profile-name">Welcome, Andrew Brown</h2>
+        </div>
+      </div>
+
+    </div>
+
+    <div class="nav-items">
+      <div id="item">
+        <h3>Test item</h3>
+      </div>
+
+      <div id="item">
+        <h3>Test item</h3>
+      </div>
+
+      <div id="item">
+        <h3>Test item</h3>
+      </div>
+
+      <div id="item">
+        <h3>Test item</h3>
+      </div>
+
+      <div id="item">
+        <h3>Test item</h3>
+      </div>
+
+      <div id="item">
+        <h3>Test item</h3>
+      </div>
+
+      <div id="item">
+        <h3>Test item</h3>
+      </div>
+
+      <div id="item">
+        <h3>Test item</h3>
+      </div>
+
+      <div id="item">
+        <h3>Test item</h3>
+      </div>
+
+      <div id="item">
+        <h3>Test item</h3>
+      </div>
+
+    </div>
+
+    <div class="nav-settings-bar">
+      <div class="settings-wrapper">
+        <button id="lock" type="image"/>
+        <button id="lock" type="image"/>
+        <button id="settings" type="image"/>
+      </div>
+    </div>
 
   </div>
 
@@ -71,12 +133,179 @@
       document.body.innerHTML = '<h1>Looks like it all works ' + currentUid + '!</h1>';
     } else {
       currentUid = null;
+      //window.location.replace('/auth/login/');
       console.log("No user signed in!!!!!");
     }
   });
 
   if (currentUid == null) {
     function initMap() {
+      var styledMapType = new google.maps.StyledMapType(
+        [
+          {
+            "elementType": "geometry",
+            "stylers": [
+              {
+                "color": "#f5f5f5"
+              }
+            ]
+          },
+          {
+            "elementType": "labels.icon",
+            "stylers": [
+              {
+                "visibility": "off"
+              }
+            ]
+          },
+          {
+            "elementType": "labels.text.fill",
+            "stylers": [
+              {
+                "color": "#616161"
+              }
+            ]
+          },
+          {
+            "elementType": "labels.text.stroke",
+            "stylers": [
+              {
+                "color": "#f5f5f5"
+              }
+            ]
+          },
+          {
+            "featureType": "administrative.land_parcel",
+            "elementType": "labels.text.fill",
+            "stylers": [
+              {
+                "color": "#bdbdbd"
+              }
+            ]
+          },
+          {
+            "featureType": "poi",
+            "elementType": "geometry",
+            "stylers": [
+              {
+                "color": "#eeeeee"
+              }
+            ]
+          },
+          {
+            "featureType": "poi",
+            "elementType": "labels.text.fill",
+            "stylers": [
+              {
+                "color": "#757575"
+              }
+            ]
+          },
+          {
+            "featureType": "poi.park",
+            "elementType": "geometry",
+            "stylers": [
+              {
+                "color": "#e5e5e5"
+              }
+            ]
+          },
+          {
+            "featureType": "poi.park",
+            "elementType": "labels.text.fill",
+            "stylers": [
+              {
+                "color": "#9e9e9e"
+              }
+            ]
+          },
+          {
+            "featureType": "road",
+            "elementType": "geometry",
+            "stylers": [
+              {
+                "color": "#ffffff"
+              }
+            ]
+          },
+          {
+            "featureType": "road.arterial",
+            "elementType": "labels.text.fill",
+            "stylers": [
+              {
+                "color": "#757575"
+              }
+            ]
+          },
+          {
+            "featureType": "road.highway",
+            "elementType": "geometry",
+            "stylers": [
+              {
+                "color": "#dadada"
+              }
+            ]
+          },
+          {
+            "featureType": "road.highway",
+            "elementType": "labels.text.fill",
+            "stylers": [
+              {
+                "color": "#616161"
+              }
+            ]
+          },
+          {
+            "featureType": "road.local",
+            "elementType": "labels.text.fill",
+            "stylers": [
+              {
+                "color": "#9e9e9e"
+              }
+            ]
+          },
+          {
+            "featureType": "transit.line",
+            "elementType": "geometry",
+            "stylers": [
+              {
+                "color": "#e5e5e5"
+              }
+            ]
+          },
+          {
+            "featureType": "transit.station",
+            "elementType": "geometry",
+            "stylers": [
+              {
+                "color": "#eeeeee"
+              }
+            ]
+          },
+          {
+            "featureType": "water",
+            "elementType": "geometry",
+            "stylers": [
+              {
+                "color": "#c9c9c9"
+              }
+            ]
+          },
+          {
+            "featureType": "water",
+            "elementType": "labels.text.fill",
+            "stylers": [
+              {
+                "color": "#9e9e9e"
+              }
+            ]
+          }
+        ],
+        {
+          name: 'Styled Map'
+        }
+      );
+
         var map = new google.maps.Map(document.getElementById('map'), {
             center: { lat: 51.4803872, lng: -0.0650901 },
             zoom: 6,
@@ -84,15 +313,14 @@
             mapTypeControl: true,
             mapTypeControlOptions: {
                 style: google.maps.MapTypeControlStyle.HORIZONTAL_BAR,
-                mapTypeId: [
-                    google.maps.MapTypeId.ROADMAP,
-                    google.maps.MapTypeId.SATELLITE,
-                    google.maps.MapTypeId.TERRAIN,
-                    google.maps.MapTypeId.HYBRID
-                ],
+                mapTypeIds: ['roadmap', 'satellite', 'hybrid', 'terrain',
+                    'styled_map'],
                 position: google.maps.ControlPosition.BOTTOM_LEFT
             }
         });
+
+        map.mapTypes.set('styled_map', styledMapType);
+        map.setMapTypeId('styled_map');
 
         var input = document.getElementById('pac-input');
         var searchContainer = document.getElementById('searchContainer');

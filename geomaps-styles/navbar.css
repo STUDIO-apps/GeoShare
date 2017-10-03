@@ -1,0 +1,123 @@
+.left-nav {
+
+}
+
+.header {
+  width: 416px;
+  top: 0;
+  float: left;
+}
+
+.header-image {
+  position: relative;
+  width: 416px;
+}
+
+.header img {
+  width: 100%;
+}
+
+.user-info {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+}
+
+.user-info h2 {
+  margin: 24px 12px;
+  color: white;
+  font: 16px 'Roboto', sans-serif;
+}
+
+.user-info img {
+  margin: -12px 12px;
+  width: 72px;
+  height: 72px;
+  border-radius: 100px;
+  border-width: 0px;
+  border-color: transparent;
+}
+
+.nav-items {
+  width: 416px;
+  height: calc(100% - 277px - 48px);
+  max-height: calc(100% - 277px - 48px);
+  overflow-y: auto;
+  float: left;
+  clear: left;
+}
+
+#item {
+  height: 72px;
+}
+
+#item h3 {
+  padding-left: 12px;
+}
+
+.nav-settings-bar {
+  height: 48px;
+  width: 416px;
+  float: left;
+  clear: left;
+}
+
+.settings-wrapper {
+  display: inline-flex;
+}
+
+#lock {
+  background: url(../img/lock.png);
+  background-repeat: no-repeat;
+  background-position: center;
+}
+
+#settings {
+  background: url(../img/settings.png);
+  background-repeat: no-repeat;
+  background-position: center;
+}
+
+.settings-wrapper button {
+  outline: 0;
+  border: 0;
+  opacity: 0.7;
+  margin: 0;
+  width: calc(416px / 3);
+  height: 48px;
+  -webkit-transition: opacity .25s ease-in-out;
+  transition: opacity .25s ease-in-out;
+  cursor: pointer;
+}
+
+.settings-wrapper button:hover {
+  opacity: 1;
+  -webkit-transition: opacity .25s ease-in-out;
+  transition: opacity .25s ease-in-out;
+}
+
+.settings-wrapper button::selection {
+  opacity: 1;
+}
+
+::-webkit-scrollbar {
+  width: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background-color: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  border-radius: 50px;
+  background-color: rgba(0, 0, 0, 0.2);
+}
+
+::-webkit-scrollbar-button {
+  height: 4px;
+  background-color: transparent;
+}
+
+::-webkit-scrollbar-corner {
+  background-color: transpaent;
+}
