@@ -17,7 +17,10 @@
   <link rel="icon" type="image/x-icon" href="../../img/favicon.ico" />
 </head>
 
-<script src="https://www.gstatic.com/firebasejs/4.4.0/firebase.js"></script>
+<script src="https://www.gstatic.com/firebasejs/4.5.0/firebase.js"></script>
+<script src="https://www.gstatic.com/firebasejs/4.5.0/firebase-app.js"></script>
+<script src="https://www.gstatic.com/firebasejs/4.5.0/firebase-auth.js"></script>
+
 <script>
   // Initialize Firebase
   var config = {
@@ -29,6 +32,14 @@
     messagingSenderId: "594909480502"
   };
   firebase.initializeApp(config);
+
+  function signIn() {
+    var email = document.getElementById('email').value;
+    var password = document.getElementById('password').value;
+    firebase.auth().signInWithEmailAndPassword(email, password).catch(function(error) {
+      console.log(error.message);
+    });
+  }
 </script>
 
 <script src="https://www.gstatic.com/firebasejs/4.3.1/firebase-app.js"></script>
@@ -72,16 +83,6 @@
       </div>
     </main>
   </div>
-
-  <script>
-    function signIn() {
-      var email = document.getElementById('email').value;
-      var password = document.getElementById('password').value;
-      firebase.auth().signInWithEmailAndPassword(email, password).catch(function(error) {
-        console.log(error.message);
-      });
-    }
-  </script>
 
 
 </body>
