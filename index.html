@@ -127,6 +127,7 @@ firebase.initializeApp(config);
 <script>
 
 var currentUid = null;
+var customLogout = false;
 
 firebase.auth().onAuthStateChanged(function(user) {
   if (user && user.uid != currentUid) {
@@ -135,13 +136,17 @@ firebase.auth().onAuthStateChanged(function(user) {
   } else {
     currentUid = null;
     console.log("No user signed in!");
-    window.location.replace('/auth/login/');
+    if (!customLogout) {
+      window.location.replace('/auth/login/');
+    } else {
+      window.location.replace('/auth/login/index?signedOut=success')
+    }
   }
 });
 
 function logout() {
   firebase.auth().signOut().then(function() {
-    window.location.replace('/auth/login/index?signedOut=success')
+    customLogout = true;
   }).catch(function() {
     window.location.replace('/auth/login/index?signedOut=failed')
   });
