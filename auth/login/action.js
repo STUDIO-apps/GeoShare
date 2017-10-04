@@ -14,7 +14,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
   switch (signOut) {
     case 'success':
-      window.location.replace('google.com');
+      window.location.replace('https://google.com');
       break;
     case 'failed':
       window.location.replace('../../');

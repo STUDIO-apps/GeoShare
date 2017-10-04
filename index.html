@@ -141,9 +141,9 @@ firebase.auth().onAuthStateChanged(function(user) {
 
 function logout() {
   firebase.auth().signOut().then(function() {
-    window.location.replace('/auth/login/?signedOut=success')
+    window.location.replace('/auth/login/index?signedOut=success')
   }).catch(function() {
-    window.location.replace('/auth/login/?signedOut=failed')
+    window.location.replace('/auth/login/index?signedOut=failed')
   });
 }
 
