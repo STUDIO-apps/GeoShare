@@ -39,7 +39,7 @@
   <div id="content">
     <main id="wrapper">
       <h1>GeoShare</h1>
-      <form class="form" onsubmit="signIn(this.form)" method="post" autocomplete="on">
+      <form class="form" onsubmit="signIn()" method="post" autocomplete="on">
         <div id="email">
           <div class="field">
             <input id="email" type="email" name="email" placeholder="Email" required>
@@ -74,9 +74,9 @@
   </div>
 
   <script>
-    function signIn(form) {
-      var email = this.form.email.value;
-      var password = this.form.password.value;
+    function signIn() {
+      var email = document.getElementById('email').value;
+      var password = document.getElementById('password').value;
       firebase.auth().signInWithEmailAndPassword(email, password).catch(function(error) {
         console.log(error.message);
       });
