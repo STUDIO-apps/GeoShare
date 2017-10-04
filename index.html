@@ -143,7 +143,7 @@ function logout() {
   firebase.auth().signOut().then(function() {
     window.location.replace('/auth/login/?signedOut=success')
   }).catch(function() {
-    window.location.replace('/auth/login/?signOut=failed')
+    window.location.replace('/auth/login/?signedOut=failed')
   });
 }
 

@@ -1,6 +1,6 @@
 document.addEventListener('DOMContentLoaded', function() {
   var mode = getParameterByName('mode');
-
+  var signOut = getParameterByName('signedOut');
 
   switch (mode) {
     case 'resetPassword':
@@ -10,6 +10,17 @@ document.addEventListener('DOMContentLoaded', function() {
       handleRecoverEmail();
       break;
     default:
+  }
+
+  switch (signOut) {
+    case 'success':
+      window.location.replace('google.com');
+      break;
+    case 'failed':
+      window.location.replace('../../');
+      break;
+    default:
+
   }
 }, false);
 
