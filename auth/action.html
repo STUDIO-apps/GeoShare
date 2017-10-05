@@ -122,7 +122,6 @@
     }
 
     function handleSignIn(email, password) {
-        console.log(email + ' ' + password);
         firebase.auth().signInWithEmailAndPassword(email, password).catch(function (error) {
             console.log(error.message);
         });
@@ -152,23 +151,40 @@
                 // TODO: Show the reset screen with the user's email and ask the user for
                 // the new password.
                 document.getElementById('resetPasswordForm').style.display = 'block';
+                document.getElementById('resetEmail').value = accountEmail;
 
-                // Save the new password.
-                auth.confirmPasswordReset(actionCode, newPassword).then(function (resp) {
-                    // Password reset has been confirmed and new password updated.
 
-                    // TODO: Display a link back to the app, or sign-in the user directly
-                    // if the page belongs to the same domain as the app:
-                    // auth.signInWithEmailAndPassword(accountEmail, newPassword);
-                }).catch(function (error) {
-                    // Error occurred during confirmation. The code might have expired or the
-                    // password is too weak.
-                });
             }).catch(function (error) {
                 // Invalid or expired action code. Ask user to try to reset the password
                 // again.
             });
         }
+    }
+
+    function resetPassword(accountEmail, newPassword) {
+        var actionCode = getParameterByName('oobCode');
+        // Save the new password.
+        firebase.auth().confirmPasswordReset(actionCode, newPassword).then(function (resp) {
+            console.log("Here now!");
+            // Password reset has been confirmed and new password updated.
+
+            // TODO: Display a link back to the app, or sign-in the user directly
+            // if the page belongs to the same domain as the app:
+            // auth.signInWithEmailAndPassword(accountEmail, newPassword);
+            firebase.auth().signInWithEmailAndPassword(accountEmail, newPassword);
+        }).catch(function (error) {
+            console.log("Ohh no!");
+            // Error occurred during confirmation. The code might have expired or the
+            // password is too weak.
+        });
+    }
+
+    function sendPasswordResetEmail(email) {
+        firebase.auth().sendPasswordResetEmail(email).then(function () {
+            console.log("Email sent!")
+        }).catch(function (error) {
+            console.log(error.message)
+        })
     }
 
     function handleRecoverEmail() {
@@ -216,13 +232,13 @@
             </div>
             <div id="login">
                 <div class="button login">
-                    <input type="submit" name="mode" value="CREATE NEW ACCOUNT" class="g-recaptcha"
+                    <input type="button" name="mode" value="CREATE NEW ACCOUNT" class="g-recaptcha"
                            data-sitekey="6Lf0cCkUAAAAAGfWmcyfOL3A0r7Ty7OA7FWkBI6u" data-callback="">
                 </div>
             </div>
         </form>
 
-        <form class="form" id="getResetPasswordForm" method="" action="#" autocomplete="on">
+        <form class="form" id="getResetPasswordForm" method="" autocomplete="on">
             <div id="email">
                 <div class="field">
                     <input id="email" type="email" name="email" placeholder="Email" required>
@@ -230,7 +246,7 @@
             </div>
             <div id="login">
                 <div class="button login">
-                    <input type="submit" name="mode" value="DONE">
+                    <input type="button" name="mode" value="DONE" onclick="sendPasswordResetEmail(this.form.email.value.toString())">
                 </div>
             </div>
         </form>
@@ -238,7 +254,7 @@
         <form class="form" id="resetPasswordForm" method="" action="#" autocomplete="on">
             <div id="email">
                 <div class="field">
-                    <input id="email" type="email" name="email" disabled>
+                    <input id="resetEmail" type="email" name="email" disabled>
                 </div>
             </div>
             <div id="password">
@@ -248,7 +264,7 @@
             </div>
             <div id="login">
                 <div class="button login">
-                    <input type="submit" name="mode" value="RESET PASSWORD">
+                    <input type="button" name="mode" value="RESET PASSWORD" onclick="resetPassword(this.form.email.value.toString(), this.form.password.value.toString())">
                 </div>
             </div>
         </form>
