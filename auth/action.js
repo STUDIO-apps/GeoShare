@@ -21,13 +21,13 @@ document.addEventListener('DOMContentLoaded', function() {
 
   switch (mode) {
     case 'resetPassword':
-      handleResetPassword(getParameterByName('email'), getParameterByName('password'));
+      handleResetPassword(auth, getParameterByName('oobCode'));
       break;
     case 'recoverEmail':
       handleRecoverEmail();
       break;
     case 'LOGIN':
-      handleSignIn(auth, getParameterByName('oobCode'));
+      handleSignIn(getParameterByName('email'), getParameterByName('password'));
       break;
     case 'signin':
       showSignin();
