@@ -33,6 +33,7 @@
   };
   firebase.initializeApp(config);
 
+  /*
   function signIn(form) {
     var email = form.email.value;
     var password = form.password.value;
@@ -46,13 +47,14 @@
       window.location.replace('../../')
     }
   });
+  //*/
 </script>
 
 <body>
   <div id="content">
     <main id="wrapper">
       <h1>GeoShare</h1>
-      <form class="form" action="#" autocomplete="on">
+      <form class="form" id="loginForm" method="" action="#" autocomplete="on">
         <div id="email">
           <div class="field">
             <input id="email" type="email" name="email" placeholder="Email" required>
@@ -65,7 +67,7 @@
         </div>
         <div id="login">
           <div class="button login">
-            <input type="submit" value="LOGIN" class="g-recaptcha" data-sitekey="6Lf0cCkUAAAAAGfWmcyfOL3A0r7Ty7OA7FWkBI6u" data-callback="" onclick="signIn(this.form)">
+            <input type="submit" name="mode" value="LOGIN" class="g-recaptcha" data-sitekey="6Lf0cCkUAAAAAGfWmcyfOL3A0r7Ty7OA7FWkBI6u" data-callback="">
           </div>
         </div>
       </form>
