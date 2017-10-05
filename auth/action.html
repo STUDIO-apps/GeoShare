@@ -1,20 +1,21 @@
 <!DOCTYPE html>
-<html>
 <head>
-  <meta charset="utf-8">
-  <title>Login - GeoShare</title>
+    <meta charset="utf-8">
+    <title>Login - GeoShare</title>
 
-  <link rel="stylesheet" type="text/css" href="../theme.css" />
-  <link rel="stylesheet" type="text/css" href="login.css" />
+    <link rel="stylesheet" type="text/css" href="../theme.css"/>
+    <link rel="stylesheet" type="text/css" href="login.css"/>
 
-  <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet"/>
 
-  <script src="https://apis.google.com/js/platform.js" async defer></script>
-  <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular.min.js"></script>
+    <script src="https://apis.google.com/js/platform.js" async defer></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular.min.js"></script>
 
-  <script type="text/javascript" src="action.js"></script>
+    <script type="text/javascript" src="action.js"></script>
 
-  <link rel="icon" type="image/x-icon" href="../img/favicon.ico" />
+    <script type="text/javascript" src="http://code.jquery.com/jquery-1.7.1.min.js"></script>
+
+    <link rel="icon" type="image/x-icon" href="../img/favicon.ico"/>
 </head>
 
 <script src="https://www.gstatic.com/firebasejs/4.5.0/firebase.js"></script>
@@ -22,127 +23,141 @@
 <script src="https://www.gstatic.com/firebasejs/4.5.0/firebase-auth.js"></script>
 
 <script>
-  // Initialize Firebase
-  var config = {
-    apiKey: "AIzaSyA5_zLFEivVC-ETuNAe-1rRfc0Jj6z01Dk",
-    authDomain: "modular-decoder-118720.firebaseapp.com",
-    databaseURL: "https://modular-decoder-118720.firebaseio.com",
-    projectId: "modular-decoder-118720",
-    storageBucket: "modular-decoder-118720.appspot.com",
-    messagingSenderId: "594909480502"
-  };
-  firebase.initializeApp(config);
+    // Initialize Firebase
+    var config = {
+        apiKey: "AIzaSyA5_zLFEivVC-ETuNAe-1rRfc0Jj6z01Dk",
+        authDomain: "modular-decoder-118720.firebaseapp.com",
+        databaseURL: "https://modular-decoder-118720.firebaseio.com",
+        projectId: "modular-decoder-118720",
+        storageBucket: "modular-decoder-118720.appspot.com",
+        messagingSenderId: "594909480502"
+    };
+    firebase.initializeApp(config);
 
-  /*
-  function signIn(form) {
-    var email = form.email.value;
-    var password = form.password.value;
-    firebase.auth().signInWithEmailAndPassword(email, password).catch(function(error) {
-      console.log(error.message);
-    });
-  }
-
-  firebase.auth().onAuthStateChanged(function(user) {
-    if (user) {
-      window.location.replace('../../')
+    /*
+    function signIn(form) {
+      var email = form.email.value;
+      var password = form.password.value;
+      firebase.auth().signInWithEmailAndPassword(email, password).catch(function(error) {
+        console.log(error.message);
+      });
     }
-  });
-  //*/
+
+    firebase.auth().onAuthStateChanged(function(user) {
+      if (user) {
+        window.location.replace('../../')
+      }
+    });
+    //*/
+
+    function submit() {
+        $.ajax({
+            url: '',
+            type: 'POST',
+            data: new FormData($('#loginForm')[0]),
+            processData: false,
+            contentType: false
+        }).done(function () {
+            console.log("Done");
+        }).fail(function () {
+            console.log("Failed");
+        })
+    }
 </script>
 
 <body>
-  <div id="content">
+<div id="content">
     <main id="wrapper">
-      <h1>GeoShare</h1>
-      <form class="form" id="loginForm" method="" action="#" autocomplete="on">
-        <div id="email">
-          <div class="field">
-            <input id="email" type="email" name="email" placeholder="Email" required>
-          </div>
-        </div>
-        <div id="password">
-          <div class="field">
-            <input id="password" type="password" name="password" placeholder="Password" required>
-          </div>
-        </div>
-        <div id="login">
-          <div class="button login">
-            <input type="submit" name="mode" value="LOGIN">
-          </div>
-        </div>
-      </form>
+        <h1>GeoShare</h1>
+        <form class="form" id="loginForm" method="post" autocomplete="on">
+            <div id="email">
+                <div class="field">
+                    <input id="email" type="email" name="email" placeholder="Email" required>
+                </div>
+            </div>
+            <div id="password">
+                <div class="field">
+                    <input id="password" type="password" name="password" placeholder="Password" required>
+                </div>
+            </div>
+            <div id="login">
+                <div class="button login">
+                    <input type="submit" name="mode" value="LOGIN" onclick="handleSignIn(this.form.email.value.toString(), this.form.password.value.toString())">
+                </div>
+            </div>
+        </form>
 
-      <form class="form" id="signupForm" method="" action="#" autocomplete="on">
-        <div id="name">
-          <div class="field">
-            <input id="name" type="text" name="name" placeholder="Full Name" required>
-          </div>
-        </div>
-        <div id="email">
-          <div class="field">
-            <input id="email" type="email" name="email" placeholder="Email" required>
-          </div>
-        </div>
-        <div id="password">
-          <div class="field">
-            <input id="password" type="password" name="password" placeholder="Password" required>
-          </div>
-        </div>
-        <div id="login">
-          <div class="button login">
-            <input type="submit" name="mode" value="CREATE NEW ACCOUNT" class="g-recaptcha" data-sitekey="6Lf0cCkUAAAAAGfWmcyfOL3A0r7Ty7OA7FWkBI6u" data-callback="">
-          </div>
-        </div>
-      </form>
+        <form class="form" id="signupForm" method="" action="#" autocomplete="on">
+            <div id="name">
+                <div class="field">
+                    <input id="name" type="text" name="name" placeholder="Full Name" required>
+                </div>
+            </div>
+            <div id="email">
+                <div class="field">
+                    <input id="email" type="email" name="email" placeholder="Email" required>
+                </div>
+            </div>
+            <div id="password">
+                <div class="field">
+                    <input id="password" type="password" name="password" placeholder="Password" required>
+                </div>
+            </div>
+            <div id="login">
+                <div class="button login">
+                    <input type="submit" name="mode" value="CREATE NEW ACCOUNT" class="g-recaptcha"
+                           data-sitekey="6Lf0cCkUAAAAAGfWmcyfOL3A0r7Ty7OA7FWkBI6u" data-callback="">
+                </div>
+            </div>
+        </form>
 
-      <form class="form" id="getResetPasswordForm" method="" action="#" autocomplete="on">
-        <div id="email">
-          <div class="field">
-            <input id="email" type="email" name="email" placeholder="Email" required>
-          </div>
-        </div>
-        <div id="login">
-          <div class="button login">
-            <input type="submit" name="mode" value="DONE">
-          </div>
-        </div>
-      </form>
+        <form class="form" id="getResetPasswordForm" method="" action="#" autocomplete="on">
+            <div id="email">
+                <div class="field">
+                    <input id="email" type="email" name="email" placeholder="Email" required>
+                </div>
+            </div>
+            <div id="login">
+                <div class="button login">
+                    <input type="submit" name="mode" value="DONE">
+                </div>
+            </div>
+        </form>
 
-      <form class="form" id="resetPasswordForm" method="" action="#" autocomplete="on">
-        <div id="email">
-          <div class="field">
-            <input id="email" type="email" name="email" placeholder="Email" disabled>
-          </div>
-        </div>
-        <div id="password">
-          <div class="field">
-            <input id="password" type="password" name="password" placeholder="Password" required>
-          </div>
-        </div>
-        <div id="login">
-          <div class="button login">
-            <input type="submit" name="mode" value="RESET PASSWORD">
-          </div>
-        </div>
-      </form>
+        <form class="form" id="resetPasswordForm" method="" action="#" autocomplete="on">
+            <div id="email">
+                <div class="field">
+                    <input id="email" type="email" name="email" disabled>
+                </div>
+            </div>
+            <div id="password">
+                <div class="field">
+                    <input id="password" type="password" name="password" placeholder="New Password" required>
+                </div>
+            </div>
+            <div id="login">
+                <div class="button login">
+                    <input type="submit" name="mode" value="RESET PASSWORD">
+                </div>
+            </div>
+        </form>
 
-      <div class="new-account-container" id="new-account">
-        <div class="button new-account">
-          <a href="?mode=signup">
-            <button onclick="">CREATE NEW ACCOUNT</button>
-          </a>
+        <div class="new-account-container" id="new-account">
+            <div class="button new-account">
+                <a href="?mode=signup">
+                    <button onclick="">CREATE NEW ACCOUNT</button>
+                </a>
+            </div>
         </div>
-      </div>
-      <div class="forgot-password-container" id="forgot-password">
-        <div class="button forgot-password">
-          <a href="?mode=resetPassword">
-            <button onclick="">FORGOT PASSWORD?</button>
-          </a>
+        <div class="forgot-password-container" id="forgot-password">
+            <div class="button forgot-password">
+                <a href="?mode=resetPassword">
+                    <button onclick="">FORGOT PASSWORD?</button>
+                </a>
+            </div>
         </div>
-      </div>
     </main>
-  </div>
-
+</div>
 
 </body>
 
