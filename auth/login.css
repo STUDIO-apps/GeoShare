@@ -1,7 +1,15 @@
-body, main::before {
-  background: url(../../img/contactBackground.jpg) 0 / cover fixed;
+body {
+  background: url(../img/contactBackground.jpg) 0 / cover fixed;
   margin: 0;
 }
+
+/*
+FOR BLUR EFFECT
+body, main::before {
+  background: url(../img/contactBackground.jpg) 0 / cover fixed;
+  margin: 0;
+}
+*/
 
 #content {
   height: 100%;
@@ -19,6 +27,8 @@ main {
   padding-bottom: 32px;
 }
 
+/*
+FOR BLUR EFFECT
 main::before {
   content: '';
   position: absolute;
@@ -29,6 +39,7 @@ main::before {
   filter: blur(5px);
   z-index: -1;
 }
+*/
 
 h1 {
   color: white;
@@ -39,6 +50,7 @@ h1 {
 .form {
   width: 100%;
   margin: 0;
+  display: none;
 }
 
 .field {
@@ -107,7 +119,11 @@ h1 {
   transition: all .15s ease-out;
 }
 
-.new-account input {
+.new-account-container {
+  display: none;
+}
+
+.new-account button {
   height: 48px;
   width: 100%;
   margin-top: 6px;
@@ -125,12 +141,16 @@ h1 {
   cursor: pointer;
 }
 
-.new-account input:hover {
+.new-account button:hover {
   color: #4caf50;
   transition: all .15s ease-out;
 }
 
-.forgot-password input {
+.forgot-password-container {
+  display: none;
+}
+
+.forgot-password button {
   height: 48px;
   width: 100%;
   padding: 15px 20px;
@@ -147,7 +167,7 @@ h1 {
   cursor: pointer;
 }
 
-.forgot-password input:hover {
+.forgot-password button:hover {
   color: #4caf50;
   transition: all .15s ease-out;
 }

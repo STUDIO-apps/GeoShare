@@ -137,9 +137,9 @@ firebase.auth().onAuthStateChanged(function(user) {
     currentUid = null;
     console.log("No user signed in!");
     if (!customLogout) {
-      window.location.replace('/auth/login/');
+      window.location.replace('/auth/action?mode=signin');
     } else {
-      window.location.replace('/auth/login/index?signedOut=success')
+      window.location.replace('/auth/action?signedOut=success')
     }
   }
 });
@@ -148,7 +148,7 @@ function logout() {
   firebase.auth().signOut().then(function() {
     customLogout = true;
   }).catch(function() {
-    window.location.replace('/auth/login/index?signedOut=failed')
+    window.location.replace('/auth/action?signedOut=failed')
   });
 }
 

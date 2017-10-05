@@ -17,15 +17,23 @@ document.addEventListener('DOMContentLoaded', function() {
   var mode = getParameterByName('mode');
   var signOut = getParameterByName('signedOut');
 
+  var auth = firebase.auth();
+
   switch (mode) {
     case 'resetPassword':
-      handleResetPassword();
+      handleResetPassword(getParameterByName('email'), getParameterByName('password'));
       break;
     case 'recoverEmail':
       handleRecoverEmail();
       break;
     case 'LOGIN':
-      handleSignIn(getParameterByName('email'), getParameterByName('password'));
+      handleSignIn(auth, getParameterByName('oobCode'));
+      break;
+    case 'signin':
+      showSignin();
+      break;
+    case 'signup':
+      showSignup();
       break;
     default:
   }
@@ -37,7 +45,7 @@ document.addEventListener('DOMContentLoaded', function() {
       document.getElementById('forgot-password').style.display = 'none';
       break;
     case 'failed':
-      window.location.replace('../../');
+      window.location.replace('../');
       break;
     default:
 
@@ -45,12 +53,20 @@ document.addEventListener('DOMContentLoaded', function() {
 
   firebase.auth().onAuthStateChanged(function(user) {
     if (user) {
-      window.location.replace('../../')
+      window.location.replace('../')
     }
   });
 }, false);
 
+function showSignin() {
+  document.getElementById('loginForm').style.display = 'block';
+  document.getElementById('new-account').style.display = 'block';
+  document.getElementById('forgot-password').style.display = 'block';
+}
 
+function showSignup() {
+  document.getElementById('signupForm').style.display = 'block';
+}
 
 function handleSignIn(email, password) {
   console.log(email + ' ' + password);
@@ -74,25 +90,31 @@ function getParameterByName(name) {
 function handleResetPassword(auth, actionCode) {
   var accountEmail;
   // Verify the password reset code is valid.
-  auth.verifyPasswordResetCode(actionCode).then(function(email) {
-    var accountEmail = email;
+  if (actionCode == '') {
+    document.getElementById('getResetPasswordForm').style.display = 'block';
+  } else {
+    auth.verifyPasswordResetCode(actionCode).then(function(email) {
+      var accountEmail = email;
 
-    // TODO: Show the reset screen with the user's email and ask the user for
-    // the new password.
+      // TODO: Show the reset screen with the user's email and ask the user for
+      // the new password.
+      document.getElementById('resetPasswordForm').style.display = 'block';
 
-    // Save the new password.
-    auth.confirmPasswordReset(actionCode, newPassword).then(function(resp) {
-      // Password reset has been confirmed and new password updated.
+      // Save the new password.
+      auth.confirmPasswordReset(actionCode, newPassword).then(function(resp) {
+        // Password reset has been confirmed and new password updated.
 
-      // TODO: Display a link back to the app, or sign-in the user directly
-      // if the page belongs to the same domain as the app:
-      // auth.signInWithEmailAndPassword(accountEmail, newPassword);
+        // TODO: Display a link back to the app, or sign-in the user directly
+        // if the page belongs to the same domain as the app:
+        // auth.signInWithEmailAndPassword(accountEmail, newPassword);
+      }).catch(function(error) {
+        // Error occurred during confirmation. The code might have expired or the
+        // password is too weak.
+      });
     }).catch(function(error) {
-      // Error occurred during confirmation. The code might have expired or the
-      // password is too weak.
+      // Invalid or expired action code. Ask user to try to reset the password
+      // again.
     });
-  }).catch(function(error) {
-    // Invalid or expired action code. Ask user to try to reset the password
-    // again.
-  });
+  }
+
 }
