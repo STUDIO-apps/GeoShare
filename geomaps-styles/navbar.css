@@ -27,6 +27,7 @@
   margin: 24px 12px;
   color: white;
   font: 16px 'Roboto', sans-serif;
+  font-weight: bold;
 }
 
 .user-info img {
@@ -47,12 +48,39 @@
   clear: left;
 }
 
-#item {
-  height: 72px;
+.list_item {
+  padding: 16px;
+  float: left;
+  width: calc(100% - 32px);
+  cursor: pointer;
+
+  -webkit-transition: background ease-in 150ms;
+  -moz-transition: background ease-in 150ms;
+  -o-transition: background ease-in 150ms;
+  transition: background ease-in 150ms;
 }
 
-#item h3 {
-  padding-left: 12px;
+.list_item:hover {
+  background-color: rgba(0,0,0,0.08);
+  -webkit-transition: background ease-in 150ms;
+  -moz-transition: background ease-in 150ms;
+  -o-transition: background ease-in 150ms;
+  transition: background ease-in 150ms;
+}
+
+.list_item a {
+  padding-left: 8px;
+  text-decoration: none;
+  color: black;
+  vertical-align: middle;
+  font: 18px 'Roboto', sans-serif;
+}
+
+.list_item img {
+  padding: 4px;
+  height: 32px;
+  width: 32px;
+  vertical-align: middle;
 }
 
 .nav-settings-bar {

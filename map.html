@@ -1,21 +1,21 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="utf-8" />
+    <meta charset="utf-8"/>
     <title>Map - GeoShare</title>
 
-    <link rel="stylesheet" href="theme.css" type="text/css" />
+    <link rel="stylesheet" href="theme.css" type="text/css"/>
 
-    <link rel="stylesheet" href="geomaps-styles/main.css" type="text/css" />
-    <link rel="stylesheet" href="geomaps-styles/navbar.css" type="text/css" />
-    <link rel="stylesheet" href="geomaps-styles/map.css" type="text/css" />
-    <link rel="stylesheet" href="geomaps-styles/friendsbar.css" type="text/css" />
-    <link rel="stylesheet" href="geomaps-styles/search.css" type="text/css" />
+    <link rel="stylesheet" href="geomaps-styles/main.css" type="text/css"/>
+    <link rel="stylesheet" href="geomaps-styles/navbar.css" type="text/css"/>
+    <link rel="stylesheet" href="geomaps-styles/map.css" type="text/css"/>
+    <link rel="stylesheet" href="geomaps-styles/friendsbar.css" type="text/css"/>
+    <link rel="stylesheet" href="geomaps-styles/search.css" type="text/css"/>
 
     <script src="https://apis.google.com/js/platform.js" async defer></script>
     <script type="text/javascript" src="js/main.js"></script>
 
-    <link rel="icon" type="image/x-icon" href="img/favicon.ico" />
+    <link rel="icon" type="image/x-icon" href="img/favicon.ico"/>
 </head>
 
 <script src="https://www.gstatic.com/firebasejs/4.4.0/firebase.js"></script>
@@ -39,7 +39,7 @@
         <div class="header-image">
             <img src="img/header.jpg"/>
             <div class="user-info">
-                <img id="profile-picture" src="img/dummy-profile.png"/>
+                <img id="profile-picture" src=""/>
                 <h2 id="profile-name">Welcome, user</h2>
             </div>
         </div>
@@ -47,44 +47,14 @@
     </div>
 
     <div class="nav-items">
-        <div id="item">
-            <h3>Test item</h3>
+        <div class="list_item selected">
+            <img src="img/map_black.png"/>
+            <a>GeoMaps</a>
         </div>
 
-        <div id="item">
-            <h3>Test item</h3>
-        </div>
-
-        <div id="item">
-            <h3>Test item</h3>
-        </div>
-
-        <div id="item">
-            <h3>Test item</h3>
-        </div>
-
-        <div id="item">
-            <h3>Test item</h3>
-        </div>
-
-        <div id="item">
-            <h3>Test item</h3>
-        </div>
-
-        <div id="item">
-            <h3>Test item</h3>
-        </div>
-
-        <div id="item">
-            <h3>Test item</h3>
-        </div>
-
-        <div id="item">
-            <h3>Test item</h3>
-        </div>
-
-        <div id="item">
-            <h3>Test item</h3>
+        <div class="list_item">
+            <img src="img/people_black.png"/>
+            <a>Friends Manager</a>
         </div>
 
     </div>
@@ -120,7 +90,7 @@
 </div>
 
 <div class="right-nav">
-    Hello
+
 </div>
 
 </body>
@@ -130,7 +100,7 @@
     var currentUid = null;
     var customLogout = false;
 
-    firebase.auth().onAuthStateChanged(function(user) {
+    firebase.auth().onAuthStateChanged(function (user) {
         if (user && user.uid != currentUid) {
             currentUid = user.uid;
             setup();
@@ -146,9 +116,9 @@
     });
 
     function logout() {
-        firebase.auth().signOut().then(function() {
+        firebase.auth().signOut().then(function () {
             customLogout = true;
-        }).catch(function() {
+        }).catch(function () {
             window.location.replace('/auth/action?signedOut=failed')
         });
     }
@@ -156,11 +126,24 @@
     function setup() {
         if (currentUid != null) {
             //UI setup from Firebase
+
+            //Profile picture
+            var storage = firebase.storage();
+            var gsRef = storage.refFromURL('gs://modular-decoder-118720.appspot.com/profile_pictures');
+
+            gsRef.child('/' + currentUid + '.png').getDownloadURL().then(function (url) {
+                var img = document.getElementById('profile-picture');
+                img.src = url;
+            }).catch(function (error) {
+
+            })
+
+            //Profile name
             var ref = firebase.database().ref('/users/' + currentUid);
-            ref.on("value", function(snapshot) {
+            ref.on("value", function (snapshot) {
                 var name = (snapshot.val() && snapshot.val().name);
                 document.getElementById('profile-name').innerHTML = 'Welcome, ' + name;
-            }, function(error) {
+            }, function (error) {
                 console.log(error.code);
             });
         }
@@ -335,7 +318,7 @@
         );
 
         var map = new google.maps.Map(document.getElementById('map'), {
-            center: { lat: 51.4803872, lng: -0.0650901 },
+            center: {lat: 51.4803872, lng: -0.0650901},
             zoom: 6,
             scaleControl: true,
             mapTypeControl: true,
@@ -354,7 +337,7 @@
         var searchContainer = document.getElementById('searchContainer');
         var searchBox = new google.maps.places.SearchBox(input);
         map.controls[google.maps.ControlPosition.TOP_LEFT].push(searchContainer);
-        map.setOptions({draggableCursor:'default'});
+        map.setOptions({draggableCursor: 'default'});
 
         google.maps.event.addListener(map, 'zoom_changed', function () {
             if (map.getZoom() < 3) {
@@ -441,7 +424,9 @@
 
 </script>
 
-<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAiUunq8k3vZd9iQenenLA9WwyTWA82Bc4&callback=initMap" async defer></script>
-<script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCDNHoQZumXcpl9cEhTo7fOnuiJuXHXdbU&libraries=places"></script>
+<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAiUunq8k3vZd9iQenenLA9WwyTWA82Bc4&callback=initMap" async
+        defer></script>
+<script type="text/javascript"
+        src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCDNHoQZumXcpl9cEhTo7fOnuiJuXHXdbU&libraries=places"></script>
 
 </html>

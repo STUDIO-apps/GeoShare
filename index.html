@@ -1,26 +1,26 @@
 <!DOCTYPE html>
 <head>
-  <meta charset="utf-8" />
-  <title>Map - GeoShare</title>
-  
-  <script src="https://apis.google.com/js/platform.js" async defer></script>
-  <script type="text/javascript" src="js/main.js"></script>
+    <meta charset="utf-8"/>
+    <title>GeoShare</title>
 
-  <link rel="icon" type="image/x-icon" href="img/favicon.ico" />
+    <script src="https://apis.google.com/js/platform.js" async defer></script>
+    <script type="text/javascript" src="js/main.js"></script>
+
+    <link rel="icon" type="image/x-icon" href="img/favicon.ico"/>
 </head>
 
 <script src="https://www.gstatic.com/firebasejs/4.4.0/firebase.js"></script>
 <script>
-// Initialize Firebase
-var config = {
-  apiKey: "AIzaSyA5_zLFEivVC-ETuNAe-1rRfc0Jj6z01Dk",
-  authDomain: "modular-decoder-118720.firebaseapp.com",
-  databaseURL: "https://modular-decoder-118720.firebaseio.com",
-  projectId: "modular-decoder-118720",
-  storageBucket: "modular-decoder-118720.appspot.com",
-  messagingSenderId: "594909480502"
-};
-firebase.initializeApp(config);
+    // Initialize Firebase
+    var config = {
+        apiKey: "AIzaSyA5_zLFEivVC-ETuNAe-1rRfc0Jj6z01Dk",
+        authDomain: "modular-decoder-118720.firebaseapp.com",
+        databaseURL: "https://modular-decoder-118720.firebaseio.com",
+        projectId: "modular-decoder-118720",
+        storageBucket: "modular-decoder-118720.appspot.com",
+        messagingSenderId: "594909480502"
+    };
+    firebase.initializeApp(config);
 </script>
 
 <body>
@@ -28,17 +28,17 @@ firebase.initializeApp(config);
 
 <script>
 
-var currentUid = null;
+    var currentUid = null;
 
-firebase.auth().onAuthStateChanged(function(user) {
-  if (user && user.uid != currentUid) {
-    currentUid = user.uid;
-    window.location.replace('map');
-  } else {
-    currentUid = null;
-    window.location.replace('/auth/action?mode=signin');
-  }
-});
+    firebase.auth().onAuthStateChanged(function (user) {
+        if (user && user.uid != currentUid) {
+            currentUid = user.uid;
+            window.location.replace('map');
+        } else {
+            currentUid = null;
+            window.location.replace('/auth/action?mode=signin');
+        }
+    });
 </script>
 
 </html>
