@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <head>
     <meta charset="utf-8">
-    <title>Login - GeoShare</title>
+    <title>Accounts - GeoShare</title>
 
     <link rel="stylesheet" type="text/css" href="../theme.css"/>
     <link rel="stylesheet" type="text/css" href="login.css"/>
@@ -119,6 +119,7 @@
 
     function showSignup() {
         document.getElementById('signupForm').style.display = 'block';
+        document.getElementById('back').style.display = 'block';
     }
 
     function handleSignIn(email, password) {
@@ -144,6 +145,7 @@
         // Verify the password reset code is valid.
         if (actionCode == '') {
             document.getElementById('getResetPasswordForm').style.display = 'block';
+            document.getElementById('back').style.display = 'block';
         } else {
             auth.verifyPasswordResetCode(actionCode).then(function (email) {
                 var accountEmail = email;
@@ -280,6 +282,13 @@
             <div class="button forgot-password">
                 <a href="?mode=resetPassword">
                     <button onclick="">FORGOT PASSWORD?</button>
+                </a>
+            </div>
+        </div>
+        <div class="back-container" id="back">
+            <div class="button back">
+                <a href="?mode=signin">
+                    <button onclick="">BACK</button>
                 </a>
             </div>
         </div>

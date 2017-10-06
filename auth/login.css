@@ -1,6 +1,6 @@
 body {
-  background: url(../img/contactBackground.jpg) 0 / cover fixed;
-  margin: 0;
+    background: url(../img/contactBackground.jpg) 0 / cover fixed;
+    margin: 0;
 }
 
 /*
@@ -12,19 +12,19 @@ body, main::before {
 */
 
 #content {
-  height: 100%;
-  width: 100%;
+    height: 100%;
+    width: 100%;
 }
 
 main {
-  background-color: rgba(0, 0, 0, 0.64);
-  margin: 0 auto;
-  position: relative;
-  max-width: 350px;
-  padding-left: 32px;
-  padding-right: 32px;
-  padding-top: 250px;
-  padding-bottom: 32px;
+    background-color: rgba(0, 0, 0, 0.64);
+    margin: 0 auto;
+    position: relative;
+    max-width: 350px;
+    padding-left: 32px;
+    padding-right: 32px;
+    padding-top: 250px;
+    padding-bottom: 32px;
 }
 
 /*
@@ -42,150 +42,180 @@ main::before {
 */
 
 h1 {
-  color: white;
-  text-align: center;
-  font: 32px 'Roboto', sans-serif;
+    color: white;
+    text-align: center;
+    font: 32px 'Roboto', sans-serif;
 }
 
 .form {
-  width: 100%;
-  margin: 0;
-  display: none;
+    width: 100%;
+    margin: 0;
+    display: none;
 }
 
 .field {
-  display: inline-block;
-  width: 100%;
-  margin-bottom: 12px;
+    display: inline-block;
+    width: 100%;
+    margin-bottom: 12px;
 }
 
-.field label{
-  font: 13px 'Roboto', sans-serif;
-  color: rgba(26,26,26,.6);
+.field label {
+    font: 13px 'Roboto', sans-serif;
+    color: rgba(26, 26, 26, .6);
 }
 
-.field input{
-  height: 48px;
-  width: 100%;
-  padding: 24px;
-  margin: 6px 0 4px;
-  font-size: 16px;
-  letter-spacing: 1px;
-  color: white;
-  border: 2px solid #4caf50;
-  border-radius: 100px;
-  background: transparent;
-  box-sizing: border-box;
+.field input {
+    height: 48px;
+    width: 100%;
+    padding: 24px;
+    margin: 6px 0 4px;
+    font-size: 16px;
+    letter-spacing: 1px;
+    color: white;
+    border: 2px solid #4caf50;
+    border-radius: 100px;
+    background: transparent;
+    box-sizing: border-box;
 }
 
-.field textarea{
-  width: 100%;
-  min-height: 100px;
-  padding: 12px;
-  margin: 6px 0 4px;
-  font-size: 14px;
-  border: 1px solid #ccc;
-  background: #FAFAFA;
-  box-sizing: border-box;
-  resize: vertical;
+.field textarea {
+    width: 100%;
+    min-height: 100px;
+    padding: 12px;
+    margin: 6px 0 4px;
+    font-size: 14px;
+    border: 1px solid #ccc;
+    background: #FAFAFA;
+    box-sizing: border-box;
+    resize: vertical;
 }
 
-.field input:focus{
-  -webkit-input-placeholder: #FFF;
-  outline: none;
-  transition: background .1s ease-in;
+.field input:focus {
+    -webkit-input-placeholder: #FFF;
+    outline: none;
+    transition: background .1s ease-in;
 }
 
 .login input {
-  height: 48px;
-  width: 100%;
-  margin-top: 12px;
-  padding: 15px 20px;
-  letter-spacing: 2px;
-  color: white;
-  border-radius: 100px;
-  border: 0px;
-  background: #4caf50;
-  outline: none;
-  font-size: 16px;
-  font-weight: 400;
-  text-decoration: none;
-  font-family: 'Roboto', sans-serif;
-  cursor: pointer;
+    height: 48px;
+    width: 100%;
+    margin-top: 12px;
+    padding: 15px 20px;
+    letter-spacing: 2px;
+    color: white;
+    border-radius: 100px;
+    border: 0px;
+    background: #4caf50;
+    outline: none;
+    font-size: 16px;
+    font-weight: 400;
+    text-decoration: none;
+    font-family: 'Roboto', sans-serif;
+    cursor: pointer;
 }
 
 .login input:hover {
-  background: #388E3C;
-  transition: all .15s ease-out;
+    background: #388E3C;
+    transition: all .15s ease-out;
 }
 
 .new-account-container {
-  display: none;
+    display: none;
 }
 
 .new-account button {
-  height: 48px;
-  width: 100%;
-  margin-top: 6px;
-  padding: 15px 20px;
-  letter-spacing: 2px;
-  color: white;
-  border-radius: 100px;
-  border: 0px;
-  background: transparent;
-  outline: none;
-  font-size: 16px;
-  font-weight: 400;
-  text-decoration: none;
-  font-family: 'Roboto', sans-serif;
-  cursor: pointer;
+    height: 48px;
+    width: 100%;
+    margin-top: 6px;
+    padding: 15px 20px;
+    letter-spacing: 2px;
+    color: white;
+    border-radius: 100px;
+    border: 0px;
+    background: transparent;
+    outline: none;
+    font-size: 16px;
+    font-weight: 400;
+    text-decoration: none;
+    font-family: 'Roboto', sans-serif;
+    cursor: pointer;
 }
 
 .new-account button:hover {
-  color: #4caf50;
-  transition: all .15s ease-out;
+    color: #4caf50;
+    transition: all .15s ease-out;
 }
 
 .forgot-password-container {
-  display: none;
+    display: none;
 }
 
 .forgot-password button {
-  height: 48px;
-  width: 100%;
-  padding: 15px 20px;
-  letter-spacing: 2px;
-  color: white;
-  border-radius: 100px;
-  border: 0px;
-  background: transparent;
-  outline: none;
-  font-size: 16px;
-  font-weight: 400;
-  text-decoration: none;
-  font-family: 'Roboto', sans-serif;
-  cursor: pointer;
+    height: 48px;
+    width: 100%;
+    padding: 15px 20px;
+    letter-spacing: 2px;
+    color: white;
+    border-radius: 100px;
+    border: 0px;
+    background: transparent;
+    outline: none;
+    font-size: 16px;
+    font-weight: 400;
+    text-decoration: none;
+    font-family: 'Roboto', sans-serif;
+    cursor: pointer;
 }
 
 .forgot-password button:hover {
-  color: #4caf50;
-  transition: all .15s ease-out;
+    color: #4caf50;
+    transition: all .15s ease-out;
+}
+
+.back-container {
+    display: none;
+}
+
+.back button {
+    height: 48px;
+    width: 100%;
+    padding: 15px 20px;
+    letter-spacing: 2px;
+    color: white;
+    border-radius: 100px;
+    border: 0px;
+    background: transparent;
+    outline: none;
+    font-size: 16px;
+    font-weight: 400;
+    text-decoration: none;
+    font-family: 'Roboto', sans-serif;
+    cursor: pointer;
+}
+
+.back button:hover {
+    color: #4caf50;
+    transition: all .15s ease-out;
 }
 
 ::-webkit-input-placeholder { /* WebKit, Blink, Edge */
-    color:    #FFF;
+    color: #FFF;
 }
+
 :-moz-placeholder { /* Mozilla Firefox 4 to 18 */
-   color:    #FFF;
-   opacity:  1;
+    color: #FFF;
+    opacity: 1;
 }
+
 ::-moz-placeholder { /* Mozilla Firefox 19+ */
-   color:    #FFF;
-   opacity:  1;
+    color: #FFF;
+    opacity: 1;
 }
+
 :-ms-input-placeholder { /* Internet Explorer 10-11 */
-   color:    #FFF;
+    color: #FFF;
 }
+
 ::-ms-input-placeholder { /* Microsoft Edge */
-   color:    #FFF;
+    color: #FFF;
 }
