@@ -100,6 +100,95 @@
       <div class="nav-bar">
         <button id="close" type="image" onclick="showSettings(false)"/>
       </div>
+      <div class="pref-screen">
+        <div class="settings-category">
+          <div class="heading">
+            <h3>Notifications</h3>
+          </div>
+          <div class="item-toggle">
+            <h4>New friend notifications</h4>
+            <label class="switch">
+              <input type="checkbox">
+              <span class="slider round"></span>
+            </label>
+          </div>
+          <div class="item-toggle">
+            <h4>New location notifications</h4>
+            <label class="switch">
+              <input type="checkbox">
+              <span class="slider round"></span>
+            </label>
+          </div>
+          <div class="item-empty">
+            <h4>Ringtone</h4>
+          </div>
+          <div class="item-empty">
+            <h4>Vibrate</h4>
+          </div>
+        </div>
+
+        <div class="settings-category">
+          <div class="heading">
+            <h3>Data &amp; sync</h3>
+          </div>
+          <div class="item-empty">
+            <h4>Sync frequency</h4>
+          </div>
+        </div>
+
+        <div class="settings-category">
+          <div class="heading">
+            <h3>Location</h3>
+          </div>
+          <div class="item-empty">
+            <h4>Update frequency</h4>
+          </div>
+          <div class="item-empty">
+            <h4>Nearby radius</h4>
+          </div>
+        </div>
+
+        <div class="settings-category">
+          <div class="heading">
+            <h3>Account</h3>
+          </div>
+          <div class="item-empty">
+            <h4>Display name</h4>
+          </div>
+          <div class="item-empty">
+            <h4>Profile picture</h4>
+          </div>
+          <div class="item-empty">
+            <h4>Change password</h4>
+          </div>
+          <div class="item-empty">
+            <h4>Delete user</h4>
+          </div>
+        </div>
+
+        <div class="settings-category">
+          <div class="heading">
+            <h3>About</h3>
+          </div>
+          <div class="item-empty">
+            <h4>Stuff</h4>
+          </div>
+          <div class="item-empty">
+            <h4>Version</h4>
+          </div>
+          <div class="item-empty">
+            <h4>Send feedback</h4>
+          </div>
+          <div class="item-empty">
+            <h4>FAQ</h4>
+          </div>
+        </div>
+      </div>
+      </div>
+
+      <div class="content-screen">
+
+      </div>
     </div>
 </div>
 
@@ -109,6 +198,50 @@
 
     var currentUid = null;
     var customLogout = false;
+    var currentMode = null;
+
+    document.addEventListener('DOMContentLoaded', function () {
+        var mode = getParameterByName('mode');
+
+        var auth = firebase.auth();
+
+        switch (mode) {
+            case 'settings':
+                showSettings(true);
+                break;
+            default:
+        }
+    }, false);
+
+    window.addEventListener('popstate', function () {
+        var mode = getParameterByName('mode');
+
+        switch (mode) {
+          case '':
+            showSettings(false);
+            break;
+          case 'settings':
+            if (currentMode != mode) {
+              showSettings(true);
+            }
+            break;
+          default:
+            showSettings(false);
+
+        }
+    })
+
+    function getParameterByName(name) {
+        name = name.replace(/[\[]/, "\\\[").replace(/[\]]/, "\\\]");
+        var regexS = "[\\?&]" + name + "=([^&#]*)";
+        var regex = new RegExp(regexS);
+        var results = regex.exec(window.location.href);
+
+        if (results == null)
+            return "";
+        else
+            return decodeURIComponent(results[1].replace(/\+/g, " "));
+    }
 
     firebase.auth().onAuthStateChanged(function (user) {
         if (user && user.uid != currentUid) {
@@ -162,8 +295,10 @@
     function showSettings(show) {
       if (show) {
         document.getElementById('settings-container').style.display = 'block';
+        history.pushState('settings', 'Settings - GeoShare', 'map?mode=settings');
       } else {
         document.getElementById('settings-container').style.display = 'none';
+        window.history.pushState('map', 'Map - GeoShare', 'map');
       }
     }
 
