@@ -11,6 +11,7 @@
     <link rel="stylesheet" href="geomaps-styles/map.css" type="text/css"/>
     <link rel="stylesheet" href="geomaps-styles/friendsbar.css" type="text/css"/>
     <link rel="stylesheet" href="geomaps-styles/search.css" type="text/css"/>
+    <link rel="stylesheet" href="geomaps-styles/settings.css" type="text/css"/>
 
     <script src="https://apis.google.com/js/platform.js" async defer></script>
     <script type="text/javascript" src="js/main.js"></script>
@@ -62,7 +63,7 @@
     <div class="nav-settings-bar">
         <div class="settings-wrapper">
             <button id="lock" type="image"/>
-            <button id="settings" type="image"/>
+            <button id="settings" type="image" onclick="showSettings(true)"/>
             <button id="lock" type="image" onclick="logout()"/>
         </div>
     </div>
@@ -91,6 +92,15 @@
 
 <div class="right-nav">
 
+</div>
+
+<div id="settings-container" class="settings">
+    <div class="settings-background" onclick="showSettings(false)"></div>
+    <div class="settings-container">
+      <div class="nav-bar">
+        <button id="close" type="image" onclick="showSettings(false)"/>
+      </div>
+    </div>
 </div>
 
 </body>
@@ -147,6 +157,14 @@
                 console.log(error.code);
             });
         }
+    }
+
+    function showSettings(show) {
+      if (show) {
+        document.getElementById('settings-container').style.display = 'block';
+      } else {
+        document.getElementById('settings-container').style.display = 'none';
+      }
     }
 
     //Map setup
