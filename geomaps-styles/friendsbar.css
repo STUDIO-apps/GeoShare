@@ -1,0 +1,31 @@
+.friendItem {
+  height: 72px;
+  display: flex;
+  cursor: pointer;
+
+  -webkit-transition: background ease-in 150ms;
+  -moz-transition: background ease-in 150ms;
+  -o-transition: background ease-in 150ms;
+  transition: background ease-in 150ms;
+}
+
+.friendItem:hover {
+  background-color: rgba(0,0,0,0.08);
+  -webkit-transition: background ease-in 150ms;
+  -moz-transition: background ease-in 150ms;
+  -o-transition: background ease-in 150ms;
+  transition: background ease-in 150ms;
+}
+
+.friendItem h2 {
+  margin: auto 12px;
+  font: 18px 'Roboto', sans-serif;
+}
+
+.friendItem img {
+  margin: auto;
+  margin-right: 12px;
+  width: 64px;
+  height: 64px;
+  border-radius: 100px;
+}

@@ -14,6 +14,8 @@
     <link rel="stylesheet" href="geomaps-styles/settings.css" type="text/css"/>
 
     <script src="https://apis.google.com/js/platform.js" async defer></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.0rc1/angular-route.min.js"></script>
     <script type="text/javascript" src="js/main.js"></script>
 
     <link rel="icon" type="image/x-icon" href="img/favicon.ico"/>
@@ -62,7 +64,7 @@
 
     <div class="nav-settings-bar">
         <div class="settings-wrapper">
-            <button id="lock" type="image"/>
+            <button id="lock" type="image" onclick="getFriendsList()"/>
             <button id="settings" type="image" onclick="showSettings(true)"/>
             <button id="lock" type="image" onclick="logout()"/>
         </div>
@@ -91,7 +93,12 @@
 </div>
 
 <div class="right-nav">
-
+  <div class="friendsWrapper" id="friendsWrapper">
+    <!--div class="friendItem" ng-repeat="friend in friends">
+      <h2>{{friend.name}}</h2>
+      <img src="img/lock.png">
+    </div-->
+  </div>
 </div>
 
 <div id="settings-container" class="settings">
@@ -192,8 +199,6 @@
     </div>
 </div>
 
-</body>
-
 <script>
 
     var currentUid = null;
@@ -279,7 +284,7 @@
                 img.src = url;
             }).catch(function (error) {
 
-            })
+            });
 
             //Profile name
             var ref = firebase.database().ref('/users/' + currentUid);
@@ -289,7 +294,62 @@
             }, function (error) {
                 console.log(error.code);
             });
+
+            getFriendsList();
         }
+    }
+
+    function getFriendsList() {
+      //Friends list
+      var friendRef = firebase.database().ref('/friends/' + currentUid);
+      friendRef.on("child_added", function (snapshot) {
+        var id = snapshot.key;
+        var ref = firebase.database().ref('/users/' + id);
+        ref.on("value", function (snapshot) {
+            friendName = (snapshot.val() && snapshot.val().name);
+            addFriendElement(id, friendName);
+            console.log(friendName);
+        }, function (error) {
+            console.log(error.code);
+        });
+
+      });
+
+      friendRef.on("child_removed", function (snapshot) {
+        removeFriendElement(snapshot.key);
+      })
+    }
+
+    function addFriendElement(id, name) {
+      var friendItem = document.createElement("DIV");
+      friendItem.className = 'friendItem';
+      friendItem.id = id;
+      var friendNameContainer = document.createElement("H2");
+      var friendName = document.createTextNode(name);
+      var friendPicture = document.createElement("IMG");
+      getProfileImage(id, friendPicture);
+      friendNameContainer.appendChild(friendName);
+      friendItem.appendChild(friendNameContainer);
+      friendItem.appendChild(friendPicture);
+      document.getElementById('friendsWrapper').appendChild(friendItem);
+    }
+
+    function removeFriendElement(id) {
+      var friendItem = document.getElementById(id);
+      friendItem.remove();
+    }
+
+    function getProfileImage(id, friendPicture) {
+      var imageUrl = null;
+      //Profile picture
+      var storage = firebase.storage();
+      var gsRef = storage.refFromURL('gs://modular-decoder-118720.appspot.com/profile_pictures');
+
+      gsRef.child('/' + id + '.png').getDownloadURL().then(function (url) {
+          friendPicture.src = url;
+      }).catch(function (error) {
+
+      });
     }
 
     function showSettings(show) {
@@ -581,5 +641,7 @@
         defer></script>
 <script type="text/javascript"
         src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCDNHoQZumXcpl9cEhTo7fOnuiJuXHXdbU&libraries=places"></script>
+
+</body>
 
 </html>
