@@ -17,6 +17,12 @@
   transition: background ease-in 150ms;
 }
 
+.friendsWrapper {
+  pointer-events: all;
+  float: right;
+  width: 416px;
+}
+
 .friendItem h2 {
   margin: auto 12px;
   font: 18px 'Roboto', sans-serif;

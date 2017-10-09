@@ -16,7 +16,7 @@
 .settings-container {
   background-color: white;
   width: 1020px;
-  height: 70%;
+  max-height: 700px;
   top: 0;
   bottom: 0;
   left: 0;

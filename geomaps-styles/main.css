@@ -28,9 +28,9 @@ html, body {
 }
 
 .right-nav {
+  pointer-events: none;
   position: absolute;
-  width: 416px;
-  max-width: 416px;
+  width: 832px;
   height: 100%;
   margin: 0;
   right: 0;
