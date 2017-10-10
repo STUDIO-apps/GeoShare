@@ -201,9 +201,12 @@
 
 <script>
 
+    var map;
+
     var currentUid = null;
     var customLogout = false;
     var currentMode = null;
+    var currentSelection = null;
 
     document.addEventListener('DOMContentLoaded', function () {
         var mode = getParameterByName('mode');
@@ -331,21 +334,88 @@
       var friendNameContainer = document.createElement("H2");
       var friendName = document.createTextNode(name);
       var friendPicture = document.createElement("IMG");
+
       getProfileImage(id, friendPicture);
+
       friendNameContainer.appendChild(friendName);
       friendItem.appendChild(friendNameContainer);
       friendItem.appendChild(friendPicture);
       friendContainer.appendChild(friendItem);
+
       document.getElementById('friendsWrapper').appendChild(friendContainer);
+
+      friendContainer.onclick = function() {
+        if (currentSelection != null && currentSelection != id) {
+          document.getElementById(currentSelection + '-options').remove();
+          document.getElementById(currentSelection).className = ('friendContainer');
+        }
+        var optionDiv = document.getElementById(id + '-options');
+        if (optionDiv == null) {
+          document.getElementById(id).className = ('friendContainer no-hover');
+          //Container
+          var friendOptionsContainer = document.createElement("DIV");
+          friendOptionsContainer.className = 'friendOptionsContainer';
+          friendOptionsContainer.id = id + '-options';
+
+          //Options
+          //Share option
+          var friendOptionsShareContainer = document.createElement("DIV");
+          friendOptionsShareContainer.className = 'friendOptionsItem';
+          var friendOptionsShare = document.createElement("H2");
+          var friendOptionsShareText = document.createTextNode('Share current location');
+          friendOptionsShare.appendChild(friendOptionsShareText);
+          friendOptionsShareContainer.appendChild(friendOptionsShare);
+
+          friendOptionsShareContainer.onclick = function(event) {
+            event.stopPropagation()
+            console.log("Share");
+          }
+
+          //Request option
+          var friendOptionsRequestContainer = document.createElement("DIV");
+          friendOptionsRequestContainer.className = 'friendOptionsItem';
+          var friendOptionsRequest = document.createElement("H2");
+          var friendOptionsRequestText = document.createTextNode('Request location');
+          friendOptionsRequest.appendChild(friendOptionsRequestText);
+          friendOptionsRequestContainer.appendChild(friendOptionsRequest);
+
+          friendOptionsRequestContainer.onclick = function(event) {
+            event.stopPropagation()
+            console.log("Request");
+          }
+
+          //Show option
+          var friendOptionsShowContainer = document.createElement("DIV");
+          friendOptionsShowContainer.className = 'friendOptionsItem';
+          var friendOptionsShow = document.createElement("H2");
+          var friendOptionsShowText = document.createTextNode('Show on map');
+          friendOptionsShow.appendChild(friendOptionsShowText);
+          friendOptionsShowContainer.appendChild(friendOptionsShow);
+
+          friendOptionsShowContainer.onclick = function(event) {
+            event.stopPropagation()
+            console.log("Show");
+          }
+
+          //Append children to parent container
+          friendOptionsContainer.appendChild(friendOptionsShareContainer);
+          friendOptionsContainer.appendChild(friendOptionsRequestContainer);
+          friendOptionsContainer.appendChild(friendOptionsShowContainer);
+
+          document.getElementById(id).appendChild(friendOptionsContainer);
+
+          currentSelection = id;
+        } else {
+          currentSelection = null;
+          optionDiv.remove();
+          document.getElementById(id).className = ('friendContainer');
+        }
+      };
     }
 
     function removeFriendElement(id) {
-      var friendItem = document.getElementById(id);
-      friendItem.remove();
-    }
-
-    function showShareOptions() {
-
+      var friendContainer = document.getElementById(id);
+      friendContainer.remove();
     }
 
     function getProfileImage(id, friendPicture) {
@@ -539,17 +609,10 @@
             }
         );
 
-        var map = new google.maps.Map(document.getElementById('map'), {
-            center: {lat: 51.4803872, lng: -0.0650901},
+        map = new google.maps.Map(document.getElementById('map'), {
             zoom: 6,
             scaleControl: true,
-            mapTypeControl: true,
-            mapTypeControlOptions: {
-                style: google.maps.MapTypeControlStyle.HORIZONTAL_BAR,
-                mapTypeIds: ['roadmap', 'satellite', 'hybrid', 'terrain',
-                    'styled_map'],
-                position: google.maps.ControlPosition.BOTTOM_LEFT
-            }
+            mapTypeControl: false
         });
 
         map.mapTypes.set('styled_map', styledMapType);

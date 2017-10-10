@@ -13,7 +13,6 @@
 
 .friendContainer {
   width: 320px;
-  height: 72px;
   cursor: pointer;
   clear: right;
   float: right;
@@ -24,7 +23,7 @@
   transition: background ease-in 150ms;
 }
 
-.friendContainer:hover {
+.friendContainer:not(.no-hover):hover {
   background-color: rgba(0,0,0,0.08);
   -webkit-transition: background ease-in 150ms;
   -moz-transition: background ease-in 150ms;
@@ -44,4 +43,36 @@
   width: 64px;
   height: 64px;
   border-radius: 100px;
+}
+
+.friendOptionsContainer {
+  display: inline-block;
+  width: 320px;
+  height: calc(58px * 3);
+  background-color: white;
+  border-radius: 10px;
+}
+
+.friendOptionsItem {
+  height: 58px;
+  display: flex;
+
+  -webkit-transition: background ease-in 150ms;
+  -moz-transition: background ease-in 150ms;
+  -o-transition: background ease-in 150ms;
+  transition: background ease-in 150ms;
+}
+
+.friendOptionsItem:hover {
+  background-color: rgba(0,0,0,0.08);
+  border-radius: 10px;
+  -webkit-transition: background ease-in 150ms;
+  -moz-transition: background ease-in 150ms;
+  -o-transition: background ease-in 150ms;
+  transition: background ease-in 150ms;
+}
+
+.friendOptionsItem h2 {
+  margin: auto 12px;
+  font: 18px 'Roboto', sans-serif;
 }
