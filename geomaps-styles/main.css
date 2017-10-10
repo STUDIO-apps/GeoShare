@@ -23,7 +23,7 @@ html, body {
 
 #map {
   position: fixed;
-  width: 100%;
+  width: calc(100% - 320px);
   height: 100%;
   padding-right: 320px;
 }
