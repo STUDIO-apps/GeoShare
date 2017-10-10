@@ -30,7 +30,7 @@ html, body {
 .right-nav {
   pointer-events: none;
   position: absolute;
-  width: 832px;
+  width: 320px;
   height: 100%;
   margin: 0;
   right: 0;

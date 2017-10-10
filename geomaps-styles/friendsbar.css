@@ -1,6 +1,19 @@
 .friendItem {
   height: 72px;
   display: flex;
+  clear: right;
+  float: right;
+}
+
+.friendsWrapper {
+  pointer-events: all;
+  float: right;
+  width:320px;
+}
+
+.friendContainer {
+  width: 320px;
+  height: 72px;
   cursor: pointer;
   clear: right;
   float: right;
@@ -11,18 +24,12 @@
   transition: background ease-in 150ms;
 }
 
-.friendItem:hover {
+.friendContainer:hover {
   background-color: rgba(0,0,0,0.08);
   -webkit-transition: background ease-in 150ms;
   -moz-transition: background ease-in 150ms;
   -o-transition: background ease-in 150ms;
   transition: background ease-in 150ms;
-}
-
-.friendsWrapper {
-  pointer-events: all;
-  float: right;
-  width: 416px;
 }
 
 .friendItem h2 {
@@ -32,6 +39,7 @@
 }
 
 .friendItem img {
+  margin: auto;
   margin-right: 12px;
   width: 64px;
   height: 64px;

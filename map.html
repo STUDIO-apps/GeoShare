@@ -321,9 +321,13 @@
     }
 
     function addFriendElement(id, name) {
+      var friendContainer = document.createElement("DIV");
+      friendContainer.className = 'friendContainer';
+      friendContainer.id = id;
+
       var friendItem = document.createElement("DIV");
       friendItem.className = 'friendItem';
-      friendItem.id = id;
+
       var friendNameContainer = document.createElement("H2");
       var friendName = document.createTextNode(name);
       var friendPicture = document.createElement("IMG");
@@ -331,12 +335,17 @@
       friendNameContainer.appendChild(friendName);
       friendItem.appendChild(friendNameContainer);
       friendItem.appendChild(friendPicture);
-      document.getElementById('friendsWrapper').appendChild(friendItem);
+      friendContainer.appendChild(friendItem);
+      document.getElementById('friendsWrapper').appendChild(friendContainer);
     }
 
     function removeFriendElement(id) {
       var friendItem = document.getElementById(id);
       friendItem.remove();
+    }
+
+    function showShareOptions() {
+
     }
 
     function getProfileImage(id, friendPicture) {
