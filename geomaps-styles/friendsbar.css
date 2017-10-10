@@ -2,6 +2,8 @@
   height: 72px;
   display: flex;
   cursor: pointer;
+  clear: right;
+  float: right;
 
   -webkit-transition: background ease-in 150ms;
   -moz-transition: background ease-in 150ms;
@@ -26,10 +28,10 @@
 .friendItem h2 {
   margin: auto 12px;
   font: 18px 'Roboto', sans-serif;
+  color: #4caf50;
 }
 
 .friendItem img {
-  margin: auto;
   margin-right: 12px;
   width: 64px;
   height: 64px;
