@@ -65,11 +65,20 @@
 
 .friendOptionsItem:hover {
   background-color: rgba(0,0,0,0.08);
-  border-radius: 10px;
   -webkit-transition: background ease-in 150ms;
   -moz-transition: background ease-in 150ms;
   -o-transition: background ease-in 150ms;
   transition: background ease-in 150ms;
+}
+
+.friendOptionsItem.first:hover {
+  border-top-left-radius: 10px;
+  border-top-right-radius: 10px;
+}
+
+.friendOptionsItem.last:hover {
+  border-bottom-left-radius: 10px;
+  border-bottom-right-radius: 10px;
 }
 
 .friendOptionsItem h2 {
