@@ -60,6 +60,18 @@
   transition: background ease-in 150ms;
 }
 
+.list_item.selected {
+  background-color: #4caf50;
+}
+
+.list_item.selected a {
+  color: white;
+}
+
+.list_item.selected:hover {
+  background-color: #4caf50;
+}
+
 .list_item:hover {
   background-color: rgba(0,0,0,0.08);
   -webkit-transition: background ease-in 150ms;
@@ -81,6 +93,83 @@
   height: 32px;
   width: 32px;
   vertical-align: middle;
+}
+
+.friend-manager-container {
+  display: none;
+  width: 100%;
+}
+
+.manager-item {
+  display: flex;
+  padding: 16px;
+  float: left;
+  width: calc(100% - 32px);
+  cursor: pointer;
+}
+
+.manager-item a {
+  margin: auto;
+  margin-left: 0;
+  padding-left: 16px;
+  text-decoration: none;
+  color: #4caf50;
+  vertical-align: middle;
+  font: 18px 'Roboto', sans-serif;
+}
+
+.manager-item img {
+  padding: 4px;
+  height: 32px;
+  width: 32px;
+}
+
+.tab-container {
+  display: inline-flex;
+  height: 72px;
+  width: 100%;
+  background-color: #4caf50;
+}
+
+.tab {
+  cursor: pointer;
+  width: 50%;
+  text-align: center;
+}
+
+.tab.selected {
+  border: 0;
+  border-bottom-width: 4px;
+  border-color: #ff9800;
+  border-style: solid;
+}
+
+.tab a {
+  display: inline-block;
+  padding-top: 32px;
+  font: 18px 'Roboto', sans-serif;
+  color: white;
+}
+
+.tab-view-container {
+  display: inline-flex;
+  width: 100%;
+}
+
+.current-tab {
+  width: 100%;
+  height: 320px;
+  background-color: black;
+}
+
+.pending-tab {
+  width: 100%;
+  height: 320px;
+  background-color: black;
+}
+
+.out-view {
+  display: none;
 }
 
 .nav-settings-bar {

@@ -55,9 +55,32 @@
             <a>GeoMaps</a>
         </div>
 
-        <div class="list_item">
+        <div class="list_item" onclick="showFriendsManager()">
             <img src="img/people_black.png"/>
             <a>Friends Manager</a>
+        </div>
+
+        <div class="friend-manager-container" id="friend-manager-container">
+          <div class="manager-item">
+            <a>Find Friends</a>
+            <img src="img/search.png"/>
+          </div>
+          <div class="tab-container">
+            <div class="tab selected" onclick="changeTab(0)">
+              <a>CURRENT</a>
+            </div>
+            <div class="tab" onclick="changeTab(1)">
+              <a>PENDING</a>
+            </div>
+          </div>
+          <div class="tab-view-container">
+            <div class="current-tab">
+
+            </div>
+            <div class="pending-tab out-view">
+
+            </div>
+          </div>
         </div>
 
     </div>
@@ -479,6 +502,20 @@
         history.pushState('settings', 'Settings - GeoShare', 'map?mode=settings');
       } else {
         document.getElementById('settings-container').style.display = 'none';
+        window.history.pushState('map', 'Map - GeoShare', 'map');
+      }
+    }
+
+    var isShowingManager = false;
+
+    function showFriendsManager() {
+      if (!isShowingManager) {
+        isShowingManager = true;
+        document.getElementById('friend-manager-container').style.display = 'inline-block';
+        history.pushState('settings', 'Settings - GeoShare', 'map?mode=manager');
+      } else {
+        isShowingManager = false;
+        document.getElementById('friend-manager-container').style.display = 'none';
         window.history.pushState('map', 'Map - GeoShare', 'map');
       }
     }
