@@ -6,7 +6,7 @@ html, body {
 }
 
 .left-nav {
-  display: inline;
+  position: absolute;
   width: 416px;
   height: 100%;
   max-height: 100%;
@@ -29,13 +29,14 @@ html, body {
 }
 
 .right-nav {
-  pointer-events: none;
   position: absolute;
   width: 320px;
   height: 100%;
   margin: 0;
   right: 0;
   top: 0;
+
+  overflow-y: auto;
 
   background: white; /* For browsers that do not support gradients */
   background: -webkit-linear-gradient(left, transparent, white); /* For Safari 5.1 to 6.0 */
