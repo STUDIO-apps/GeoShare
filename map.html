@@ -247,9 +247,10 @@
         switch (mode) {
           case '':
             showSettings(false);
+            hideManager();
             break;
           case 'manager':
-            showFriendsManager();
+            showManager();
             break;
           case 'settings':
             if (currentMode != mode) {
@@ -519,23 +520,31 @@
     function showFriendsManager() {
       if (!isShowingManager) {
         isShowingManager = true;
-        document.getElementById('list-item-maps').style.display = 'none';
-        document.getElementById('header').style.display = 'none';
-        document.getElementById('nav-items').style.height = 'calc(100% - 56px)';
-        document.getElementById('list-item-friend-manager').className = 'list_item selected';
-        document.getElementById('friend-manager-container').style.display = 'inline-block';
-        document.getElementById('image-friends-manager').src = 'img/back.png';
-        history.pushState('settings', 'Settings - GeoShare', 'map?mode=manager');
+        showManager();
       } else {
         isShowingManager = false;
-        document.getElementById('list-item-maps').style.display = '';
-        document.getElementById('header').style.display = '';
-        document.getElementById('nav-items').style.height = 'calc(100% - 277px - 56px)';
-        document.getElementById('list-item-friend-manager').className = 'list_item';
-        document.getElementById('friend-manager-container').style.display = 'none';
-        document.getElementById('image-friends-manager').src = 'img/people.png';
-        window.history.pushState('map', 'Map - GeoShare', 'map');
+        hideManager();
       }
+    }
+
+    function showManager() {
+      document.getElementById('list-item-maps').style.display = 'none';
+      document.getElementById('header').style.display = 'none';
+      document.getElementById('nav-items').style.height = 'calc(100% - 56px)';
+      document.getElementById('list-item-friend-manager').className = 'list_item selected';
+      document.getElementById('friend-manager-container').style.display = 'inline-block';
+      document.getElementById('image-friends-manager').src = 'img/back.png';
+      history.pushState('settings', 'Settings - GeoShare', 'map?mode=manager');
+    }
+
+    function hideManager() {
+      document.getElementById('list-item-maps').style.display = '';
+      document.getElementById('header').style.display = '';
+      document.getElementById('nav-items').style.height = 'calc(100% - 277px - 56px)';
+      document.getElementById('list-item-friend-manager').className = 'list_item';
+      document.getElementById('friend-manager-container').style.display = 'none';
+      document.getElementById('image-friends-manager').src = 'img/people.png';
+      window.history.pushState('map', 'Map - GeoShare', 'map');
     }
 
     function changeTab(tab) {
