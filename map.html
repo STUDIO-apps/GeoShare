@@ -94,7 +94,7 @@
 
 <div class="right-nav">
   <div class="friendsWrapper" id="friendsWrapper">
-    
+
   </div>
 </div>
 
@@ -687,19 +687,44 @@
                         lng: position.coords.longitude
                     };
 
-                    gpsLocation = new google.maps.Marker({
-                        position: currentPos,
-                        map: map,
-                        icon: '../img/navigation.png',
-                        title: "Location"
+                    // gpsLocation = new google.maps.Marker({
+                    //     position: currentPos,
+                    //     map: map,
+                    //     icon: '../img/navigation.png',
+                    //     title: "Location",
+                    //     anchor: new google.maps.Point(14, 14)
+                    // });
+
+                    gpsLocation = new google.maps.Circle({
+                      strokeColor: '#FFF',
+                      strokeOpacity: 1,
+                      strokeWeight: 1,
+                      fillColor: '#4caf50',
+                      fillOpacity: 1,
+                      map: map,
+                      center: currentPos,
+                      radius: 0.25
                     });
 
+                    nearbyRadius(currentPos, 200);
+
                     map.setCenter(currentPos);
-                    map.setZoom(15);
+                    map.setZoom(18);
                 });
             } else {
                 // Browser doesn't support Geolocation
             }
+        }
+
+        function nearbyRadius(center, radius) {
+          var nearbyCircle = new google.maps.Circle({
+            strokeWeight: 0,
+            fillColor: '#304caf50',
+            fillOpacity: 0.5,
+            map: map,
+            center: center,
+            radius: radius
+          });
         }
 
         getCurrentLocation();
