@@ -74,11 +74,16 @@
             </div>
           </div>
           <div class="tab-view-container">
-            <div class="current-tab" id="tab-0-content">
-
-            </div>
+            <div class="current-tab" id="tab-0-content"></div>
             <div class="pending-tab out-view" id="tab-1-content">
-
+              <div class="request-container" id="incoming-container">
+                <h1>INCOMING</h1>
+                <a id="no-incoming-text">No incoming friend requests!</a>
+              </div>
+              <div class="request-container" id="outgoing-container">
+                <h1>OUTGOING</h1>
+                <a id="no-outgoing-text">No outgoing friend requests!</a>
+              </div>
             </div>
           </div>
         </div>
@@ -372,6 +377,7 @@
             });
 
             getFriendsList();
+            getFriendRequests();
         }
     }
 
@@ -394,6 +400,20 @@
 
       friendRef.on("child_removed", function (snapshot) {
         removeFriendElement(snapshot.key);
+      })
+    }
+
+    function getFriendRequests() {
+      var friendRequestRef = firebase.database().ref('/pending/' + currentUid);
+      friendRequestRef.on("child_added", function (snapshot) {
+        var id = snapshot.key;
+        var isOutgoing = snapshot.val().outgoing;
+        var ref = firebase.database().ref('/users/' + id);
+        ref.on("value", function (snapshot) {
+          var name = (snapshot.val() && snapshot.val().name);
+
+          addRequestElement(id, name, isOutgoing);
+        })
       })
     }
 
@@ -498,14 +518,57 @@
       var friendCurrentName = document.createTextNode(name);
 
       var friendCurrentPicture = document.createElement("IMG");
+      friendCurrentPicture.className = 'friendCurrentPicture';
       getProfileImage(id, friendCurrentPicture);
+
+      var friendCurrentMore = document.createElement("IMG");
+      friendCurrentMore.className = 'friendCurrentMore';
+      friendCurrentMore.src = 'img/more.png';
 
       friendCurrentNameContainer.appendChild(friendCurrentName);
       friendCurrentItem.appendChild(friendCurrentPicture);
       friendCurrentItem.appendChild(friendCurrentNameContainer);
+      friendCurrentItem.appendChild(friendCurrentMore);
 
       document.getElementById('tab-0-content').appendChild(friendCurrentItem);
 
+      friendCurrentMore.onclick = function() {
+        var moreDiv = document.getElementById('more');
+        if (moreDiv == null) {
+          var more = document.createElement("DIV");
+          more.className = 'more';
+          more.id = 'more';
+
+          friendCurrentItem.appendChild(more);
+        } else {
+          moreDiv.remove();
+        }
+      };
+    }
+
+    function addRequestElement(id, name, isOutgoing) {
+      var friendRequestItem = document.createElement("DIV");
+      friendRequestItem.className = 'friendRequestItem';
+      friendRequestItem.id = id + '-manager-request';
+
+      var friendRequestNameContainer = document.createElement("H2");
+      var friendRequestName = document.createTextNode(name);
+
+      var friendRequestPicture = document.createElement("IMG");
+      friendRequestPicture.className = 'friendRequestPicture';
+      getProfileImage(id, friendRequestPicture);
+
+      friendRequestNameContainer.appendChild(friendRequestName);
+      friendRequestItem.appendChild(friendRequestPicture);
+      friendRequestItem.appendChild(friendRequestNameContainer);
+
+      if (!isOutgoing) {
+        document.getElementById('incoming-container').appendChild(friendRequestItem);
+        document.getElementById('no-incoming-text').style.display = 'none';
+      } else {
+        document.getElementById('outgoing-container').appendChild(friendRequestItem);
+        document.getElementById('no-outgoing-text').style.display = 'none';
+      }
     }
 
     function removeFriendElement(id) {
@@ -825,7 +888,7 @@
                     nearbyRadius(currentPos, 200);
 
                     map.setCenter(currentPos);
-                    map.setZoom(18);
+                    map.setZoom(15);
                 });
             } else {
                 // Browser doesn't support Geolocation

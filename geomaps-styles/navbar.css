@@ -162,17 +162,17 @@
 .friendCurrentItem {
   width: 416px;
   height: 72px;
-  cursor: pointer;
   display: inline-flex;
 }
 
 .friendCurrentItem h2 {
+  width: calc(100% - 168px);
   margin: auto 12px;
   font: 18px 'Roboto', sans-serif;
   color: #4caf50;
 }
 
-.friendCurrentItem img {
+.friendCurrentPicture {
   margin: auto;
   margin-left: 12px;
   margin-right: 12px;
@@ -181,10 +181,60 @@
   border-radius: 100px;
 }
 
+.friendCurrentMore {
+  height: 32px;
+  width: 32px;
+  margin: auto;
+  margin-left: 12px;
+  margin-right: 12px;
+  cursor: pointer;
+}
+
+.more {
+  width: 144px;
+  height: 144px;
+  background-color: black;
+}
+
 .pending-tab {
   width: 100%;
-  height: 320px;
-  background-color: black;
+}
+
+.request-container {
+  display: grid;
+}
+
+.request-container h1 {
+  margin-left: 12px;
+  margin-top: 12px;
+  font: 14px 'Roboto', sans-serif;
+}
+
+.request-container a {
+  margin: auto;
+  font: 12px 'Roboto', sans-serif;
+}
+
+.friendRequestItem {
+  width: 416px;
+  height: 72px;
+  display: inline-flex;
+}
+
+.friendRequestItem h2 {
+  width: calc(100% - 168px);
+  margin: auto 12px;
+  font: 18px 'Roboto', sans-serif;
+  color: #4caf50;
+}
+
+.friendRequestPicture {
+  margin: auto;
+  margin-left: 12px;
+  margin-right: 12px;
+  width: 64px;
+  height: 64px;
+  border-radius: 100px;
 }
 
 .out-view {
