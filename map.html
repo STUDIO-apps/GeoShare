@@ -38,7 +38,7 @@
 <body>
 
 <div class="left-nav">
-    <div class="header">
+    <div class="header" id="header">
         <div class="header-image">
             <img src="img/header.jpg"/>
             <div class="user-info">
@@ -49,35 +49,35 @@
 
     </div>
 
-    <div class="nav-items">
-        <div class="list_item selected">
-            <img src="img/map_black.png"/>
+    <div class="nav-items" id="nav-items">
+        <div class="list_item selected" id="list-item-maps">
+            <img src="img/map.png"/>
             <a>GeoMaps</a>
         </div>
 
-        <div class="list_item" onclick="showFriendsManager()">
-            <img src="img/people_black.png"/>
+        <div class="list_item" id="list-item-friend-manager" onclick="showFriendsManager()">
+            <img src="img/people.png" id="image-friends-manager"/>
             <a>Friends Manager</a>
         </div>
 
         <div class="friend-manager-container" id="friend-manager-container">
-          <div class="manager-item">
+          <div class="manager-item" onclick="showFindFriends(true)">
             <a>Find Friends</a>
             <img src="img/search.png"/>
           </div>
           <div class="tab-container">
-            <div class="tab selected" onclick="changeTab(0)">
+            <div class="tab selected" id="tab-0" onclick="changeTab(0)">
               <a>CURRENT</a>
             </div>
-            <div class="tab" onclick="changeTab(1)">
+            <div class="tab" id="tab-1" onclick="changeTab(1)">
               <a>PENDING</a>
             </div>
           </div>
           <div class="tab-view-container">
-            <div class="current-tab">
+            <div class="current-tab" id="tab-0-content">
 
             </div>
-            <div class="pending-tab out-view">
+            <div class="pending-tab out-view" id="tab-1-content">
 
             </div>
           </div>
@@ -374,6 +374,7 @@
         ref.on("value", function (snapshot) {
             friendName = (snapshot.val() && snapshot.val().name);
             addFriendElement(id, friendName);
+            addFriendManagerElement(id, friendName);
             console.log(friendName);
         }, function (error) {
             console.log(error.code);
@@ -478,6 +479,10 @@
       };
     }
 
+    function addFriendManagerElement(id, name) {
+
+    }
+
     function removeFriendElement(id) {
       var friendContainer = document.getElementById(id);
       friendContainer.remove();
@@ -511,11 +516,52 @@
     function showFriendsManager() {
       if (!isShowingManager) {
         isShowingManager = true;
+        document.getElementById('list-item-maps').style.display = 'none';
+        document.getElementById('header').style.display = 'none';
+        document.getElementById('nav-items').style.height = 'calc(100% - 56px)';
+        document.getElementById('list-item-friend-manager').className = 'list_item selected';
         document.getElementById('friend-manager-container').style.display = 'inline-block';
+        document.getElementById('image-friends-manager').src = 'img/back.png';
         history.pushState('settings', 'Settings - GeoShare', 'map?mode=manager');
       } else {
         isShowingManager = false;
+        document.getElementById('list-item-maps').style.display = '';
+        document.getElementById('header').style.display = '';
+        document.getElementById('nav-items').style.height = 'calc(100% - 277px - 56px)';
+        document.getElementById('list-item-friend-manager').className = 'list_item';
         document.getElementById('friend-manager-container').style.display = 'none';
+        document.getElementById('image-friends-manager').src = 'img/people.png';
+        window.history.pushState('map', 'Map - GeoShare', 'map');
+      }
+    }
+
+    function changeTab(tab) {
+      switch (tab) {
+        case 0:
+          document.getElementById('tab-0-content').className = 'current-tab';
+          document.getElementById('tab-1-content').className = 'pending-tab out-view';
+
+          document.getElementById('tab-0').className = 'tab selected';
+          document.getElementById('tab-1').className = 'tab';
+          break;
+        case 1:
+          document.getElementById('tab-0-content').className = 'current-tab out-view';
+          document.getElementById('tab-1-content').className = 'pending-tab';
+
+          document.getElementById('tab-0').className = 'tab';
+          document.getElementById('tab-1').className = 'tab selected';
+          break;
+        default:
+
+      }
+    }
+
+    function showFindFriends(show) {
+      if (show) {
+        document.getElementById('settings-container').style.display = 'block';
+        history.pushState('settings', 'Settings - GeoShare', 'map?mode=friend-search');
+      } else {
+        document.getElementById('settings-container').style.display = 'none';
         window.history.pushState('map', 'Map - GeoShare', 'map');
       }
     }
