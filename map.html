@@ -237,6 +237,9 @@
             case 'settings':
                 showSettings(true);
                 break;
+            case 'manager':
+                showManager();
+                break;
             default:
         }
     }, false);
@@ -250,7 +253,9 @@
             hideManager();
             break;
           case 'manager':
-            showManager();
+            if (currentMode != mode) {
+              showManager();
+            }
             break;
           case 'settings':
             if (currentMode != mode) {
