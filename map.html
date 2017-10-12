@@ -687,24 +687,24 @@
                         lng: position.coords.longitude
                     };
 
-                    // gpsLocation = new google.maps.Marker({
-                    //     position: currentPos,
-                    //     map: map,
-                    //     icon: '../img/navigation.png',
-                    //     title: "Location",
-                    //     anchor: new google.maps.Point(14, 14)
-                    // });
-
-                    gpsLocation = new google.maps.Circle({
-                      strokeColor: '#FFF',
-                      strokeOpacity: 1,
-                      strokeWeight: 1,
-                      fillColor: '#4caf50',
-                      fillOpacity: 1,
-                      map: map,
-                      center: currentPos,
-                      radius: 0.25
+                    gpsLocation = new google.maps.Marker({
+                        position: currentPos,
+                        map: map,
+                        icon: '../img/navigation.png',
+                        title: "Location",
+                        anchor: new google.maps.Point(14, 14)
                     });
+
+                    // gpsLocation = new google.maps.Circle({
+                    //   strokeColor: '#FFF',
+                    //   strokeOpacity: 1,
+                    //   strokeWeight: 1,
+                    //   fillColor: '#4caf50',
+                    //   fillOpacity: 1,
+                    //   map: map,
+                    //   center: currentPos,
+                    //   radius: 0.25
+                    // });
 
                     nearbyRadius(currentPos, 200);
 
@@ -719,8 +719,8 @@
         function nearbyRadius(center, radius) {
           var nearbyCircle = new google.maps.Circle({
             strokeWeight: 0,
-            fillColor: '#304caf50',
-            fillOpacity: 0.5,
+            fillColor: '#4caf50',
+            fillOpacity: 0.64,
             map: map,
             center: center,
             radius: radius
