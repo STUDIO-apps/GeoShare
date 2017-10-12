@@ -125,6 +125,7 @@
     <div class="settings-background" onclick="showSettings(false)"></div>
     <div class="settings-container">
       <div class="nav-bar">
+        <h1>Settings</h1>
         <button id="close" type="image" onclick="showSettings(false)"/>
       </div>
       <div class="pref-screen">
@@ -489,6 +490,21 @@
     }
 
     function addFriendManagerElement(id, name) {
+      var friendCurrentItem = document.createElement("DIV");
+      friendCurrentItem.className = 'friendCurrentItem';
+      friendCurrentItem.id = id + '-manager';
+
+      var friendCurrentNameContainer = document.createElement("H2");
+      var friendCurrentName = document.createTextNode(name);
+
+      var friendCurrentPicture = document.createElement("IMG");
+      getProfileImage(id, friendCurrentPicture);
+
+      friendCurrentNameContainer.appendChild(friendCurrentName);
+      friendCurrentItem.appendChild(friendCurrentPicture);
+      friendCurrentItem.appendChild(friendCurrentNameContainer);
+
+      document.getElementById('tab-0-content').appendChild(friendCurrentItem);
 
     }
 
