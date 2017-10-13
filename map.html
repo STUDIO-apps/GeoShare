@@ -279,8 +279,8 @@
                 showManager();
                 break;
             case 'search':
-                showFindFriends(true);
                 showManager();
+                showFindFriends(true);
                 break;
             default:
         }
@@ -302,8 +302,8 @@
             break;
           case 'search':
             if (currentMode != mode) {
-              showFindFriends(true);
               showManager();
+              showFindFriends(true);
             }
             break;
           case 'settings':
@@ -830,10 +830,10 @@
     function showFindFriends(show) {
       if (show) {
         document.getElementById('friend-search-container').style.display = 'block';
-        history.pushState('settings', 'Settings - GeoShare', 'map?mode=search');
+        history.pushState('settings', 'Search - GeoShare', 'map?mode=search');
       } else {
         document.getElementById('friend-search-container').style.display = 'none';
-        window.history.pushState('map', 'Map - GeoShare', 'map');
+        window.history.pushState('map', 'Map - GeoShare', 'map?mode=manager');
       }
     }
 
