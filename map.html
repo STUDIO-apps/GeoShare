@@ -284,6 +284,7 @@
             case 'search':
                 showManager();
                 showFindFriends(true);
+                isShowingManager = true;
                 break;
             default:
         }
@@ -308,6 +309,7 @@
             if (currentMode != mode) {
               showManager();
               showFindFriends(true);
+              isShowingManager = true;
             }
             break;
           case 'settings':
