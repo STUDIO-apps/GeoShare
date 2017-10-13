@@ -16,6 +16,9 @@
     <script src="https://apis.google.com/js/platform.js" async defer></script>
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular.min.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.0rc1/angular-route.min.js"></script>
+
+    <script type="text/javascript" src="http://maps.google.com/maps/api/js?sensor=false&v=3&libraries=geometry"></script>
+
     <script type="text/javascript" src="js/main.js"></script>
 
     <link rel="icon" type="image/x-icon" href="img/favicon.ico"/>
@@ -393,6 +396,7 @@
           console.log("Location changed");
         } else {
           addFriendMarker(snapshot.key, snapshot.val().lat, snapshot.val().longitude);
+          nearbyFriends();
         }
       });
 
@@ -403,6 +407,7 @@
           console.log("Location changed");
         } else {
           updateFriendMarker(snapshot.key, snapshot.val().lat, snapshot.val().longitude);
+          nearbyFriends();
         }
       });
 
@@ -413,6 +418,7 @@
           console.log("Location changed");
         } else {
           removeFriendMarker(snapshot.key);
+          nearbyFriends();
         }
       });
     }
@@ -625,12 +631,48 @@
       });
     }
 
+    function createFriendMarkerImage(id, width, height) {
+      var canvas, context;
+
+      canvas = canvas.createElement("canvas");
+      canvas.width = width;
+      canvas.height = height;
+
+      context = canvas.getContext("2d");
+
+      context.clearRect(0,0,width,height);
+
+      var markerImg = new Image();
+      markerImg.src = 'img/marker.png';
+
+      var markerProfileImg = new Image();
+      //Profile picture
+      var storage = firebase.storage();
+      var gsRef = storage.refFromURL('gs://modular-decoder-118720.appspot.com/profile_pictures');
+
+      gsRef.child('/' + id + '.png').getDownloadURL().then(function (url) {
+          markerProfileImg.src = url;
+      }).catch(function (error) {
+
+      });
+
+      markerProfileImg.onload = function() {
+        context.drawImage(markerImg, 0, 0);
+        context.drawImage(markerProfileImg, 16, 16);
+
+        return canvas.toDataURL();
+      }
+
+      return canvas.toDataURL();
+    }
+
     function addFriendMarker(id, lat, long) {
       var latLong = {lat: lat, lng: long};
       var marker = new google.maps.Marker({
         position: latLong,
         map: map,
-        title: id
+        title: id,
+        icon: createFriendMarkerImage(id, 116, 155)
       });
       friendMarker[id] = marker;
     }
@@ -717,6 +759,46 @@
       } else {
         document.getElementById('settings-container').style.display = 'none';
         window.history.pushState('map', 'Map - GeoShare', 'map');
+      }
+    }
+
+    function nearbyRadius(center, radius) {
+      var nearbyCircle = new google.maps.Circle({
+        strokeWeight: 0,
+        fillColor: '#4caf50',
+        fillOpacity: 0.35,
+        map: map,
+        center: center,
+        radius: radius
+      });
+    }
+
+    function nearbyFriends() {
+      var count = 0;
+
+      for (var id in friendMarker) {
+        var marker = friendMarker[id];
+        var latLng = new google.maps.LatLng(marker.position.lat(), marker.position.lng());
+
+        if (navigator.geolocation) {
+            navigator.geolocation.getCurrentPosition(function (position) {
+                var currentPos = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
+
+                console.log(currentPos);
+
+                console.log("My location: " + currentPos + "      Other location: " + latLng);
+
+                console.log(google.maps.geometry.spherical.computeDistanceBetween(currentPos, latLng));
+
+                if (google.maps.geometry.spherical.computeDistanceBetween(currentPos, latLng) < 200) {
+                  count = count + 1;
+                }
+            });
+
+
+        } else {
+            // Browser doesn't support Geolocation
+        }
       }
     }
 
@@ -924,6 +1006,8 @@
                         lng: position.coords.longitude
                     };
 
+                    console.log(currentPos);
+
                     gpsLocation = new google.maps.Marker({
                         position: currentPos,
                         map: map,
@@ -944,6 +1028,7 @@
                     // });
 
                     nearbyRadius(currentPos, 200);
+                    nearbyFriends();
 
                     map.setCenter(currentPos);
                     map.setZoom(17);
@@ -951,17 +1036,6 @@
             } else {
                 // Browser doesn't support Geolocation
             }
-        }
-
-        function nearbyRadius(center, radius) {
-          var nearbyCircle = new google.maps.Circle({
-            strokeWeight: 0,
-            fillColor: '#4caf50',
-            fillOpacity: 0.35,
-            map: map,
-            center: center,
-            radius: radius
-          });
         }
 
         getCurrentLocation();
