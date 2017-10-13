@@ -264,6 +264,8 @@
     var currentMode = null;
     var currentSelection = null;
 
+    var isShowingManager = false;
+
     var friendMarker = {};
 
     document.addEventListener('DOMContentLoaded', function () {
@@ -277,6 +279,7 @@
                 break;
             case 'manager':
                 showManager();
+                isShowingManager = true;
                 break;
             case 'search':
                 showManager();
@@ -298,6 +301,7 @@
           case 'manager':
             if (currentMode != mode) {
               showManager();
+              isShowingManager = true;
             }
             break;
           case 'search':
@@ -773,8 +777,6 @@
         window.history.pushState('map', 'Map - GeoShare', 'map');
       }
     }
-
-    var isShowingManager = false;
 
     function showFriendsManager() {
       if (!isShowingManager) {
