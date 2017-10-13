@@ -656,6 +656,7 @@
       markerImg.src = 'img/marker.png';
 
       var markerProfileImg = new Image();
+      markerProfileImg.setAttribute('crossOrigin', 'anonymous');
       //Profile picture
       var storage = firebase.storage();
       var gsRef = storage.refFromURL('gs://modular-decoder-118720.appspot.com/profile_pictures');
@@ -670,7 +671,7 @@
       context.drawImage(markerProfileImg, 16, 16);
 
       markerProfileImg.onload = function() {
-        //context.drawImage(markerImg, 0, 0);
+        context.drawImage(markerImg, 0, 0);
         context.drawImage(markerProfileImg, 16, 16);
 
         marker.setIcon(canvas.toDataURL());
