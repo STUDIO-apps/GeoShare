@@ -671,11 +671,36 @@
       context.drawImage(markerProfileImg, 16, 16);
 
       markerProfileImg.onload = function() {
+        markerProfileImg.style.width = 84;
+        markerProfileImg.style.width = 84;
+
         context.drawImage(markerImg, 0, 0);
-        context.drawImage(markerProfileImg, 16, 16);
+        //context.drawImage(markerProfileImg, 16, 16);
+        context.drawImage(roundedImage(10, 10, 84, 84, 10), 16, 16);
 
         marker.setIcon(canvas.toDataURL());
       }
+    }
+
+    function roundedImage(x, y, width, height, radius, img){
+      var canvas = document.createElement("canvas");
+      var ctx = canvas.getContext("2d");
+
+      ctx.beginPath();
+      ctx.moveTo(x + radius, y);
+      ctx.lineTo(x + width - radius, y);
+      ctx.quadraticCurveTo(x + width, y, x + width, y + radius);
+      ctx.lineTo(x + width, y + height - radius);
+      ctx.quadraticCurveTo(x + width, y + height, x + width - radius, y + height);
+      ctx.lineTo(x + radius, y + height);
+      ctx.quadraticCurveTo(x, y + height, x, y + height - radius);
+      ctx.lineTo(x, y + radius);
+      ctx.quadraticCurveTo(x, y, x + radius, y);
+      ctx.closePath();
+
+      ctx.drawImage(img, 10, 10, width, height);
+
+      return canvas.toDataURL();
     }
 
     function addFriendMarker(id, lat, long) {
