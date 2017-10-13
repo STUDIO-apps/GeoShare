@@ -120,13 +120,18 @@
         </div>
 
     </div> -->
-    <div class="center-map-container" onclick="centerMyLocation()">
-      <img src="img/gps-white.png">
+    <div class="controls-container" id="controls-container">
+      <div class="show-share-container" onclick="showRightNav()">
+        <img src="img/share-white.png">
+      </div>
+      <div class="center-map-container" onclick="centerMyLocation()">
+        <img src="img/gps-white.png">
+      </div>
     </div>
     <div id="map"></div>
 </div>
 
-<div class="right-nav">
+<div class="right-nav" id="right-nav">
   <div class="friendsWrapper" id="friendsWrapper">
 
   </div>
@@ -713,6 +718,20 @@
       var marker = friendMarker[id];
       marker.setMap(null);
       delete friendMarker[id];
+    }
+
+    var isShowingRightNav = false;
+
+    function showRightNav() {
+      if (!isShowingRightNav) {
+        document.getElementById('right-nav').style.display = 'block';
+        document.getElementById('controls-container').style.right = '323px';
+        isShowingRightNav = true;
+      } else {
+        document.getElementById('right-nav').style.display = 'none';
+        document.getElementById('controls-container').style.right = '8px';
+        isShowingRightNav = false;
+      }
     }
 
     function showSettings(show) {

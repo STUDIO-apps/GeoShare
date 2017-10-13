@@ -35,7 +35,7 @@ html, body {
   margin: 0;
   right: 0;
   top: 0;
-
+  display: none;
   overflow-y: auto;
 
   background: white; /* For browsers that do not support gradients */
