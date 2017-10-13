@@ -120,6 +120,9 @@
         </div>
 
     </div> -->
+    <div class="center-map-container" onclick="centerMyLocation()">
+      <img src="img/gps-white.png">
+    </div>
     <div id="map"></div>
 </div>
 
@@ -1107,6 +1110,22 @@
         //     });
         //     map.fitBounds(bounds);
         // });
+    }
+
+    function centerMyLocation() {
+      if (navigator.geolocation) {
+          navigator.geolocation.getCurrentPosition(function (position) {
+              var currentPos = {
+                  lat: position.coords.latitude,
+                  lng: position.coords.longitude
+              };
+
+              map.setCenter(currentPos);
+              map.setZoom(17);
+          });
+      } else {
+          // Browser doesn't support Geolocation
+      }
     }
 
 </script>

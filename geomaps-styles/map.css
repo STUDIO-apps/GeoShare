@@ -1,0 +1,19 @@
+.center-map-container {
+  width: 72px;
+  height: 72px;
+  position: absolute;
+  bottom: 8px;
+  right: 230px;
+  background-color: #ff9800;
+  border-radius: 50%;
+  z-index: 100;
+  display: flex;
+  cursor: pointer;
+  box-shadow: 5px 3px 5px rgba(0, 0, 0, 0.3);
+}
+
+.center-map-container img {
+  width: 36px;
+  height: 36px;
+  margin: auto;
+}
