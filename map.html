@@ -631,7 +631,7 @@
       });
     }
 
-    function createFriendMarkerImage(id, width, height) {
+    function createFriendMarkerImage(id, width, height, radius) {
       var canvas, context;
 
       canvas = document.createElement("canvas");
@@ -642,30 +642,53 @@
 
       context.clearRect(0,0,width,height);
 
-      var markerImg = new Image();
-      markerImg.setAttribute('crossOrigin', 'anonymous');
-      markerImg.src = 'img/marker.png';
+      // background is yellow
+      context.fillStyle = "rgba(255,255,0,1)";
 
-      var markerProfileImg = new Image();
-      //Profile picture
-      var storage = firebase.storage();
-      var gsRef = storage.refFromURL('gs://modular-decoder-118720.appspot.com/profile_pictures');
+      // border is black
+      context.strokeStyle = "rgba(0,0,0,1)";
 
-      gsRef.child('/' + id + '.png').getDownloadURL().then(function (url) {
-          markerProfileImg.src = url;
-      }).catch(function (error) {
+      context.beginPath();
+      context.moveTo(radius, 0);
+      context.lineTo(width - radius, 0);
+      context.quadraticCurveTo(width, 0, width, radius);
+      context.lineTo(width, height - radius);
+      context.quadraticCurveTo(width, height, width - radius, height);
+      context.lineTo(radius, height);
+      context.quadraticCurveTo(0, height, 0, height - radius);
+      context.lineTo(0, radius);
+      context.quadraticCurveTo(0, 0, radius, 0);
+      context.closePath();
 
-      });
-
-      context.drawImage(markerImg, 0, 0);
-      context.drawImage(markerProfileImg, 16, 16);
-
-      markerProfileImg.onload = function() {
-        context.drawImage(markerImg, 0, 0);
-        context.drawImage(markerProfileImg, 16, 16);
-      }
+      context.fill();
+      context.stroke();
 
       return canvas.toDataURL();
+
+      // var markerImg = new Image();
+      // markerImg.setAttribute('crossOrigin', 'anonymous');
+      // markerImg.src = 'img/marker.png';
+      //
+      // var markerProfileImg = new Image();
+      // //Profile picture
+      // var storage = firebase.storage();
+      // var gsRef = storage.refFromURL('gs://modular-decoder-118720.appspot.com/profile_pictures');
+      //
+      // gsRef.child('/' + id + '.png').getDownloadURL().then(function (url) {
+      //     markerProfileImg.src = url;
+      // }).catch(function (error) {
+      //
+      // });
+      //
+      // context.drawImage(markerImg, 0, 0);
+      // context.drawImage(markerProfileImg, 16, 16);
+      //
+      // markerProfileImg.onload = function() {
+      //   context.drawImage(markerImg, 0, 0);
+      //   context.drawImage(markerProfileImg, 16, 16);
+      // }
+      //
+      // return canvas.toDataURL();
     }
 
     function addFriendMarker(id, lat, long) {
@@ -674,7 +697,7 @@
         position: latLong,
         map: map,
         title: id,
-        icon: createFriendMarkerImage(id, 116, 155)
+        icon: createFriendMarkerImage(id, 116, 155, 4)
       });
       friendMarker[id] = marker;
     }
