@@ -274,6 +274,7 @@
         switch (mode) {
             case 'settings':
                 showSettings(true);
+                showManager();
                 break;
             case 'manager':
                 showManager();
@@ -302,6 +303,7 @@
           case 'search':
             if (currentMode != mode) {
               showFindFriends(true);
+              showManager();
             }
             break;
           case 'settings':
