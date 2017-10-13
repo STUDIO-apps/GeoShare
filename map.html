@@ -668,10 +668,9 @@
       });
 
       markerProfileImg.onload = function() {
-        markerProfileImg.style.borderRadius = '100px';
         context.drawImage(markerImg, 0, 0, width, height);
         //context.drawImage(markerProfileImg, 16, 16);
-        context.drawImage(markerProfileImg, 3, 3, 50, 50);
+        context.drawImage(scaleImage(25, 25, 50, 50, 25, markerProfileImg), 3, 3, 50, 50);
 
         marker.setIcon(canvas.toDataURL());
       }
@@ -697,7 +696,7 @@
 
       ctx.clip();
 
-      ctx.drawImage(img, 10, 10, width, height);
+      ctx.drawImage(img, 0, 0);
 
       ctx.restore();
 
