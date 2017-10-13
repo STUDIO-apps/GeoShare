@@ -9,6 +9,8 @@
   pointer-events: all;
   float: right;
   width:320px;
+  max-height: calc(100% - 168px);
+  overflow: scroll;
 }
 
 .friendContainer {
