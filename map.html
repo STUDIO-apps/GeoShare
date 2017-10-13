@@ -657,11 +657,12 @@
 
       });
 
+      context.drawImage(markerImg, 0, 0);
+      context.drawImage(markerProfileImg, 16, 16);
+
       markerProfileImg.onload = function() {
         context.drawImage(markerImg, 0, 0);
         context.drawImage(markerProfileImg, 16, 16);
-
-        return canvas.toDataURL();
       }
 
       return canvas.toDataURL();
