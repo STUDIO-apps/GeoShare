@@ -657,13 +657,13 @@
 
       var markerProfileImg = new Image();
       markerProfileImg.setAttribute('crossOrigin', 'anonymous');
-      markerProfileImg.imageTag('profile.png', {width: 50, height: 50, gravity: "face", radius: "max", crop: "fill"}).toHtml();
       //Profile picture
       var storage = firebase.storage();
       var gsRef = storage.refFromURL('gs://modular-decoder-118720.appspot.com/profile_pictures');
 
       gsRef.child('/' + id + '.png').getDownloadURL().then(function (url) {
           markerProfileImg.src = url;
+          markerProfileImg.style.borderRadius = '100px';
       }).catch(function (error) {
 
       });
