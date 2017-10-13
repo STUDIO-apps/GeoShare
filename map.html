@@ -45,7 +45,7 @@
         <div class="header-image">
             <img src="img/header.jpg"/>
             <div class="user-info">
-                <img id="profile-picture" src=""/>
+                <img id="profile-picture" src="img/dummy-profile.png"/>
                 <h2 id="profile-name">Welcome, user</h2>
             </div>
         </div>
@@ -627,7 +627,7 @@
       gsRef.child('/' + id + '.png').getDownloadURL().then(function (url) {
           friendPicture.src = url;
       }).catch(function (error) {
-
+        friendPicture.src = 'img/dummy-profile.png'
       });
     }
 
