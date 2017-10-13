@@ -234,6 +234,8 @@
     var currentMode = null;
     var currentSelection = null;
 
+    var friendMarker = {};
+
     document.addEventListener('DOMContentLoaded', function () {
         var mode = getParameterByName('mode');
 
@@ -379,6 +381,19 @@
             getFriendsList();
             getFriendRequests();
         }
+    }
+
+    function getSharedLocations() {
+      var shareRef = firebase.database().ref('/current_location/' + currentUid);
+      shareRef.on("child_added", function (snapshot) {
+        if (snapshot.key == "tracking") {
+          console.log("Tracking");
+        } else if (snapshot.key == "location") {
+          console.log("Location changed");
+        } else {
+          addFriendMarker(snapshot.key, snapshot.val().lat, snapshot.val().longitude);
+        }
+      })
     }
 
     function getFriendsList() {
@@ -587,6 +602,16 @@
       }).catch(function (error) {
 
       });
+    }
+
+    function addFriendMarker(id, lat, long) {
+      var latLong = {lat: lat, lng: long};
+      var marker = new google.maps.Marker({
+        position: latLong,
+        map: map,
+        title: id
+      });
+      friendMarker[id] = marker;
     }
 
     function showSettings(show) {
@@ -888,7 +913,7 @@
                     nearbyRadius(currentPos, 200);
 
                     map.setCenter(currentPos);
-                    map.setZoom(15);
+                    map.setZoom(17);
                 });
             } else {
                 // Browser doesn't support Geolocation
