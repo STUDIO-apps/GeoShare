@@ -634,8 +634,8 @@
     function createFriendMarkerImage(id) {
       var canvas, context;
 
-      var width = 116;
-      var height = 155;
+      var width = 64;
+      var height = 86;
       var radius = 4;
 
       var marker = friendMarker[id];
@@ -671,9 +671,9 @@
       context.drawImage(markerProfileImg, 16, 16);
 
       markerProfileImg.onload = function() {
-        context.drawImage(scaleImage(10, 10, 116, 155, 0, markerImg), 0, 0);
+        context.drawImage(markerImg, 0, 0, width, height);
         //context.drawImage(markerProfileImg, 16, 16);
-        context.drawImage(scaleImage(10, 10, 84, 84, 10, markerProfileImg), 16, 16);
+        context.drawImage(scaleImage(10, 10, 54, 54, 10, markerProfileImg), 16, 16);
 
         marker.setIcon(canvas.toDataURL());
       }
