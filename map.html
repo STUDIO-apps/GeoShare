@@ -669,7 +669,6 @@
 
       markerProfileImg.onload = function() {
         context.drawImage(markerImg, 0, 0, width, height);
-        //context.drawImage(markerProfileImg, 16, 16);
         context.drawImage(scaleImage(20, 20, 40, 40, 20, markerProfileImg), 12, 14);
 
         marker.setIcon(canvas.toDataURL());
@@ -681,14 +680,10 @@
       var ctx = canvas.getContext("2d");
 
       ctx.save();
-
       ctx.beginPath();
       ctx.arc(x, y, radius, 0, 2 * Math.PI, false);
-
       ctx.clip();
-
       ctx.drawImage(img, 0, 0, width, height);
-
       ctx.restore();
 
       return canvas;
@@ -1039,7 +1034,7 @@
                     gpsLocation = new google.maps.Marker({
                         position: currentPos,
                         map: map,
-                        icon: '../img/navigation.png',
+                        icon: '../img/gps.png',
                         title: "Location"
                         //anchor: new google.maps.Point(14, 14)
                     });
