@@ -673,7 +673,7 @@
       markerProfileImg.onload = function() {
         context.drawImage(markerImg, 0, 0, width, height);
         //context.drawImage(markerProfileImg, 16, 16);
-        context.drawImage(scaleImage(10, 10, 54, 54, 10, markerProfileImg), 16, 16);
+        context.drawImage(scaleImage(10, 10, 54, 54, 10, markerProfileImg), 4, 4);
 
         marker.setIcon(canvas.toDataURL());
       }
@@ -695,7 +695,11 @@
       ctx.quadraticCurveTo(x, y, x + radius, y);
       ctx.closePath();
 
+      ctx.clip();
+
       ctx.drawImage(img, 10, 10, width, height);
+
+      ctx.restore();
 
       return canvas;
     }
