@@ -643,6 +643,7 @@
       context.clearRect(0,0,width,height);
 
       var markerImg = new Image();
+      markerImg.setAttribute('crossOrigin', 'anonymous');
       markerImg.src = 'img/marker.png';
 
       var markerProfileImg = new Image();
