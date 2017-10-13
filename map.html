@@ -663,12 +663,12 @@
 
       gsRef.child('/' + id + '.png').getDownloadURL().then(function (url) {
           markerProfileImg.src = url;
-          markerProfileImg.style.borderRadius = '100px';
       }).catch(function (error) {
 
       });
 
       markerProfileImg.onload = function() {
+        markerProfileImg.style.borderRadius = '100px';
         context.drawImage(markerImg, 0, 0, width, height);
         //context.drawImage(markerProfileImg, 16, 16);
         context.drawImage(markerProfileImg, 3, 3, 50, 50);
