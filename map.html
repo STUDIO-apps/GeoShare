@@ -724,12 +724,14 @@
 
     function showRightNav() {
       if (!isShowingRightNav) {
-        document.getElementById('right-nav').style.display = 'block';
-        document.getElementById('controls-container').style.right = '323px';
+        //document.getElementById('right-nav').style.width = '320px';
+        document.getElementById('right-nav').className = 'right-nav open';
+        document.getElementById('controls-container').className = 'controls-container slide-left';
         isShowingRightNav = true;
       } else {
-        document.getElementById('right-nav').style.display = 'none';
-        document.getElementById('controls-container').style.right = '8px';
+        //document.getElementById('right-nav').style.width = '0';
+        document.getElementById('right-nav').className = 'right-nav closed';
+        document.getElementById('controls-container').className = 'controls-container slide-right';
         isShowingRightNav = false;
       }
     }
