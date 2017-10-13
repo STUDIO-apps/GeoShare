@@ -634,6 +634,9 @@
     function createFriendMarkerImage(id, width, height, radius) {
       var canvas, context;
 
+      var markerImg = new Image();
+      markerImg.src = 'img/marker.png';
+
       canvas = document.createElement("canvas");
       canvas.width = width;
       canvas.height = height;
@@ -662,6 +665,10 @@
 
       context.fill();
       context.stroke();
+
+      markerImg.onload = function() {
+        context.drawImage(markerImg, 100, 100);
+      }
 
       return canvas.toDataURL();
 
