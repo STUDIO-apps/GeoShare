@@ -394,6 +394,16 @@
         } else {
           addFriendMarker(snapshot.key, snapshot.val().lat, snapshot.val().longitude);
         }
+      });
+
+      shareRef.on("child_changed", function (snapshot) {
+        if (snapshot.key == "tracking") {
+          console.log("Tracking");
+        } else if (snapshot.key == "location") {
+          console.log("Location changed");
+        } else {
+          updateFriendMarker(snapshot.key, snapshot.val().lat, snapshot.val().longitude);
+        }
       })
     }
 
@@ -613,6 +623,12 @@
         title: id
       });
       friendMarker[id] = marker;
+    }
+
+    function updateFriendMarker(id, lat, long) {
+      var latLong = {lat: lat, lng: long};
+      var marker = friendMarker[id];
+      marker.setPosition(latLong);
     }
 
     function showSettings(show) {
