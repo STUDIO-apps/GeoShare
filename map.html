@@ -657,6 +657,7 @@
 
       var markerProfileImg = new Image();
       markerProfileImg.setAttribute('crossOrigin', 'anonymous');
+      markerProfileImg.imageTag('profile.png', {width: 50, height: 50, gravity: "face", radius: "max", crop: "fill"}).toHtml();
       //Profile picture
       var storage = firebase.storage();
       var gsRef = storage.refFromURL('gs://modular-decoder-118720.appspot.com/profile_pictures');
@@ -667,13 +668,10 @@
 
       });
 
-      context.drawImage(markerImg, 0, 0);
-      context.drawImage(markerProfileImg, 16, 16);
-
       markerProfileImg.onload = function() {
         context.drawImage(markerImg, 0, 0, width, height);
         //context.drawImage(markerProfileImg, 16, 16);
-        context.drawImage(scaleImage(10, 10, 50, 50, 100, markerProfileImg), 3, 3);
+        context.drawImage(markerProfileImg, 3, 3, 50, 50);
 
         marker.setIcon(canvas.toDataURL());
       }
@@ -682,6 +680,8 @@
     function scaleImage(x, y, width, height, radius, img){
       var canvas = document.createElement("canvas");
       var ctx = canvas.getContext("2d");
+
+      ctx.save();
 
       ctx.beginPath();
       ctx.moveTo(x + radius, y);
