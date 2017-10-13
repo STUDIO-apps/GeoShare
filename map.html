@@ -11,6 +11,7 @@
     <link rel="stylesheet" href="geomaps-styles/map.css" type="text/css"/>
     <link rel="stylesheet" href="geomaps-styles/friendsbar.css" type="text/css"/>
     <link rel="stylesheet" href="geomaps-styles/search.css" type="text/css"/>
+    <link rel="stylesheet" href="geomaps-styles/friend-search.css" type="text/css"/>
     <link rel="stylesheet" href="geomaps-styles/settings.css" type="text/css"/>
 
     <script src="https://apis.google.com/js/platform.js" async defer></script>
@@ -137,6 +138,24 @@
   </div>
 </div>
 
+<div class="friend-search" id="friend-search-container">
+  <div class="friend-search-background" onclick="showFindFriends(false)"></div>
+  <div class="friend-search-container">
+    <div class="friend-search-wrapper">
+      <div class="friend-search-box">
+        <input id="name" type="text" name="name" placeholder="Find Friends" required>
+        <img src="img/search.png"/>
+      </div>
+      <div class="friend-search-results">
+
+      </div>
+    </div>
+    <div class="friend-content-wrapper">
+
+    </div>
+  </div>
+</div>
+
 <div id="settings-container" class="settings">
     <div class="settings-background" onclick="showSettings(false)"></div>
     <div class="settings-container">
@@ -259,6 +278,9 @@
             case 'manager':
                 showManager();
                 break;
+            case 'search':
+                showFindFriends(true);
+                break;
             default:
         }
     }, false);
@@ -269,11 +291,17 @@
         switch (mode) {
           case '':
             showSettings(false);
+            showFindFriends(false);
             hideManager();
             break;
           case 'manager':
             if (currentMode != mode) {
               showManager();
+            }
+            break;
+          case 'search':
+            if (currentMode != mode) {
+              showFindFriends(true);
             }
             break;
           case 'settings':
@@ -799,10 +827,10 @@
 
     function showFindFriends(show) {
       if (show) {
-        document.getElementById('settings-container').style.display = 'block';
-        history.pushState('settings', 'Settings - GeoShare', 'map?mode=friend-search');
+        document.getElementById('friend-search-container').style.display = 'block';
+        history.pushState('settings', 'Settings - GeoShare', 'map?mode=search');
       } else {
-        document.getElementById('settings-container').style.display = 'none';
+        document.getElementById('friend-search-container').style.display = 'none';
         window.history.pushState('map', 'Map - GeoShare', 'map');
       }
     }
