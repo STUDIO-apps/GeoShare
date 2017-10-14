@@ -9,7 +9,8 @@
   pointer-events: all;
   float: right;
   max-height: calc(100% - 168px);
-  overflow: scroll;
+  overflow-y: scroll;
+  overflow-x: hidden;
 }
 
 .friendContainer {

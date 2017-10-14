@@ -43,6 +43,7 @@
   width: 416px;
   height: calc(100% - 277px - 56px);
   overflow-y: auto;
+  overflow-x: hidden;
   float: left;
   clear: left;
 }
