@@ -146,13 +146,11 @@
         <input id="name" type="text" name="name" placeholder="Find Friends" required>
         <img src="img/search.png"/>
       </div>
-      <div class="friend-search-results">
-
+      <div class="friend-search-results" id="friend-search-results">
+        <div class="recentSearchContainer" id="recentSearchContainer"></div>
       </div>
     </div>
-    <div class="friend-content-wrapper">
-
-    </div>
+    <div class="friend-content-wrapper"></div>
   </div>
 </div>
 
@@ -503,6 +501,38 @@
       })
     }
 
+    function getRecentSearch() {
+      var recentSearchRef = firebase.database().ref('/recent_friends_search/' + currentUid);
+      recentSearchRef.on("child_added", function (snapshot) {
+        var entry = snapshot.val().entry;
+        var isSearch = snapshot.val().search;
+        var id = snapshot.val().uid;
+        addRecentSearchElement(entry, isSearch, id);
+      });
+    }
+
+    function addRecentSearchElement(entry, isSearch, id) {
+      var recentSearchItem = document.createElement("DIV");
+      recentSearchItem.className = 'recentSearchItem';
+      recentSearchItem.id = id;
+
+      var recentSearchNameContainer = document.createElement("H2");
+      var recentSearchName = document.createTextNode(entry);
+      var recentSearchPicture = document.createElement("IMG");
+
+      if (isSearch) {
+        recentSearchPicture.src = 'img/search.png';
+      } else {
+        getProfileImage(id, recentSearchPicture);
+      }
+
+      recentSearchNameContainer.appendChild(recentSearchName);
+      recentSearchItem.appendChild(recentSearchPicture);
+      recentSearchItem.appendChild(recentSearchNameContainer);
+
+      document.getElementById('recentSearchContainer').appendChild(recentSearchItem);
+    }
+
     function addFriendElement(id, name) {
       var friendContainer = document.createElement("DIV");
       friendContainer.className = 'friendContainer';
@@ -833,6 +863,7 @@
 
     function showFindFriends(show) {
       if (show) {
+        getRecentSearch();
         document.getElementById('friend-search-container').style.display = 'block';
         history.pushState('settings', 'Search - GeoShare', 'map?mode=search');
       } else {
