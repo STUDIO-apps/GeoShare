@@ -31,7 +31,6 @@ html, body {
 
 .right-nav {
   position: absolute;
-  width: 320px;
   height: 100%;
   margin: 0;
   right: -320px;
