@@ -513,7 +513,7 @@
 
     function addRecentSearchElement(entry, isSearch, id) {
       var recentSearchItem = document.createElement("DIV");
-      recentSearchItem.className = 'recentSearchItem';
+      recentSearchItem.className = 'searchItem';
       recentSearchItem.id = id;
 
       var recentSearchNameContainer = document.createElement("H2");
@@ -530,7 +530,7 @@
       recentSearchItem.appendChild(recentSearchPicture);
       recentSearchItem.appendChild(recentSearchNameContainer);
 
-      document.getElementById('recentSearchContainer').appendChild(recentSearchItem);
+      document.getElementById('recentSearchContainer').insertBefore(recentSearchItem, document.getElementById('recentSearchContainer').firstChild);
     }
 
     function addFriendElement(id, name) {
@@ -861,9 +861,13 @@
       }
     }
 
+    var hasRecent = false;
     function showFindFriends(show) {
       if (show) {
-        getRecentSearch();
+        if (!hasRecent) {
+          getRecentSearch();
+        }
+        hasRecent = true;
         document.getElementById('friend-search-container').style.display = 'block';
         history.pushState('settings', 'Search - GeoShare', 'map?mode=search');
       } else {

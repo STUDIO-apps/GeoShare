@@ -35,6 +35,7 @@
   border-right-style: solid;
   border-color: rgba(0, 0, 0, 0.5);
   overflow-y: scroll;
+  overflow-x: hidden;
 }
 
 .friend-search-box {
@@ -81,24 +82,36 @@
 }
 
 .recentSearchContainer {
-  overflow-y: scroll;
-  overflow-x: hidden;
+
 }
 
-.recentSearchItem {
+.searchItem {
   width: 400px;
   height: 72px;
   display: inline-flex;
+
+  -webkit-transition: background ease-in 150ms;
+  -moz-transition: background ease-in 150ms;
+  -o-transition: background ease-in 150ms;
+  transition: background ease-in 150ms;
 }
 
-.recentSearchItem h2 {
+.searchItem:hover {
+  background-color: rgba(0,0,0,0.08);
+  -webkit-transition: background ease-in 150ms;
+  -moz-transition: background ease-in 150ms;
+  -o-transition: background ease-in 150ms;
+  transition: background ease-in 150ms;
+}
+
+.searchItem h2 {
   width: calc(100% - 168px);
   margin: auto 12px;
   font: 18px 'Roboto', sans-serif;
   color: #4caf50;
 }
 
-.recentSearchItem img {
+.searchItem img {
   margin: auto;
   margin-left: 12px;
   margin-right: 12px;
