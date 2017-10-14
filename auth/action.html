@@ -37,6 +37,10 @@
     };
     firebase.initializeApp(config);
 
+    var isNewUser = false;
+    var newName;
+    var newEmail;
+
     document.addEventListener('DOMContentLoaded', function () {
         var mode = getParameterByName('mode');
         var signOut = getParameterByName('signedOut');
@@ -73,8 +77,19 @@
         }
 
         firebase.auth().onAuthStateChanged(function (user) {
-            if (user) {
-                window.location.replace('../')
+            if (user && isNewUser) {
+              var ref = firebase.database().ref('users/' + user.uid);
+              ref.set({
+                  name: newName,
+                  caseFoldedName: newName.toLowerCase(),
+                  email: newEmail
+              }).then(function(success) {
+                window.location.replace('../');
+              }).catch(function (error) {
+                  console.log(error.message);
+              });
+            } else if (user) {
+              window.location.replace('../');
             }
         });
     }, false);
@@ -99,15 +114,9 @@
 
     function handleSignUp(name, email, password) {
         firebase.auth().createUserWithEmailAndPassword(email, password).then(function (user) {
-            console.log(user.uid);
-            var ref = firebase.database().ref('users/' + user.uid);
-            ref.set({
-                name: name,
-                caseFoldedName: name.toLowerCase(),
-                email: email
-            }).catch(function (error) {
-                console.log(error.message);
-            });
+            isNewUser = true;
+            newName = name;
+            newEmail = email;
         }).catch(function (error) {
             console.log(error.message);
             document.getElementById('errorMessage').innerHTML = error.message;
