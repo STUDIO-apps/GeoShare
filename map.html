@@ -1094,10 +1094,10 @@
         map.mapTypes.set('styled_map', styledMapType);
         map.setMapTypeId('styled_map');
 
-        var input = document.getElementById('pac-input');
-        var searchContainer = document.getElementById('searchContainer');
-        var searchBox = new google.maps.places.SearchBox(input);
-        map.controls[google.maps.ControlPosition.TOP_LEFT].push(searchContainer);
+        //var input = document.getElementById('pac-input');
+        //var searchContainer = document.getElementById('searchContainer');
+        //var searchBox = new google.maps.places.SearchBox(input);
+        //map.controls[google.maps.ControlPosition.TOP_LEFT].push(searchContainer);
         map.setOptions({draggableCursor: 'default'});
 
         google.maps.event.addListener(map, 'zoom_changed', function () {
