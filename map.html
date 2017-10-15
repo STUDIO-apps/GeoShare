@@ -354,11 +354,11 @@
           if (snapshot.val().tracking) {
             if (snapshot.val().showOnMap != null) {
               if (snapshot.val().showOnMap) {
-                showTrackingFriends(id, false);
+                showTrackingFriends(id);
                 nearbyFriends();
               }
             } else {
-              showTrackingFriends(id, false);
+              showTrackingFriends(id);
               nearbyFriends();
             }
           }
@@ -376,13 +376,13 @@
 
         if (snapshot.val().tracking != null) {
           if (snapshot.val().tracking) {
-            showTrackingFriends(id, true);
+            showTrackingFriends(id);
           }
         }
 
         if (snapshot.val().showOnMap != null) {
           if (snapshot.val().showOnMap) {
-            showTrackingFriends(id, true);
+            showTrackingFriends(id);
           } else {
             removeFriendMarker(id);
           }
@@ -395,16 +395,26 @@
       });
     }
 
-    function showTrackingFriends(id, isUpdating) {
+    function showTrackingFriends(id) {
       var livePositionRef = firebase.database().ref('/current_location/' + id + "/location")
       livePositionRef.once("value").then(function (snapshot) {
         var lat = snapshot.val().lat;
         var long = snapshot.val().longitude;
 
-        if (isUpdating) {
-          updateFriendMarker(id, lat, long);
+        addFriendMarker(id, lat, long);
+      });
+    }
+
+    function isShowingOnMap(id, checkbox) {
+      var showOnMapRef = firebase.database().ref('/current_location/' + currentUid + '/tracking/' + id);
+      showOnMapRef.once("value").then(function (snapshot) {
+        var exists = snapshot.val();
+        if (exists == null) {
+          checkbox.setAttribute("checked", "");
         } else {
-          addFriendMarker(id, lat, long);
+          if (snapshot.val().showOnMap || snapshot.val().showOnMap == null) {
+            checkbox.setAttribute("checked", "");
+          }
         }
       });
     }
@@ -627,8 +637,14 @@
           friendOptionsShowContainer.className = 'friendOptionsItem last';
           var friendOptionsShow = document.createElement("H2");
           var friendOptionsShowText = document.createTextNode('Show on map');
+
+          var friendOptionsShowCheckbox = document.createElement("INPUT");
+          friendOptionsShowCheckbox.setAttribute("type", "checkbox");
+          isShowingOnMap(id, friendOptionsShowCheckbox);
+
           friendOptionsShow.appendChild(friendOptionsShowText);
           friendOptionsShowContainer.appendChild(friendOptionsShow);
+          friendOptionsShowContainer.appendChild(friendOptionsShowCheckbox);
 
           friendOptionsShowContainer.onclick = function(event) {
             event.stopPropagation()
