@@ -613,10 +613,75 @@
 
           friendOptionsShareContainer.onclick = function(event) {
             event.stopPropagation()
-            console.log("Share");
+
+            //Share dialog
+            var shareDialogContainer = document.createElement("DIV");
+            shareDialogContainer.className = 'shareDialogContainer';
+            shareDialogContainer.id = 'shareDialogContainer';
+
+            var shareDialogBackground = document.createElement("DIV");
+            shareDialogBackground.className = 'shareDialogBackground';
+
+            var shareDialog = document.createElement("DIV");
+            shareDialog.className = 'shareDialog';
+
+            var shareDialogTextContainer = document.createElement("H2");
+            var shareDialogText = document.createTextNode("THIS WILL SHARE YOUR CURRENT LOCATION \n GET THE APP FOR LIVE TRACKING");
+            shareDialogTextContainer.appendChild(shareDialogText);
+
+            var shareDialogButtonContainer = document.createElement("DIV");
+            shareDialogButtonContainer.className = 'shareDialogButtonContainer';
+
+            var shareDialogCancelButton = document.createElement("DIV");
+            shareDialogCancelButton.className = 'shareDialogButton';
+            var shareDialogTextCancelContainer = document.createElement("H2");
+            var shareDialogTextCancel = document.createTextNode("CANCEL");
+            shareDialogTextCancelContainer.appendChild(shareDialogTextCancel);
+
+            shareDialogCancelButton.onclick = function(event) {
+              shareDialogContainer.remove();
+            }
+
+            shareDialogCancelButton.appendChild(shareDialogTextCancelContainer);
+
+            var shareDialogGetButton = document.createElement("DIV");
+            shareDialogGetButton.className = 'shareDialogButton';
+            var shareDialogTextGetContainer = document.createElement("H2");
+            var shareDialogTextGet = document.createTextNode("GET APP");
+            shareDialogTextGetContainer.appendChild(shareDialogTextGet);
+
+            shareDialogGetButton.onclick = function(event) {
+
+            }
+
+            shareDialogGetButton.appendChild(shareDialogTextGetContainer);
+
+            var shareDialogContinueButton = document.createElement("DIV");
+            shareDialogContinueButton.className = 'shareDialogButton';
+            var shareDialogTextOkContainer = document.createElement("H2");
+            var shareDialogTextOk = document.createTextNode("SHARE");
+            shareDialogTextOkContainer.appendChild(shareDialogTextOk);
+
+            shareDialogContinueButton.onclick = function(event) {
+              shareCurrentLocation(id, shareDialogContainer);
+            }
+
+            shareDialogContinueButton.appendChild(shareDialogTextOkContainer);
+
+            shareDialogButtonContainer.appendChild(shareDialogCancelButton);
+            shareDialogButtonContainer.appendChild(shareDialogGetButton);
+            shareDialogButtonContainer.appendChild(shareDialogContinueButton);
+
+            shareDialog.appendChild(shareDialogTextContainer);
+            shareDialog.appendChild(shareDialogButtonContainer);
+            shareDialogContainer.appendChild(shareDialogBackground);
+            shareDialogContainer.appendChild(shareDialog);
+
+
+            document.body.appendChild(shareDialogContainer);
           }
 
-          //Request option
+          //Find option
           var friendOptionsFindContainer = document.createElement("DIV");
           friendOptionsFindContainer.className = 'friendOptionsItem';
           var friendOptionsFind = document.createElement("H2");
@@ -626,7 +691,6 @@
 
           friendOptionsFindContainer.onclick = function(event) {
             event.stopPropagation()
-            console.log("Find");
             var marker = friendMarker[id];
             if (marker != null) {
               var latLng = new google.maps.LatLng(marker.position.lat(), marker.position.lng());
@@ -651,14 +715,12 @@
 
           friendOptionsShowContainer.onclick = function(event) {
             event.stopPropagation();
-            console.log("Show");
             friendOptionsShowCheckbox.checked = !friendOptionsShowCheckbox.checked;
             updateShowOnMap(id, friendOptionsShowCheckbox.checked);
           }
 
           friendOptionsShowCheckbox.onclick = function(event) {
             event.stopPropagation();
-            console.log("Show");
             updateShowOnMap(id, friendOptionsShowCheckbox.checked);
           }
 
@@ -971,6 +1033,25 @@
         } else {
             // Browser doesn't support Geolocation
         }
+      }
+    }
+
+    function shareCurrentLocation(id, dialog) {
+      if (navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition(function (position) {
+            firebase.database().ref('/current_location/' + id + "/" + currentUid).set({
+              lat: position.coords.latitude,
+              longitude: position.coords.longitude,
+              timestamp: Date.now()
+            }).then(function(event) {
+              dialog.remove();
+            }).catch(function (error) {
+              console.log(error);
+            });
+        });
+      } else {
+        // Browser doesn't support Geolocation
+        console.log("No support");
       }
     }
 
