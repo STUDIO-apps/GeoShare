@@ -78,10 +78,6 @@
   border-top-right-radius: 10px;
 }
 
-.friendOptionsItem.last {
-  cursor: default;
-}
-
 .friendOptionsItem h2 {
   margin: auto auto auto 12px;
   font: 18px 'Roboto', sans-serif;

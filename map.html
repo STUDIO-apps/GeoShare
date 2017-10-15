@@ -647,7 +647,16 @@
           friendOptionsShowContainer.appendChild(friendOptionsShowCheckbox);
 
           friendOptionsShowContainer.onclick = function(event) {
-            event.stopPropagation()
+            event.stopPropagation();
+            console.log("Show");
+            friendOptionsShowCheckbox.checked = !friendOptionsShowCheckbox.checked;
+            updateShowOnMap(id, friendOptionsShowCheckbox.checked);
+          }
+
+          friendOptionsShowCheckbox.onclick = function(event) {
+            event.stopPropagation();
+            console.log("Show");
+            updateShowOnMap(id, friendOptionsShowCheckbox.checked);
           }
 
           //Append children to parent container
@@ -664,6 +673,10 @@
           document.getElementById(id).className = ('friendContainer');
         }
       };
+    }
+
+    function updateShowOnMap(id, state) {
+      firebase.database().ref("/current_location/" + currentUid + "/tracking/" + id + "/showOnMap").set(state);
     }
 
     function addFriendManagerElement(id, name) {
