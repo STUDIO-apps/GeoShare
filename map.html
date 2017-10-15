@@ -18,7 +18,7 @@
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular.min.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.0rc1/angular-route.min.js"></script>
 
-    <script type="text/javascript" src="http://maps.google.com/maps/api/js?sensor=false&v=3&libraries=geometry"></script>
+    <script type="text/javascript" src="https://maps.google.com/maps/api/js?sensor=false&v=3&libraries=geometry"></script>
 
     <script type="text/javascript" src="js/main.js"></script>
 
@@ -336,7 +336,7 @@
                 var name = (snapshot.val() && snapshot.val().name);
                 document.getElementById('profile-name').innerHTML = 'Welcome, ' + name;
             }, function (error) {
-                console.log(error.code);
+
             });
 
             getFriendsList();
@@ -400,7 +400,6 @@
     function showTrackingFriends(id, isUpdating) {
       var livePositionRef = firebase.database().ref('/current_location/' + id + "/location")
       livePositionRef.once("value").then(function (snapshot) {
-        console.log(id);
         var lat = snapshot.val().lat;
         var long = snapshot.val().longitude;
 
@@ -458,7 +457,6 @@
             friendName = (snapshot.val() && snapshot.val().name);
             addFriendElement(id, friendName);
             addFriendManagerElement(id, friendName);
-            console.log(friendName);
         }, function (error) {
             console.log(error.code);
         });
@@ -496,7 +494,6 @@
             var id = ds.key;
             var name = ds.val().name;
             addSearchElements(id, name)
-            console.log(id);
           });
         })
       }
@@ -935,12 +932,6 @@
             navigator.geolocation.getCurrentPosition(function (position) {
                 var currentPos = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
 
-                console.log(currentPos);
-
-                console.log("My location: " + currentPos + "      Other location: " + latLng);
-
-                console.log(google.maps.geometry.spherical.computeDistanceBetween(currentPos, latLng));
-
                 if (google.maps.geometry.spherical.computeDistanceBetween(currentPos, latLng) < 200) {
                   count = count + 1;
                 }
@@ -1157,8 +1148,6 @@
                         lat: position.coords.latitude,
                         lng: position.coords.longitude
                     };
-
-                    console.log(currentPos);
 
                     gpsLocation = new google.maps.Marker({
                         position: currentPos,
