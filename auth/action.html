@@ -81,8 +81,7 @@
               var ref = firebase.database().ref('users/' + user.uid);
               ref.set({
                   name: newName,
-                  caseFoldedName: newName.toLowerCase(),
-                  email: newEmail
+                  caseFoldedName: newName.toLowerCase()
               }).then(function(success) {
                 window.location.replace('../');
               }).catch(function (error) {

@@ -384,8 +384,75 @@
 
             getFriendsList();
             getFriendRequests();
+
             getSharedLocations();
+            getTrackingInfo();
         }
+    }
+
+    function getTrackingInfo() {
+      var trackingRef = firebase.database().ref('/current_location/' + currentUid + "/tracking");
+      trackingRef.on("child_added", function (snapshot) {
+        var id = snapshot.key;
+
+        if (snapshot.val().tracking != null) {
+          if (snapshot.val().tracking) {
+            if (snapshot.val().showOnMap != null) {
+              if (snapshot.val().showOnMap) {
+                showTrackingFriends(id, false);
+                nearbyFriends();
+              }
+            } else {
+              showTrackingFriends(id, false);
+              nearbyFriends();
+            }
+          }
+        }
+
+        if (snapshot.val().showOnMap != null) {
+          if (!snapshot.val().showOnMap) {
+            removeFriendMarker(id);
+          }
+        }
+      });
+
+      trackingRef.on("child_changed", function (snapshot) {
+        var id = snapshot.key;
+
+        if (snapshot.val().tracking != null) {
+          if (snapshot.val().tracking) {
+            showTrackingFriends(id, true);
+          }
+        }
+
+        if (snapshot.val().showOnMap != null) {
+          if (snapshot.val().showOnMap) {
+            showTrackingFriends(id, true);
+          } else {
+            removeFriendMarker(id);
+          }
+        }
+      });
+
+      trackingRef.on("child_removed", function (snapshot) {
+        removeFriendMarker(id);
+        nearbyFriends();
+      });
+    }
+
+    function showTrackingFriends(id, isUpdating) {
+      var livePositionRef = firebase.database().ref('/current_location/' + id + "/location")
+      livePositionRef.on("value", function (snapshot) {
+        console.log(id);
+        var lat = snapshot.val().lat;
+        var long = snapshot.val().longitude;
+
+        if (isUpdating) {
+          updateFriendMarker(id, lat, long);
+        } else {
+          addFriendMarker(id, lat, long);
+        }
+      });
     }
 
     function getSharedLocations() {
@@ -769,11 +836,16 @@
       var latLong = {lat: lat, lng: long};
       var marker = new google.maps.Marker({
         position: latLong,
-        map: map,
-        title: id
+        map: map
       });
       friendMarker[id] = marker;
       createFriendMarkerImage(id);
+
+      var ref = firebase.database().ref('/users/' + id);
+      ref.on("value", function (snapshot) {
+        var name = (snapshot.val() && snapshot.val().name);
+        marker.setTitle(name);
+      })
     }
 
     function updateFriendMarker(id, lat, long) {
@@ -784,8 +856,10 @@
 
     function removeFriendMarker(id) {
       var marker = friendMarker[id];
-      marker.setMap(null);
-      delete friendMarker[id];
+      if (marker != null) {
+        marker.setMap(null);
+        delete friendMarker[id];
+      }
     }
 
     var isShowingRightNav = false;
@@ -1108,9 +1182,9 @@
             }
         });
 
-        map.addListener('bounds_changed', function () {
-            searchBox.setBounds(map.getBounds());
-        });
+        // map.addListener('bounds_changed', function () {
+        //     searchBox.setBounds(map.getBounds());
+        // });
 
         var gpsLocation = null;
 
