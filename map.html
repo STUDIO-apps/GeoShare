@@ -1127,13 +1127,13 @@
         //var searchContainer = document.getElementById('searchContainer');
         //var searchBox = new google.maps.places.SearchBox(input);
         //map.controls[google.maps.ControlPosition.TOP_LEFT].push(searchContainer);
-        map.setOptions({draggableCursor: 'default'});
+        //map.setOptions({draggableCursor: 'default'});
 
-        google.maps.event.addListener(map, 'zoom_changed', function () {
-            if (map.getZoom() < 3) {
-                map.setZoom(3);
-            }
-        });
+        // google.maps.event.addListener(map, 'zoom_changed', function () {
+        //     if (map.getZoom() < 3) {
+        //         map.setZoom(3);
+        //     }
+        // });
 
         // map.addListener('bounds_changed', function () {
         //     searchBox.setBounds(map.getBounds());
@@ -1158,17 +1158,6 @@
                         //anchor: new google.maps.Point(14, 14)
                     });
 
-                    // gpsLocation = new google.maps.Circle({
-                    //   strokeColor: '#FFF',
-                    //   strokeOpacity: 1,
-                    //   strokeWeight: 1,
-                    //   fillColor: '#4caf50',
-                    //   fillOpacity: 1,
-                    //   map: map,
-                    //   center: currentPos,
-                    //   radius: 0.25
-                    // });
-
                     nearbyRadius(currentPos, 200);
                     nearbyFriends();
 
@@ -1181,8 +1170,6 @@
         }
 
         getCurrentLocation();
-
-        var markers = [];
 
         // searchBox.addListener('places_changed', function () {
         //     var places = searchBox.getPlaces();
