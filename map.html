@@ -159,52 +159,78 @@
       <div class="nav-bar">
         <button id="close" type="image" onclick="showSettings(false)"/>
       </div>
-      <div class="pref-screen">
-        <div class="settings-category">
-          <div class="heading">
-            <h3>Location</h3>
+      <div class="settings-content-container">
+        <div class="pref-screen">
+          <div class="settings-category">
+            <div class="heading">
+              <h3>Location</h3>
+            </div>
+            <div class="item-empty selected">
+              <h4>Nearby radius</h4>
+            </div>
           </div>
-          <div class="item-empty">
-            <h4>Nearby radius</h4>
+
+          <div class="settings-category">
+            <div class="heading">
+              <h3>Account</h3>
+            </div>
+            <div class="item-empty">
+              <h4>Display name</h4>
+            </div>
+            <div class="item-empty">
+              <h4>Profile picture</h4>
+            </div>
+            <div class="item-empty">
+              <h4>Change password</h4>
+            </div>
+            <div class="item-empty">
+              <h4>Delete user</h4>
+            </div>
+          </div>
+
+          <div class="settings-category">
+            <div class="heading">
+              <h3>About</h3>
+            </div>
+            <div class="item-empty disabled">
+              <h4>Version 1.0</h4>
+            </div>
+            <div class="item-empty">
+              <h4>Send feedback</h4>
+            </div>
+            <!-- <div class="item-empty">
+              <h4>FAQ</h4>
+            </div> -->
           </div>
         </div>
 
-        <div class="settings-category">
-          <div class="heading">
-            <h3>Account</h3>
+        <div class="content-screen">
+          <div class="content-view" id="nearby-radius-content" style="background-image: url(img/radius.png)">
+            <h2>Nearby radius</h2>
+            <output for="nearby-range" id="nearby-ranger-value">100m</output>
+            <input type="range" min="1" max="200" value="100" class="nearby-slider" id="nearby-range" oninput="updateNearbyRangerText(value)">
+            <div class="button">
+              <h2>SET</h2>
+            </div>
           </div>
-          <div class="item-empty">
-            <h4>Display name</h4>
-          </div>
-          <div class="item-empty">
-            <h4>Profile picture</h4>
-          </div>
-          <div class="item-empty">
-            <h4>Change password</h4>
-          </div>
-          <div class="item-empty">
-            <h4>Delete user</h4>
-          </div>
-        </div>
 
-        <div class="settings-category">
-          <div class="heading">
-            <h3>About</h3>
+          <div class="content-view hidden" id="display-name-content">
+
           </div>
-          <div class="item-empty disabled">
-            <h4>Version 1.0</h4>
+
+          <div class="content-view hidden" id="profile-picture-content">
+
           </div>
-          <div class="item-empty">
-            <h4>Send feedback</h4>
+
+          <div class="content-view hidden" id="chng-pwrd-content">
+
           </div>
-          <div class="item-empty">
-            <h4>FAQ</h4>
+
+          <div class="content-view hidden" id="delete-user-content">
+
           </div>
         </div>
       </div>
-      </div>
-
-      <div class="content-screen">
 
       </div>
     </div>
@@ -1034,6 +1060,13 @@
             // Browser doesn't support Geolocation
         }
       }
+    }
+
+    function updateNearbyRangerText(value) {
+      var output = document.querySelector("#nearby-ranger-value");
+      output.value = value + "m";
+      var final = (value * 1.25) + 400 - 10.02;
+      output.style.left = final + 'px';
     }
 
     function shareCurrentLocation(id, dialog) {
