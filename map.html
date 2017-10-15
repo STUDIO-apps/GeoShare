@@ -292,49 +292,6 @@
             return decodeURIComponent(results[1].replace(/\+/g, " "));
     }
 
-    function addParameter(url, parameterName, parameterValue, atStart){
-        replaceDuplicates = true;
-        if(url.indexOf('#') > 0){
-            var cl = url.indexOf('#');
-            urlhash = url.substring(url.indexOf('#'),url.length);
-        } else {
-            urlhash = '';
-            cl = url.length;
-        }
-        sourceUrl = url.substring(0,cl);
-
-        var urlParts = sourceUrl.split("?");
-        var newQueryString = "";
-
-        if (urlParts.length > 1)
-        {
-            var parameters = urlParts[1].split("&");
-            for (var i=0; (i < parameters.length); i++)
-            {
-                var parameterParts = parameters[i].split("=");
-                if (!(replaceDuplicates && parameterParts[0] == parameterName))
-                {
-                    if (newQueryString == "")
-                        newQueryString = "?";
-                    else
-                        newQueryString += "&";
-                    newQueryString += parameterParts[0] + "=" + (parameterParts[1]?parameterParts[1]:'');
-                }
-            }
-        }
-        if (newQueryString == "")
-            newQueryString = "?";
-
-        if(atStart){
-            newQueryString = '?'+ parameterName + "=" + parameterValue + (newQueryString.length>1?'&'+newQueryString.substring(1):'');
-        } else {
-            if (newQueryString !== "" && newQueryString != '?')
-                newQueryString += "&";
-            newQueryString += parameterName + "=" + (parameterValue?parameterValue:'');
-        }
-        return urlParts[0] + newQueryString + urlhash;
-    };
-
     firebase.auth().onAuthStateChanged(function (user) {
         if (user && user.uid != currentUid) {
             currentUid = user.uid;
@@ -653,16 +610,21 @@
           }
 
           //Request option
-          var friendOptionsRequestContainer = document.createElement("DIV");
-          friendOptionsRequestContainer.className = 'friendOptionsItem';
-          var friendOptionsRequest = document.createElement("H2");
-          var friendOptionsRequestText = document.createTextNode('Request location');
-          friendOptionsRequest.appendChild(friendOptionsRequestText);
-          friendOptionsRequestContainer.appendChild(friendOptionsRequest);
+          var friendOptionsFindContainer = document.createElement("DIV");
+          friendOptionsFindContainer.className = 'friendOptionsItem';
+          var friendOptionsFind = document.createElement("H2");
+          var friendOptionsFindText = document.createTextNode('Find location');
+          friendOptionsFind.appendChild(friendOptionsFindText);
+          friendOptionsFindContainer.appendChild(friendOptionsFind);
 
-          friendOptionsRequestContainer.onclick = function(event) {
+          friendOptionsFindContainer.onclick = function(event) {
             event.stopPropagation()
-            console.log("Request");
+            console.log("Find");
+            var marker = friendMarker[id];
+            if (marker != null) {
+              var latLng = new google.maps.LatLng(marker.position.lat(), marker.position.lng());
+              map.setCenter(latLng);
+            }
           }
 
           //Show option
@@ -675,12 +637,11 @@
 
           friendOptionsShowContainer.onclick = function(event) {
             event.stopPropagation()
-            console.log("Show");
           }
 
           //Append children to parent container
           friendOptionsContainer.appendChild(friendOptionsShareContainer);
-          friendOptionsContainer.appendChild(friendOptionsRequestContainer);
+          friendOptionsContainer.appendChild(friendOptionsFindContainer);
           friendOptionsContainer.appendChild(friendOptionsShowContainer);
 
           document.getElementById(id).appendChild(friendOptionsContainer);
