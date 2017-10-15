@@ -278,7 +278,7 @@
             showSettings(false);
 
         }
-    })
+    });
 
     function getParameterByName(name) {
         name = name.replace(/[\[]/, "\\\[").replace(/[\]]/, "\\\]");
@@ -944,6 +944,22 @@
       }
     }
 
+    function centerMyLocation() {
+      if (navigator.geolocation) {
+          navigator.geolocation.getCurrentPosition(function (position) {
+              var currentPos = {
+                  lat: position.coords.latitude,
+                  lng: position.coords.longitude
+              };
+
+              map.setCenter(currentPos);
+              map.setZoom(17);
+          });
+      } else {
+          // Browser doesn't support Geolocation
+      }
+    }
+
     //Map setup
     function initMap() {
         var styledMapType = new google.maps.StyledMapType(
@@ -1212,22 +1228,6 @@
         //     });
         //     map.fitBounds(bounds);
         // });
-    }
-
-    function centerMyLocation() {
-      if (navigator.geolocation) {
-          navigator.geolocation.getCurrentPosition(function (position) {
-              var currentPos = {
-                  lat: position.coords.latitude,
-                  lng: position.coords.longitude
-              };
-
-              map.setCenter(currentPos);
-              map.setZoom(17);
-          });
-      } else {
-          // Browser doesn't support Geolocation
-      }
     }
 
 </script>
