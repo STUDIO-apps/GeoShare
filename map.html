@@ -226,60 +226,60 @@
 
     var friendMarker = {};
 
-    document.addEventListener('DOMContentLoaded', function () {
-        var mode = getParameterByName('mode');
-
-        var auth = firebase.auth();
-
-        switch (mode) {
-            case 'settings':
-                showSettings(true);
-                break;
-            case 'manager':
-                showManager();
-                isShowingManager = true;
-                break;
-            case 'search':
-                showManager();
-                showFindFriends(true);
-                isShowingManager = true;
-                break;
-            default:
-        }
-    }, false);
-
-    window.addEventListener('popstate', function () {
-        var mode = getParameterByName('mode');
-
-        switch (mode) {
-          case '':
-            showSettings(false);
-            showFindFriends(false);
-            hideManager();
-            break;
-          case 'manager':
-            if (currentMode != mode) {
-              showManager();
-              isShowingManager = true;
-            }
-            break;
-          case 'search':
-            if (currentMode != mode) {
-              showManager();
-              showFindFriends(true);
-              isShowingManager = true;
-            }
-            break;
-          case 'settings':
-            if (currentMode != mode) {
-              showSettings(true);
-            }
-            break;
-          default:
-            showSettings(false);
-
-        }
-    })
+    // document.addEventListener('DOMContentLoaded', function () {
+    //     var mode = getParameterByName('mode');
+    //
+    //     var auth = firebase.auth();
+    //
+    //     switch (mode) {
+    //         case 'settings':
+    //             showSettings(true);
+    //             break;
+    //         case 'manager':
+    //             showManager();
+    //             isShowingManager = true;
+    //             break;
+    //         case 'search':
+    //             showManager();
+    //             showFindFriends(true);
+    //             isShowingManager = true;
+    //             break;
+    //         default:
+    //     }
+    // }, false);
+    //
+    // window.addEventListener('popstate', function () {
+    //     var mode = getParameterByName('mode');
+    //
+    //     switch (mode) {
+    //       case '':
+    //         showSettings(false);
+    //         showFindFriends(false);
+    //         hideManager();
+    //         break;
+    //       case 'manager':
+    //         if (currentMode != mode) {
+    //           showManager();
+    //           isShowingManager = true;
+    //         }
+    //         break;
+    //       case 'search':
+    //         if (currentMode != mode) {
+    //           showManager();
+    //           showFindFriends(true);
+    //           isShowingManager = true;
+    //         }
+    //         break;
+    //       case 'settings':
+    //         if (currentMode != mode) {
+    //           showSettings(true);
+    //         }
+    //         break;
+    //       default:
+    //         showSettings(false);
+    //
+    //     }
+    // })
 
     function getParameterByName(name) {
         name = name.replace(/[\[]/, "\\\[").replace(/[\]]/, "\\\]");
