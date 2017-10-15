@@ -378,8 +378,10 @@
         var id = snapshot.key;
 
         if (snapshot.val().tracking != null) {
-          if (snapshot.val().tracking) {
-            showTrackingFriends(id);
+          if (snapshot.val().showOnMap != null) {
+            if (snapshot.val().tracking && !snapshot.val().showOnMap == false) {
+              showTrackingFriends(id);
+            }
           }
           return;
         }
