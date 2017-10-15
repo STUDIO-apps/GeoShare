@@ -348,7 +348,6 @@
     function getTrackingInfo() {
       var trackingRef = firebase.database().ref('/current_location/' + currentUid + "/tracking");
       trackingRef.on("child_added", function (snapshot) {
-        console.log("Child added");
         var id = snapshot.key;
 
         if (snapshot.val().tracking != null) {
@@ -367,14 +366,12 @@
 
         if (snapshot.val().showOnMap != null) {
           if (!snapshot.val().showOnMap) {
-            console.log("Don't show this one on the map!");
             removeFriendMarker(id);
           }
         }
       });
 
       trackingRef.on("child_changed", function (snapshot) {
-        console.log("Child changed");
         var id = snapshot.key;
 
         if (snapshot.val().tracking != null) {
@@ -633,7 +630,7 @@
             var marker = friendMarker[id];
             if (marker != null) {
               var latLng = new google.maps.LatLng(marker.position.lat(), marker.position.lng());
-              map.setCenter(latLng);
+              map.panTo(latLng);
             }
           }
 
@@ -984,7 +981,7 @@
                   lng: position.coords.longitude
               };
 
-              map.setCenter(currentPos);
+              map.panTo(currentPos);
               map.setZoom(17);
           });
       } else {
