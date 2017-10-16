@@ -379,7 +379,8 @@
       var settingsRef = firebase.database().ref('/settings/' + currentUid);
       settingsRef.on("child_added", function (snapshot) {
         var radius = snapshot.val();
-        console.log(radius);
+        updateNearbyRangerText(radius);
+        document.getElementById('nearby-range').value = radius;
         if (navigator.geolocation) {
             navigator.geolocation.getCurrentPosition(function (position) {
                 var currentPos = {
@@ -396,7 +397,8 @@
 
       settingsRef.on("child_changed", function (snapshot) {
         var radius = snapshot.val();
-        console.log(radius);
+        updateNearbyRangerText(radius);
+        document.getElementById('nearby-range').value = radius;
         nearbyCircle.set('radius', radius);
       });
     }
