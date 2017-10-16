@@ -370,6 +370,8 @@
 
             getSharedLocations();
             getTrackingInfo();
+
+            getNearbyRadius();
         }
     }
 
@@ -377,6 +379,7 @@
       var settingsRef = firebase.database().ref('/settings/' + currentUid);
       settingsRef.on("child_added", function (snapshot) {
         var radius = snapshot.val().nearbyRadius;
+        console.log(radius);
         if (navigator.geolocation) {
             navigator.geolocation.getCurrentPosition(function (position) {
                 var currentPos = {
@@ -392,8 +395,9 @@
       });
 
       settingsRef.on("child_changed", function (snapshot) {
-        var radius = snapshot.val().nearbyRadius;
-        nearbyCircle.setRadius(radius);
+        var radius = snapshot.val();
+        console.log(radius);
+        nearbyCircle.set('radius', radius);
       });
     }
 
