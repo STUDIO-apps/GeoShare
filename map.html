@@ -153,9 +153,9 @@
   </div>
 </div>
 
-<div id="settings-container" class="settings">
-    <div class="settings-background" onclick="showSettings(false)"></div>
-    <div class="settings-container">
+<div id="settings-dialog" class="settings">
+    <div class="settings-background" id="settings-background" onclick="showSettings(false)"></div>
+    <div class="settings-container" id="settings-container">
       <!-- <div class="nav-bar">
         <button id="close" type="image" onclick="showSettings(false)"/>
       </div> -->
@@ -1104,11 +1104,9 @@
 
     function showRightNav() {
       if (!isShowingRightNav) {
-        //document.getElementById('right-nav').style.width = '320px';
         document.getElementById('right-nav').className = 'right-nav open';
         isShowingRightNav = true;
       } else {
-        //document.getElementById('right-nav').style.width = '0';
         document.getElementById('right-nav').className = 'right-nav closed';
         isShowingRightNav = false;
       }
@@ -1116,10 +1114,12 @@
 
     function showSettings(show) {
       if (show) {
-        document.getElementById('settings-container').style.display = 'block';
+        document.getElementById('settings-background').style.display = 'block';
+        document.getElementById('settings-container').className = 'settings-container open';
         history.pushState('settings', 'Settings - GeoShare', 'map?mode=settings');
       } else {
-        document.getElementById('settings-container').style.display = 'none';
+        document.getElementById('settings-background').style.display = 'none';
+        document.getElementById('settings-container').className = 'settings-container closed';
         window.history.pushState('map', 'Map - GeoShare', 'map');
       }
     }

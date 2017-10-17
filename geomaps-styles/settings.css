@@ -1,29 +1,43 @@
 .settings {
-  display: none;
   width: 100%;
   height: 100%;
-  position: fixed;
+  min-height: 570px;
+  position: absolute;
   top: 0;
   z-index: 1000;
+  pointer-events: none;
 }
 
 .settings-background {
+  display: none;
   background-color: rgba(0, 0, 0, 0.64);
   width: 100%;
   height: 100%;
   cursor: pointer;
+  pointer-events: all;
 }
 
 .settings-container {
   background-color: white;
   width: 700px;
   max-height: 570px;
-  top: 0;
-  bottom: 0;
+  top: -570px;
   left: 0;
   right: 0;
   position: absolute;
   margin: auto;
+}
+
+.settings-container.open {
+  -webkit-transform: translateY(570px);
+  transform: translateY(570px);
+  transition-duration: 0.3s;
+}
+
+.settings-container.closed {
+  -webkit-transform: translateY(-570px);
+  transform: translateY(-570px);
+  transition-duration: 0.3s;
 }
 
 .nav-bar {
