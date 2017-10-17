@@ -156,16 +156,16 @@
 <div id="settings-container" class="settings">
     <div class="settings-background" onclick="showSettings(false)"></div>
     <div class="settings-container">
-      <div class="nav-bar">
+      <!-- <div class="nav-bar">
         <button id="close" type="image" onclick="showSettings(false)"/>
-      </div>
+      </div> -->
       <div class="settings-content-container">
         <div class="pref-screen">
           <div class="settings-category">
             <div class="heading">
               <h3>Location</h3>
             </div>
-            <div class="item-empty selected">
+            <div class="item-empty selected" id="item-nearby-radius" onclick="settingsPage('nearby')">
               <h4>Nearby radius</h4>
             </div>
           </div>
@@ -174,16 +174,16 @@
             <div class="heading">
               <h3>Account</h3>
             </div>
-            <div class="item-empty">
+            <div class="item-empty" id="item-display-name" onclick="settingsPage('name')">
               <h4>Display name</h4>
             </div>
-            <div class="item-empty">
+            <div class="item-empty" id="item-profile-picture" onclick="settingsPage('picture')">
               <h4>Profile picture</h4>
             </div>
-            <div class="item-empty">
+            <div class="item-empty" id="item-chng-pwrd" onclick="settingsPage('pwrd')">
               <h4>Change password</h4>
             </div>
-            <div class="item-empty">
+            <div class="item-empty" id="item-delete-user" onclick="settingsPage('delete')">
               <h4>Delete user</h4>
             </div>
           </div>
@@ -210,24 +210,57 @@
             <output for="nearby-range" id="nearby-ranger-value">100m</output>
             <input type="range" min="1" max="200" value="100" class="nearby-slider" id="nearby-range" oninput="updateNearbyRangerText(value)">
             <div class="button" onclick="updateSettings('nearbyRadius')">
-              <h2>SET</h2>
+              <h2>SET RADIUS</h2>
             </div>
           </div>
 
-          <div class="content-view hidden" id="display-name-content">
-
+          <div class="content-view hidden" id="display-name-content" style="background-image: url(img/title.png)">
+            <h2>Display name</h2>
+            <input type="text" class="settings-entry" id="name-entry">
+            <div class="button" onclick="updateSettings('name')">
+              <h2>SET NAME</h2>
+            </div>
           </div>
 
-          <div class="content-view hidden" id="profile-picture-content">
-
+          <div class="content-view hidden" id="profile-picture-content" style="background-image: url(img/profile.png)">
+            <h2>Profile picture</h2>
+            <input type="file" id="file" class="profile-picture-file" name="datafile">
+            <label for="file">
+              <span>Choose a file...</span>
+            </label>
+            <div class="button" onclick="updateSettings('profile-picture')">
+              <h2>UPLOAD PROFILE PICTURE</h2>
+            </div>
           </div>
 
-          <div class="content-view hidden" id="chng-pwrd-content">
-
+          <div class="content-view hidden" id="chng-pwrd-content" style="background-image: url(img/title.png)">
+            <div class="content-view-container" id="set-password-container">
+              <h2 id="success-pwrd-set"></h2>
+              <h4>Enter a new password</h4>
+              <h4 id="error-pwrd-set"></h4>
+              <input type="password" placeholder="Password" class="settings-entry" id="password-entry">
+              <div class="button" onclick="updateSettings('password')">
+                <h2>SET PASSWORD</h2>
+              </div>
+            </div>
+            <div class="content-view-container hidden" id="password-reauth-container">
+              <h2>This operation is sensitive and requires recent authentication.</h2>
+              <h4 id="error-reauth">Please enter your old password.</h4>
+              <input type="password" placeholder="Password" class="settings-entry" id="password-entry-reauth">
+              <div class="button" onclick="updateSettings('auth')">
+                <h2>AUTHENTICATE</h2>
+              </div>
+            </div>
           </div>
 
           <div class="content-view hidden" id="delete-user-content">
-
+            <h3>WARNING!</h3>
+            <h4>YOU ARE ABOUT TO DELETE THE ACCOUNT FOR USER</h4>
+            <h4>THIS CAN NOT BE UNDONE!</h4>
+            <h4>ARE YOU SURE YOU WANT TO DO THIS?</h4>
+            <div class="button">
+              <h2>DELETE ACCOUNT</h2>
+            </div>
           </div>
         </div>
       </div>
@@ -241,6 +274,8 @@
     var map;
 
     var currentUid = null;
+    var user = null;
+
     var customLogout = false;
     var currentMode = null;
     var currentSelection = null;
@@ -320,6 +355,7 @@
 
     firebase.auth().onAuthStateChanged(function (user) {
         if (user && user.uid != currentUid) {
+          user = user;
             currentUid = user.uid;
             setup();
         } else {
@@ -361,6 +397,7 @@
             ref.on("value", function (snapshot) {
                 var name = (snapshot.val() && snapshot.val().name);
                 document.getElementById('profile-name').innerHTML = 'Welcome, ' + name;
+                document.getElementById('name-entry').value = name;
             }, function (error) {
 
             });
@@ -374,6 +411,99 @@
             getNearbyRadius();
         }
     }
+
+    function settingsPage(option) {
+      switch (option) {
+        case 'nearby':
+          var elements = document.getElementsByClassName('content-view');
+          for (var i = 0; i < elements.length; i++) {
+            elements[i].className = 'content-view hidden';
+          }
+          document.getElementById('nearby-radius-content').className = 'content-view';
+
+          var elements = document.getElementsByClassName('item-empty');
+          for (var i = 0; i < elements.length; i++) {
+            elements[i].className = 'item-empty';
+          }
+          document.getElementById('item-nearby-radius').className = 'item-empty selected';
+          break;
+        case 'name':
+          var elements = document.getElementsByClassName('content-view');
+          for (var i = 0; i < elements.length; i++) {
+            elements[i].className = 'content-view hidden';
+          }
+          document.getElementById('display-name-content').className = 'content-view';
+
+          var elements = document.getElementsByClassName('item-empty');
+          for (var i = 0; i < elements.length; i++) {
+            elements[i].className = 'item-empty';
+          }
+          document.getElementById('item-display-name').className = 'item-empty selected';
+          break;
+        case 'picture':
+          var elements = document.getElementsByClassName('content-view');
+          for (var i = 0; i < elements.length; i++) {
+            elements[i].className = 'content-view hidden';
+          }
+          document.getElementById('profile-picture-content').className = 'content-view';
+
+          var elements = document.getElementsByClassName('item-empty');
+          for (var i = 0; i < elements.length; i++) {
+            elements[i].className = 'item-empty';
+          }
+          document.getElementById('item-profile-picture').className = 'item-empty selected';
+          break;
+        case 'pwrd':
+          var elements = document.getElementsByClassName('content-view');
+          for (var i = 0; i < elements.length; i++) {
+            elements[i].className = 'content-view hidden';
+          }
+          document.getElementById('chng-pwrd-content').className = 'content-view';
+
+          var elements = document.getElementsByClassName('item-empty');
+          for (var i = 0; i < elements.length; i++) {
+            elements[i].className = 'item-empty';
+          }
+          document.getElementById('item-chng-pwrd').className = 'item-empty selected';
+          break;
+        case 'delete':
+          var elements = document.getElementsByClassName('content-view');
+          for (var i = 0; i < elements.length; i++) {
+            elements[i].className = 'content-view hidden';
+          }
+          document.getElementById('delete-user-content').className = 'content-view warning';
+
+          var elements = document.getElementsByClassName('item-empty');
+          for (var i = 0; i < elements.length; i++) {
+            elements[i].className = 'item-empty';
+          }
+          document.getElementById('item-delete-user').className = 'item-empty selected warning';
+          break;
+        default:
+
+      }
+    }
+
+    //Profile picture upload
+    var inputs = document.querySelectorAll( '.profile-picture-file' );
+    Array.prototype.forEach.call(inputs, function(input)
+    {
+    	var label	 = input.nextElementSibling,
+    	    labelVal = label.innerHTML;
+
+    	input.addEventListener('change', function(e)
+    	{
+    		var fileName = '';
+
+    		fileName = e.target.value.split( '\\' ).pop();
+
+    		if( fileName ) {
+          label.querySelector( 'span' ).innerHTML = fileName;
+        } else {
+          label.innerHTML = labelVal;
+        }
+    	});
+    });
 
     function getNearbyRadius() {
       var settingsRef = firebase.database().ref('/settings/' + currentUid);
@@ -1094,16 +1224,75 @@
       }
     }
 
+    var file;
+    var inputFile = document.getElementById('profile-picture-file');
+
+    inputFile.onchange = function(event) {
+      var target = event.target;
+      file = target.files[0];
+    }
+
+
     function updateSettings(setting) {
       var value = null;
       switch (setting) {
         case 'nearbyRadius':
            value = parseInt(document.getElementById('nearby-range').value);
+           firebase.database().ref('/settings/' + currentUid + '/' + setting).set(value);
+          break;
+        case 'name':
+          value = document.getElementById('name-entry').value;
+          firebase.database().ref('/users/' + currentUid + '/' + setting).set(value);
+          firebase.database().ref('/users/' + currentUid + '/caseFoldedName').set(value.toLowerCase());
+          break;
+        case 'profile-picture':
+          var storageRef = firebase.storage().ref();
+          var profileRef = storageRef.child('profile_pictures/' + currentUid + ".png");
+          profileRef.put(file).then(function (snapshot) {
+            console.log('File uploaded');
+          });
+          break;
+        case 'password':
+          var password = document.getElementById('password-entry').value;
+          firebase.auth().currentUser.updatePassword(password).then(function() {
+            document.getElementById('password-entry').value = '';
+            document.getElementById('success-pwrd-set').innerHTML = 'Password has been changed!';
+            document.getElementById('error-pwrd-set').innerHTML = '';
+          }).catch(function(error) {
+            console.log(error.code);
+            if (error.code == "auth/requires-recent-login") {
+              document.getElementById('password-entry').value = '';
+              document.getElementById('error-pwrd-set').innerHTML = '';
+              document.getElementById('password-reauth-container').className = 'content-view-container';
+              document.getElementById('set-password-container').className = 'content-view-container hidden';
+            } else if (error.code == "auth/weak-password") {
+              document.getElementById('password-entry').value = '';
+              document.getElementById('error-pwrd-set').innerHTML = error.message;
+            }
+          });
+          break;
+        case 'auth':
+          var user = firebase.auth().currentUser;
+          var password = document.getElementById('password-entry-reauth').value;
+          var credentials = firebase.auth.EmailAuthProvider.credential(
+            user.email,
+            password
+          );
+          user.reauthenticateWithCredential(credentials).then(function() {
+            document.getElementById('password-entry-reauth').value = '';
+            document.getElementById('error-reauth').innerHTML = '';
+            document.getElementById('success-pwrd-set').innerHTML = 'You have been reauthenticated';
+            document.getElementById('password-reauth-container').className = 'content-view-container hidden';
+            document.getElementById('set-password-container').className = 'content-view-container';
+          }).catch(function(error) {
+            document.getElementById('password-entry-reauth').value = '';
+            document.getElementById('error-reauth').innerHTML = 'The password is invalid.';
+            document.getElementById('error-reauth').style.color = '#ff9800';
+            console.log(error.message);
+          });
           break;
         default:
-
       }
-      firebase.database().ref('/settings/' + currentUid + '/' + setting).set(value);
     }
 
     function updateNearbyRangerText(value) {

@@ -17,7 +17,7 @@
 .settings-container {
   background-color: white;
   width: 700px;
-  max-height: calc(570px + 28px + 3px);
+  max-height: 570px;
   top: 0;
   bottom: 0;
   left: 0;
@@ -71,7 +71,6 @@
 .pref-screen {
   width: 50%;
   height: 570px;
-  margin-top: 3px;
   float: left;
   overflow-y: auto;
 }
@@ -79,7 +78,7 @@
 .settings-category {
   display: inline-block;
   width: 100%;
-  margin-bottom: 12px;
+  padding-top: 12px;
 }
 
 .heading h3 {
@@ -117,6 +116,10 @@
   background-color: #4caf50;
 }
 
+.item-empty.selected.warning {
+  background-color: #e53935;
+}
+
 .item-empty.selected h4 {
   color: white;
 }
@@ -129,7 +132,6 @@
 
 .content-screen {
   width: 50%;
-  margin-top: 3px;
   float: right;
   overflow-y: auto;
   background-color: #4caf50;
@@ -138,7 +140,7 @@
 .content-view {
   width: 100%;
   height: 100%;
-  display: inline-block;
+  display: flow-root;
   background-size: 350px;
   background-repeat: no-repeat;
 }
@@ -147,11 +149,37 @@
   display: none;
 }
 
+.content-view-container {
+
+}
+
+.content-view-container.hidden {
+  display: none;
+}
+
+.content-view.warning {
+  background-color: #e53935;
+}
+
 .content-view h2 {
-  font: 32px 'Roboto', sans-serif;
+  font: 24px 'Roboto', sans-serif;
   color: white;
   text-align: center;
   margin-top: 330px;
+}
+
+.content-view h3 {
+  font: 64px 'Roboto', sans-serif;
+  color: white;
+  text-align: center;
+  margin-top: 24px;
+}
+
+.content-view h4 {
+  font: 18px 'Roboto', sans-serif;
+  color: white;
+  text-align: center;
+  margin-top: 12px;
 }
 
 .content-view output {
@@ -160,6 +188,43 @@
   font: 18px 'Roboto', sans-serif;
   bottom: 150px;
   left: 514.98px;
+}
+
+.settings-entry {
+  width: 75%;
+  margin: auto;
+  margin-left: calc(25%/2);
+  background: transparent;
+  border: 0;
+  border-bottom: 1px white solid;
+  outline: none;
+  color: white;
+  font: 18px 'Roboto', sans-serif;
+}
+
+.profile-picture-file {
+  width: 0.1px;
+  height: 0.1px;
+  opacity: 0;
+  overflow: hidden;
+  position: absolute;
+  z-index: -1;
+}
+
+.profile-picture-file + label {
+  color: #ff9800;
+  border: 2px solid currentColor;
+  border-radius: 50px;
+  width: 36%;
+  font: 18px 'Roboto', sans-serif;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  cursor: pointer;
+  display: inline-block;
+  overflow: hidden;
+  padding: 0.625rem 1.25rem;
+  margin-left: calc((100% - 36% - 2.5rem)/2);
+  margin-top: 24px;
 }
 
 .nearby-slider {
@@ -209,5 +274,27 @@
 }
 
 .button h2 {
-  margin: 12px auto;
+  margin: 24px auto;
+}
+
+::-webkit-input-placeholder { /* WebKit, Blink, Edge */
+    color: #FFF;
+}
+
+:-moz-placeholder { /* Mozilla Firefox 4 to 18 */
+    color: #FFF;
+    opacity: 1;
+}
+
+::-moz-placeholder { /* Mozilla Firefox 19+ */
+    color: #FFF;
+    opacity: 1;
+}
+
+:-ms-input-placeholder { /* Internet Explorer 10-11 */
+    color: #FFF;
+}
+
+::-ms-input-placeholder { /* Microsoft Edge */
+    color: #FFF;
 }
