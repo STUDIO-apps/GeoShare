@@ -26,6 +26,7 @@
   right: 0;
   position: absolute;
   margin: auto;
+  pointer-events: all;
 }
 
 .settings-container.open {
