@@ -89,19 +89,3 @@ function showFindFriends(show) {
     window.history.pushState('map', 'Map - GeoShare', 'map?mode=manager');
   }
 }
-
-// Image scale
-
-function scaleImage(x, y, width, height, radius, img){
-  var canvas = document.createElement("canvas");
-  var ctx = canvas.getContext("2d");
-
-  ctx.save();
-  ctx.beginPath();
-  ctx.arc(x, y, radius, 0, 2 * Math.PI, false);
-  ctx.clip();
-  ctx.drawImage(img, 0, 0, width, height);
-  ctx.restore();
-
-  return canvas;
-}
