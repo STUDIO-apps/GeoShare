@@ -20,6 +20,7 @@
 
     <script type="text/javascript" src="js/main.js"></script>
     <script type="text/javascript" src="js/friends.js"></script>
+    <script type="text/javascript" src="js/markers.js"></script>
     <script type="text/javascript" src="js/profile-picture.js"></script>
     <script type="text/javascript" src="js/tracking.js"></script>
     <script type="text/javascript" src="js/location.js"></script>
@@ -100,7 +101,6 @@
 
     <div class="nav-settings-bar">
         <div class="settings-wrapper">
-            <!-- <button id="lock" type="image" onclick=""/> -->
             <button id="settings" type="image" onclick="showSettings(true)"/>
             <button id="lock" type="image" onclick="logout()"/>
         </div>
@@ -109,22 +109,6 @@
 </div>
 
 <div class="map-container">
-    <!-- <div id="searchContainer">
-        <div class="controls">
-            <input id="pac-input" class="input" type="text" placeholder="Search...">
-            <div class="searchbox-searchbutton-container">
-                <button id="searchbutton" aria-label="Search" class="searchbox-searchbutton">
-                    <span aria-hidden="true" class="controls-tooltip tooltip-dark">Search</span>
-                </button>
-            </div>
-            <div class="navigationbutton-container">
-                <img src="img/directions.png">
-                <span aria-hidden="true" class="controls-tooltip tooltip-dark">Directions</span>
-                </img>
-            </div>
-        </div>
-
-    </div> -->
     <div class="controls-container" id="controls-container">
       <div class="show-share-container" onclick="showRightNav()">
         <img src="img/share-white.png">
@@ -285,7 +269,6 @@
     var customLogout = false;
     var currentMode = null;
     var currentSelection = null;
-
     var isShowingManager = false;
 
     var friendMarker = {};
@@ -434,8 +417,6 @@
       }
     }
 
-
-
     //Profile picture upload
     var inputs = document.querySelectorAll( '.profile-picture-file' );
     Array.prototype.forEach.call(inputs, function(input)
@@ -456,96 +437,6 @@
         }
     	});
     });
-
-    //Markers
-
-    function createFriendMarkerImage(id) {
-      var canvas, context;
-
-      var width = 64;
-      var height = 86;
-      var radius = 4;
-
-      var marker = friendMarker[id];
-
-      var markerImg = new Image();
-      markerImg.src = 'img/marker.png';
-
-      canvas = document.createElement("canvas");
-      canvas.width = width;
-      canvas.height = height;
-
-      context = canvas.getContext("2d");
-
-      context.clearRect(0,0,width,height);
-
-      var markerImg = new Image();
-      markerImg.setAttribute('crossOrigin', 'anonymous');
-      markerImg.src = 'img/marker.png';
-
-      var markerProfileImg = new Image();
-      markerProfileImg.setAttribute('crossOrigin', 'anonymous');
-      //Profile picture
-      var storage = firebase.storage();
-      var gsRef = storage.refFromURL('gs://modular-decoder-118720.appspot.com/profile_pictures');
-
-      gsRef.child('/' + id + '.png').getDownloadURL().then(function (url) {
-          markerProfileImg.src = url;
-      }).catch(function (error) {
-
-      });
-
-      markerProfileImg.onload = function() {
-        context.drawImage(markerImg, 0, 0, width, height);
-        context.drawImage(scaleImage(20, 20, 40, 40, 20, markerProfileImg), 12, 14);
-
-        marker.setIcon(canvas.toDataURL());
-      }
-    }
-
-    function scaleImage(x, y, width, height, radius, img){
-      var canvas = document.createElement("canvas");
-      var ctx = canvas.getContext("2d");
-
-      ctx.save();
-      ctx.beginPath();
-      ctx.arc(x, y, radius, 0, 2 * Math.PI, false);
-      ctx.clip();
-      ctx.drawImage(img, 0, 0, width, height);
-      ctx.restore();
-
-      return canvas;
-    }
-
-    function addFriendMarker(id, lat, long) {
-      var latLong = {lat: lat, lng: long};
-      var marker = new google.maps.Marker({
-        position: latLong,
-        map: map
-      });
-      friendMarker[id] = marker;
-      createFriendMarkerImage(id);
-
-      var ref = firebase.database().ref('/users/' + id);
-      ref.on("value", function (snapshot) {
-        var name = (snapshot.val() && snapshot.val().name);
-        marker.setTitle(name);
-      })
-    }
-
-    function updateFriendMarker(id, lat, long) {
-      var latLong = {lat: lat, lng: long};
-      var marker = friendMarker[id];
-      marker.setPosition(latLong);
-    }
-
-    function removeFriendMarker(id) {
-      var marker = friendMarker[id];
-      if (marker != null) {
-        marker.setMap(null);
-        delete friendMarker[id];
-      }
-    }
 
     var file;
     var inputFile = document.getElementById('profile-picture-file');
@@ -733,22 +624,7 @@
         map.mapTypes.set('styled_map', styledMapType);
         map.setMapTypeId('styled_map');
 
-        //var input = document.getElementById('pac-input');
-        //var searchContainer = document.getElementById('searchContainer');
-        //var searchBox = new google.maps.places.SearchBox(input);
-        //map.controls[google.maps.ControlPosition.TOP_LEFT].push(searchContainer);
-
         map.setOptions({draggableCursor: 'default'});
-
-        // google.maps.event.addListener(map, 'zoom_changed', function () {
-        //     if (map.getZoom() < 3) {
-        //         map.setZoom(3);
-        //     }
-        // });
-
-        // map.addListener('bounds_changed', function () {
-        //     searchBox.setBounds(map.getBounds());
-        // });
 
         var gpsLocation = null;
 
@@ -769,7 +645,6 @@
                         //anchor: new google.maps.Point(14, 14)
                     });
 
-                    // nearbyRadius(currentPos, 200);
                     nearbyFriends();
 
                     map.setCenter(currentPos);
@@ -781,48 +656,6 @@
         }
 
         getCurrentLocation();
-
-        // searchBox.addListener('places_changed', function () {
-        //     var places = searchBox.getPlaces();
-        //
-        //     if (places.length == 0) {
-        //         return;
-        //     }
-        //
-        //     // Clear out the old markers.
-        //     markers.forEach(function (marker) {
-        //         marker.setMap(null);
-        //     });
-        //     markers = [];
-        //
-        //     // For each place, get the icon, name and location.
-        //     var bounds = new google.maps.LatLngBounds();
-        //     places.forEach(function (place) {
-        //         var icon = {
-        //             url: place.icon,
-        //             size: new google.maps.Size(71, 71),
-        //             origin: new google.maps.Point(0, 0),
-        //             anchor: new google.maps.Point(17, 34),
-        //             scaledSize: new google.maps.Size(25, 25)
-        //         };
-        //
-        //         // Create a marker for each place.
-        //         markers.push(new google.maps.Marker({
-        //             map: map,
-        //             icon: icon,
-        //             title: place.name,
-        //             position: place.geometry.location
-        //         }));
-        //
-        //         if (place.geometry.viewport) {
-        //             // Only geocodes have viewport.
-        //             bounds.union(place.geometry.viewport);
-        //         } else {
-        //             bounds.extend(place.geometry.location);
-        //         }
-        //     });
-        //     map.fitBounds(bounds);
-        // });
     }
 
 </script>
