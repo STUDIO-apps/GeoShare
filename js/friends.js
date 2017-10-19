@@ -1,7 +1,6 @@
 //Friends
 
 function getFriendsList() {
-  //Friends list
   var friendRef = firebase.database().ref('/friends/' + currentUid);
   friendRef.on("child_added", function (snapshot) {
     var id = snapshot.key;
@@ -33,29 +32,38 @@ function addFriendManagerElement(id, name) {
   friendCurrentPicture.className = 'friendCurrentPicture';
   getProfileImage(id, friendCurrentPicture);
 
+  var optionsContainer = document.createElement("DIV");
+  optionsContainer.className = 'optionsContainer';
+
   var friendCurrentMore = document.createElement("IMG");
   friendCurrentMore.className = 'friendCurrentMore';
   friendCurrentMore.src = 'img/more.png';
 
+  var more = document.createElement("DIV");
+  more.className = 'more';
+  more.id = 'more';
+
+  var friendOptionsRemove = document.createElement("DIV");
+  friendOptionsRemove.className = 'friendOptionsRemove';
+  var friendOptionsRemoveContainer = document.createElement("H3");
+  var friendOptionsRemoveText = document.createTextNode("Unfriend");
+
+  friendOptionsRemoveContainer.appendChild(friendOptionsRemoveText);
+  friendOptionsRemove.appendChild(friendOptionsRemoveContainer);
+
+  more.appendChild(friendOptionsRemove);
+
+  optionsContainer.appendChild(friendCurrentMore);
+  optionsContainer.appendChild(more);
+
   friendCurrentNameContainer.appendChild(friendCurrentName);
   friendCurrentItem.appendChild(friendCurrentPicture);
   friendCurrentItem.appendChild(friendCurrentNameContainer);
-  friendCurrentItem.appendChild(friendCurrentMore);
+  friendCurrentItem.appendChild(optionsContainer);
 
   document.getElementById('tab-0-content').appendChild(friendCurrentItem);
 
-  friendCurrentMore.onclick = function() {
-    var moreDiv = document.getElementById('more');
-    if (moreDiv == null) {
-      var more = document.createElement("DIV");
-      more.className = 'more';
-      more.id = 'more';
 
-      friendCurrentItem.appendChild(more);
-    } else {
-      moreDiv.remove();
-    }
-  };
 }
 
 function removeFriendElement(id) {
@@ -91,14 +99,29 @@ function addRequestElement(id, name, isOutgoing) {
   friendRequestPicture.className = 'friendRequestPicture';
   getProfileImage(id, friendRequestPicture);
 
+  var acceptRejectContainer = document.createElement("DIV");
+  acceptRejectContainer.className = 'acceptRejectContainer';
+
+  var acceptButton = document.createElement("IMG");
+  acceptButton.src = 'img/accept.png';
+  acceptButton.title = 'accept';
+
+  var rejectButton = document.createElement("IMG");
+  rejectButton.src = 'img/decline.png';
+  rejectButton.title = 'decline';
+
   friendRequestNameContainer.appendChild(friendRequestName);
   friendRequestItem.appendChild(friendRequestPicture);
   friendRequestItem.appendChild(friendRequestNameContainer);
+  friendRequestItem.appendChild(acceptRejectContainer);
 
   if (!isOutgoing) {
+    acceptRejectContainer.appendChild(acceptButton);
+    acceptRejectContainer.appendChild(rejectButton);
     document.getElementById('incoming-container').appendChild(friendRequestItem);
     document.getElementById('no-incoming-text').style.display = 'none';
   } else {
+    acceptRejectContainer.appendChild(rejectButton);
     document.getElementById('outgoing-container').appendChild(friendRequestItem);
     document.getElementById('no-outgoing-text').style.display = 'none';
   }
@@ -265,7 +288,7 @@ function addFriendElement(id, name) {
         var shareDialogGetButton = document.createElement("DIV");
         shareDialogGetButton.className = 'shareDialogButton';
         var shareDialogTextGetContainer = document.createElement("H2");
-        var shareDialogTextGet = document.createTextNode("GET APP");
+        var shareDialogTextGet = document.createTextNode("GET THE ANDROID APP");
         shareDialogTextGetContainer.appendChild(shareDialogTextGet);
 
         shareDialogGetButton.onclick = function(event) {

@@ -182,19 +182,50 @@
   border-radius: 100px;
 }
 
+.optionsContainer {
+  position: relative;
+  display: inline-block;
+}
+
 .friendCurrentMore {
   height: 32px;
   width: 32px;
-  margin: auto;
+  margin-top: 20px;
   margin-left: 12px;
   margin-right: 12px;
   cursor: pointer;
 }
 
 .more {
+  display: none;
   width: 144px;
-  height: 144px;
-  background-color: black;
+  height: 48px;
+  position: absolute;
+  box-shadow: 0px 2px 8px 5px rgba(0,0,0,0.18);
+  background-color: rgb(255,255,255);
+  right: 24px;
+  z-index: 1000;
+}
+
+.friendOptionsRemove {
+  display: flex;
+  height: 48px;
+  margin: 0;
+  cursor: pointer;
+}
+
+.friendOptionsRemove h3 {
+  margin: auto 0;
+  margin-left: 12px;
+  font: 18px 'Roboto', sans-serif;
+}
+
+.friendOptionsRemove:hover {
+  background-color: rgba(0, 0, 0, 0.08);
+}
+
+.optionsContainer:hover .more {
+  display: block;
 }
 
 .pending-tab {
@@ -236,6 +267,21 @@
   width: 64px;
   height: 64px;
   border-radius: 100px;
+}
+
+.acceptRejectContainer {
+  height: 72px;
+  width: 88px;
+  margin: 0;
+  display: inline-flex;
+}
+
+.acceptRejectContainer img {
+  width: 32px;
+  height: 32px;
+  margin: auto;
+  margin-right: 12px;
+  cursor: pointer;
 }
 
 .out-view {
