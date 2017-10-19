@@ -7,6 +7,7 @@ function getFriendsList() {
     var ref = firebase.database().ref('/users/' + id);
     ref.on("value", function (snapshot) {
         friendName = (snapshot.val() && snapshot.val().name);
+        friendsList[id] = true;
         addFriendElement(id, friendName);
         addFriendManagerElement(id, friendName);
     }, function (error) {
@@ -86,7 +87,7 @@ function getFriendRequests() {
     var ref = firebase.database().ref('/users/' + id);
     ref.on("value", function (snapshot) {
       var name = (snapshot.val() && snapshot.val().name);
-
+      pendingList[id] = true;
       addRequestElement(id, name, isOutgoing);
     })
   })
@@ -154,7 +155,9 @@ function getSearchResults(value) {
       snapshot.forEach(function(ds) {
         var id = ds.key;
         var name = ds.val().name;
-        addSearchResultsElements(id, name)
+        if (id != currentUid) {
+          addSearchResultsElements(id, name);
+        }
       });
     });
   }
@@ -169,13 +172,26 @@ function addSearchResultsElements(id, name) {
   var searchName = document.createTextNode(name);
   var searchPicture = document.createElement("IMG");
   searchPicture.className = 'searchPicture';
-  var sendRequest = document.createElement("IMG");
-  sendRequest.className = 'sendRequest';
-  sendRequest.src = '';
 
-  sendRequest.onclick = function() {
-    firebase.database().ref('/pending/' + currentUid + "/" + id + "/outgoing").set(true);
-    firebase.database().ref('/pending/' + id + "/" + currentUid + "/outgoing").set(false);
+  if (id in friendsList) {
+    var isFriendIndicator = document.createElement("IMG");
+    isFriendIndicator.className = 'friendIndicator';
+    isFriendIndicator.title = 'Friend';
+    isFriendIndicator.src = 'img/person.png';
+  } else if (id in pendingList) {
+    var isFriendIndicator = document.createElement("IMG");
+    isFriendIndicator.className = 'friendIndicator';
+    isFriendIndicator.title = 'Friend request sent'
+    isFriendIndicator.src = 'img/person-grey.png';
+  } else {
+    var sendRequest = document.createElement("IMG");
+    sendRequest.className = 'sendRequest';
+    sendRequest.src = '';
+
+    sendRequest.onclick = function() {
+      firebase.database().ref('/pending/' + currentUid + "/" + id + "/outgoing").set(true);
+      firebase.database().ref('/pending/' + id + "/" + currentUid + "/outgoing").set(false);
+    }
   }
 
   getProfileImage(id, searchPicture);
@@ -183,7 +199,12 @@ function addSearchResultsElements(id, name) {
   searchNameContainer.appendChild(searchName);
   searchItem.appendChild(searchPicture);
   searchItem.appendChild(searchNameContainer);
-  searchItem.appendChild(sendRequest);
+
+  if (id in friendsList || id in pendingList) {
+    searchItem.appendChild(isFriendIndicator);
+  } else {
+    searchItem.appendChild(sendRequest);
+  }
 
   document.getElementById('search-results-container').insertBefore(searchItem, document.getElementById('search-results-container').firstChild);
 }

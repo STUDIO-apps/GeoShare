@@ -113,6 +113,14 @@
   border-radius: 100px;
 }
 
+.friendIndicator {
+  margin: auto;
+  margin-left: 12px;
+  margin-right: 12px;
+  min-width: 32px;
+  height: 32px;
+}
+
 .sendRequest {
   margin: auto;
   margin-left: 12px;
