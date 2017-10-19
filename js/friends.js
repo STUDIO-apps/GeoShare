@@ -5,9 +5,14 @@ function getFriendsList() {
   friendRef.on("child_added", function (snapshot) {
     var id = snapshot.key;
     var ref = firebase.database().ref('/users/' + id);
+
+    if (id in pendingList) {
+      delete pendingList[id];
+    }
+    friendsList[id] = true;
+
     ref.on("value", function (snapshot) {
         friendName = (snapshot.val() && snapshot.val().name);
-        friendsList[id] = true;
         addFriendElement(id, friendName);
         addFriendManagerElement(id, friendName);
     }, function (error) {
@@ -17,6 +22,8 @@ function getFriendsList() {
   });
 
   friendRef.on("child_removed", function (snapshot) {
+    delete friendsList[snapshot.key];
+    removeFriendElement(snapshot.key);
     removeFriendElement(snapshot.key + '-manager');
   })
 }
@@ -90,7 +97,12 @@ function getFriendRequests() {
       pendingList[id] = true;
       addRequestElement(id, name, isOutgoing);
     })
-  })
+  });
+
+  friendRequestRef.on("child_removed", function (snapshot) {
+    delete pendingList[snapshot.key];
+    removeFriendElement(snapshot.key + "-manager-request");
+  });
 }
 
 function addRequestElement(id, name, isOutgoing) {
@@ -191,6 +203,15 @@ function addSearchResultsElements(id, name) {
     sendRequest.onclick = function() {
       firebase.database().ref('/pending/' + currentUid + "/" + id + "/outgoing").set(true);
       firebase.database().ref('/pending/' + id + "/" + currentUid + "/outgoing").set(false);
+
+      var isFriendIndicator = document.createElement("IMG");
+      isFriendIndicator.className = 'friendIndicator';
+      isFriendIndicator.title = 'Friend request sent'
+      isFriendIndicator.src = 'img/person-grey.png';
+
+      searchItem.appendChild(isFriendIndicator);
+
+      sendRequest.remove();
     }
   }
 
