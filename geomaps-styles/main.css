@@ -53,8 +53,8 @@ html, body {
 }
 
 .right-nav.closed {
-  -webkit-transform: translateX(320px);
-  transform: translateX(320px);
+  -webkit-transform: translateX(0px);
+  transform: translateX(0px);
   transition-duration: 0.3s;
 }
 

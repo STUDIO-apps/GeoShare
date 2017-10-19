@@ -16,7 +16,7 @@ function getFriendsList() {
   });
 
   friendRef.on("child_removed", function (snapshot) {
-    removeFriendElement(snapshot.key);
+    removeFriendElement(snapshot.key + '-manager');
   })
 }
 
@@ -47,6 +47,11 @@ function addFriendManagerElement(id, name) {
   friendOptionsRemove.className = 'friendOptionsRemove';
   var friendOptionsRemoveContainer = document.createElement("H3");
   var friendOptionsRemoveText = document.createTextNode("Unfriend");
+
+  friendOptionsRemove.onclick = function() {
+    firebase.database().ref('/friends/' + currentUid + "/" + id).remove();
+    firebase.database().ref('/friends/' + id + "/" + currentUid).remove();
+  }
 
   friendOptionsRemoveContainer.appendChild(friendOptionsRemoveText);
   friendOptionsRemove.appendChild(friendOptionsRemoveContainer);
@@ -110,12 +115,24 @@ function addRequestElement(id, name, isOutgoing) {
   rejectButton.src = 'img/decline.png';
   rejectButton.title = 'decline';
 
+  rejectButton.onclick = function() {
+    firebase.database().ref('/pending/' + id + "/" + currentUid).remove();
+    firebase.database().ref('/pending/' + currentUid + "/" + id).remove();
+  }
+
   friendRequestNameContainer.appendChild(friendRequestName);
   friendRequestItem.appendChild(friendRequestPicture);
   friendRequestItem.appendChild(friendRequestNameContainer);
   friendRequestItem.appendChild(acceptRejectContainer);
 
   if (!isOutgoing) {
+    acceptButton.onclick = function() {
+      firebase.database().ref('/pending/' + id + "/" + currentUid).remove();
+      firebase.database().ref('/pending/' + currentUid + "/" + id).remove();
+      firebase.database().ref('/friends/' + currentUid + "/" + id).set(true);
+      firebase.database().ref('/friends/' + id + "/" + currentUid).set(true);
+    }
+
     acceptRejectContainer.appendChild(acceptButton);
     acceptRejectContainer.appendChild(rejectButton);
     document.getElementById('incoming-container').appendChild(friendRequestItem);
@@ -131,22 +148,19 @@ function addRequestElement(id, name, isOutgoing) {
 
 function getSearchResults(value) {
   removeSearchElements();
-  if (value == "") {
-    document.getElementById('recentSearchContainer').style.display = '';
-  } else {
-    document.getElementById('recentSearchContainer').style.display = 'none';
+  if (value != "") {
     var searchResultsRef = firebase.database().ref('/users/').orderByChild('caseFoldedName').startAt(value.toLowerCase()).endAt(value.toLowerCase() + '~');
     searchResultsRef.once('value', function (snapshot) {
       snapshot.forEach(function(ds) {
         var id = ds.key;
         var name = ds.val().name;
-        addSearchElements(id, name)
+        addSearchResultsElements(id, name)
       });
-    })
+    });
   }
 }
 
-function addSearchElements(id, name) {
+function addSearchResultsElements(id, name) {
   var searchItem = document.createElement("DIV");
   searchItem.className = 'searchItem';
   searchItem.id = id;
@@ -154,12 +168,22 @@ function addSearchElements(id, name) {
   var searchNameContainer = document.createElement("H2");
   var searchName = document.createTextNode(name);
   var searchPicture = document.createElement("IMG");
+  searchPicture.className = 'searchPicture';
+  var sendRequest = document.createElement("IMG");
+  sendRequest.className = 'sendRequest';
+  sendRequest.src = '';
+
+  sendRequest.onclick = function() {
+    firebase.database().ref('/pending/' + currentUid + "/" + id + "/outgoing").set(true);
+    firebase.database().ref('/pending/' + id + "/" + currentUid + "/outgoing").set(false);
+  }
 
   getProfileImage(id, searchPicture);
 
   searchNameContainer.appendChild(searchName);
   searchItem.appendChild(searchPicture);
   searchItem.appendChild(searchNameContainer);
+  searchItem.appendChild(sendRequest);
 
   document.getElementById('search-results-container').insertBefore(searchItem, document.getElementById('search-results-container').firstChild);
 }
@@ -169,40 +193,6 @@ function removeSearchElements() {
   while (searchResContainer.lastChild) {
     searchResContainer.removeChild(searchResContainer.lastChild);
   }
-}
-
-//Recent search
-
-function getRecentSearch() {
-  var recentSearchRef = firebase.database().ref('/recent_friends_search/' + currentUid);
-  recentSearchRef.on("child_added", function (snapshot) {
-    var entry = snapshot.val().entry;
-    var isSearch = snapshot.val().search;
-    var id = snapshot.val().uid;
-    addRecentSearchElement(entry, isSearch, id);
-  });
-}
-
-function addRecentSearchElement(entry, isSearch, id) {
-  var recentSearchItem = document.createElement("DIV");
-  recentSearchItem.className = 'searchItem';
-  recentSearchItem.id = id;
-
-  var recentSearchNameContainer = document.createElement("H2");
-  var recentSearchName = document.createTextNode(entry);
-  var recentSearchPicture = document.createElement("IMG");
-
-  if (isSearch) {
-    recentSearchPicture.src = 'img/search.png';
-  } else {
-    getProfileImage(id, recentSearchPicture);
-  }
-
-  recentSearchNameContainer.appendChild(recentSearchName);
-  recentSearchItem.appendChild(recentSearchPicture);
-  recentSearchItem.appendChild(recentSearchNameContainer);
-
-  document.getElementById('recentSearchContainer').insertBefore(recentSearchItem, document.getElementById('recentSearchContainer').firstChild);
 }
 
 /* Right nav view */

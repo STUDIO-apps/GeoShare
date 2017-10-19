@@ -1,44 +1,52 @@
 .friend-search {
-  display: none;
   width: 100%;
   height: 100%;
   position: fixed;
   top: 0;
   z-index: 1000;
+  pointer-events: none;
 }
 
 .friend-search-background {
+  display: none;
   background-color: rgba(0, 0, 0, 0.64);
   width: 100%;
   height: 100%;
   cursor: pointer;
+  pointer-events: all;
 }
 
 .friend-search-container {
   display: flex;
   background-color: white;
-  width: 800px;
+  width: 400px;
   max-height: 700px;
-  top: 0;
-  bottom: 0;
+  top: -72px;
   left: 0;
   right: 0;
   position: absolute;
   margin: auto;
+  pointer-events: all;
+}
+
+.friend-search-container.open {
+  -webkit-transform: translateY(72px);
+  transform: translateY(72px);
+  transition-duration: 0.3s;
+}
+
+.friend-search-container.closed {
+  -webkit-transform: translateY(0px);
+  transform: translateY(0px);
+  transition-duration: 0.3s;
 }
 
 .friend-search-wrapper {
-  width: 400px;
-  height: 100%;
-  float: left;
-  border-right: 1px;
-  border-right-style: solid;
-  border-color: rgba(0, 0, 0, 0.5);
-  overflow-y: scroll;
-  overflow-x: hidden;
+  width: 100%;
 }
 
 .friend-search-box {
+  background-color: #4caf50;
   display: flex;
   padding: 16px;
   float: left;
@@ -46,13 +54,14 @@
 }
 
 .friend-search-box input {
+  background: transparent;
   width: calc(100% - 40px);
   margin: auto;
   margin-left: 0;
   padding-left: 16px;
   padding-right: 16px;
   text-decoration: none;
-  color: #4caf50;
+  color: white;
   vertical-align: middle;
   font: 18px 'Roboto', sans-serif;
   border: 0;
@@ -72,13 +81,10 @@
 }
 
 .friend-search-results {
-  display: inline-block;
   width: 100%;
-}
-
-.friend-content-wrapper {
-  width: 400px;
-  height: 100%;
+  max-height: calc(700px - 72px);
+  overflow-y: auto;
+  overflow-x: hidden;
 }
 
 .recentSearchContainer {
@@ -89,19 +95,6 @@
   width: 400px;
   height: 72px;
   display: inline-flex;
-
-  -webkit-transition: background ease-in 150ms;
-  -moz-transition: background ease-in 150ms;
-  -o-transition: background ease-in 150ms;
-  transition: background ease-in 150ms;
-}
-
-.searchItem:hover {
-  background-color: rgba(0,0,0,0.08);
-  -webkit-transition: background ease-in 150ms;
-  -moz-transition: background ease-in 150ms;
-  -o-transition: background ease-in 150ms;
-  transition: background ease-in 150ms;
 }
 
 .searchItem h2 {
@@ -111,11 +104,32 @@
   color: #4caf50;
 }
 
-.searchItem img {
+.searchPicture {
   margin: auto;
   margin-left: 12px;
   margin-right: 12px;
-  width: 64px;
+  min-width: 64px;
   height: 64px;
   border-radius: 100px;
+}
+
+.sendRequest {
+  margin: auto;
+  margin-left: 12px;
+  margin-right: 12px;
+  min-width: 32px;
+  height: 32px;
+  background-image: url('../img/send.png');
+  background-size: 32px;
+  border: 0;
+  cursor: pointer;
+
+  -webkit-transition: background .25s ease-in-out;
+  transition: background .25s ease-in-out;
+}
+
+.sendRequest:hover {
+  background-image: url('../img/send-green.png');
+  -webkit-transition: background .25s ease-in-out;
+  transition: background .25s ease-in-out;
 }

@@ -125,20 +125,18 @@
   </div>
 </div>
 
-<div class="friend-search" id="friend-search-container">
-  <div class="friend-search-background" onclick="showFindFriends(false)"></div>
-  <div class="friend-search-container">
+<div class="friend-search">
+  <div class="friend-search-background" id="friend-search-background" onclick="showFindFriends(false)"></div>
+  <div class="friend-search-container" id="friend-search-container">
     <div class="friend-search-wrapper">
       <div class="friend-search-box">
-        <input id="name" type="text" name="name" placeholder="Find Friends" oninput="getSearchResults(this.value)" required>
-        <img src="img/search.png"/>
+        <input id="search-input" type="text" name="name" placeholder="Find Friends" oninput="getSearchResults(this.value)" autocomplete="off">
+        <img src="img/account-search.png"/>
       </div>
       <div class="friend-search-results" id="friend-search-results">
-        <div class="recentSearchContainer" id="recentSearchContainer"></div>
         <div class="search-results-container" id="search-results-container"></div>
       </div>
     </div>
-    <div class="friend-content-wrapper"></div>
   </div>
 </div>
 

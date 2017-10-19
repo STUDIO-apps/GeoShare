@@ -75,17 +75,24 @@ function changeTab(tab) {
   }
 }
 
-var hasRecent = false;
+//var hasRecent = false;
 function showFindFriends(show) {
   if (show) {
-    if (!hasRecent) {
-      getRecentSearch();
-    }
-    hasRecent = true;
-    document.getElementById('friend-search-container').style.display = 'block';
+    // if (!hasRecent) {
+    //   getRecentSearch();
+    // }
+    //hasRecent = true;
+    document.getElementById('friend-search-background').style.display = 'block';
+    document.getElementById('friend-search-container').className = 'friend-search-container open';
+    document.getElementById('search-input').focus();
+    //document.getElementById('friend-search-container').style.display = 'block';
     history.pushState('settings', 'Search - GeoShare', 'map?mode=search');
   } else {
-    document.getElementById('friend-search-container').style.display = 'none';
+    document.getElementById('friend-search-background').style.display = 'none';
+    document.getElementById('friend-search-container').className = 'friend-search-container closed';
+    document.getElementById('search-input').value = "";
+    removeSearchElements();
+    //document.getElementById('friend-search-container').style.display = 'none';
     window.history.pushState('map', 'Map - GeoShare', 'map?mode=manager');
   }
 }
