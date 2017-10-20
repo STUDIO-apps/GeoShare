@@ -216,7 +216,7 @@
             <label for="file">
               <span>Choose a file...</span>
             </label>
-            <div class="button" onclick="updateSettings('profile-picture')">
+            <div class="button" onclick="imageUpload()">
               <h2>UPLOAD PROFILE PICTURE</h2>
             </div>
           </div>
@@ -439,12 +439,39 @@
     	});
     });
 
-    var file;
-    var inputFile = document.getElementById('profile-picture-file');
+    var convCanvas = document.createElement("canvas");
+    var ctx = convCanvas.getContext("2d");
 
-    inputFile.onchange = function(event) {
-      var target = event.target;
-      file = target.files[0];
+    var inputFile = document.getElementById('file');
+    inputFile.addEventListener('change', imageConverter, false);
+
+    function imageConverter(e) {
+      var reader = new FileReader();
+
+      reader.onload = function(event) {
+        var newProfile = new Image();
+        newProfile.onload = function() {
+          convCanvas.width = 128;
+          convCanvas.height = 128;
+          ctx.drawImage(newProfile, 0, 0, 128, 128);
+        }
+        newProfile.src = event.target.result;
+      }
+      reader.readAsDataURL(e.target.files[0]);
+    }
+
+    function imageUpload() {
+      convCanvas.toBlob(function(blob) {
+        //blob.name = currentUid + ".png";
+
+        var storageRef = firebase.storage().ref();
+
+        var profileRef = storageRef.child('profile_pictures/' + currentUid + ".png");
+
+        profileRef.put(blob).then(function(snapshot) {
+          console.log("File uploaded!");
+        });
+      })
     }
 
     // Image scale
