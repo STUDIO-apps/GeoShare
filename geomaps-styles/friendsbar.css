@@ -9,7 +9,7 @@
   pointer-events: all;
   float: right;
   max-height: calc(100% - 168px);
-  overflow-y: scroll;
+  overflow-y: auto;
   overflow-x: hidden;
 }
 
@@ -34,14 +34,19 @@
 }
 
 .friendItem h2 {
+  max-width: 220px;
   margin: auto 12px;
   font: 18px 'Roboto', sans-serif;
   color: #4caf50;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 
 .friendItem img {
   margin: auto;
   margin-right: 12px;
+  min-width: 64px;
   width: 64px;
   height: 64px;
   border-radius: 100px;

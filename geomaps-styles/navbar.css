@@ -172,12 +172,16 @@
   margin: auto 12px;
   font: 18px 'Roboto', sans-serif;
   color: #4caf50;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 
 .friendCurrentPicture {
   margin: auto;
   margin-left: 12px;
   margin-right: 12px;
+  min-width: 64px;
   width: 64px;
   height: 64px;
   border-radius: 100px;
@@ -259,12 +263,16 @@
   margin: auto 12px;
   font: 18px 'Roboto', sans-serif;
   color: #4caf50;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 
 .friendRequestPicture {
   margin: auto;
   margin-left: 12px;
   margin-right: 12px;
+  min-width: 64px;
   width: 64px;
   height: 64px;
   border-radius: 100px;
