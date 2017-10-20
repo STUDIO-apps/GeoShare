@@ -59,6 +59,9 @@ function addFriendManagerElement(id, name) {
   friendOptionsRemove.onclick = function() {
     firebase.database().ref('/friends/' + currentUid + "/" + id).remove();
     firebase.database().ref('/friends/' + id + "/" + currentUid).remove();
+
+    firebase.database().ref('/current_location/' + currentUid + "/" + id).remove();
+    firebase.database().ref('/current_location/' + id + "/" + currentUid).remove();
   }
 
   friendOptionsRemoveContainer.appendChild(friendOptionsRemoveText);

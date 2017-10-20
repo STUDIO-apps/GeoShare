@@ -130,6 +130,9 @@ function updateSettings(setting) {
         console.log(error.message);
       });
       break;
+    case 'delete':
+
+      break;
     default:
   }
 }

@@ -69,9 +69,10 @@
         </div>
 
         <div class="friend-manager-container" id="friend-manager-container">
-          <div class="manager-item" onclick="showFindFriends(true)">
-            <a>Find Friends</a>
-            <img src="img/search.png"/>
+          <div class="manager-item">
+            <img src="img/back.png" onclick="showFriendsManager()"/>
+            <a>Friends Manager</a>
+            <img src="img/search.png" onclick="showFindFriends(true)"/>
           </div>
           <div class="tab-container">
             <div class="tab selected" id="tab-0" onclick="changeTab(0)">
@@ -245,7 +246,7 @@
             <h4>YOU ARE ABOUT TO DELETE THE ACCOUNT FOR USER</h4>
             <h4>THIS CAN NOT BE UNDONE!</h4>
             <h4>ARE YOU SURE YOU WANT TO DO THIS?</h4>
-            <div class="button">
+            <div class="button" onclick="updateSettings('delete')">
               <h2>DELETE ACCOUNT</h2>
             </div>
           </div>
