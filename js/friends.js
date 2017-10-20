@@ -25,7 +25,7 @@ function getFriendsList() {
     delete friendsList[snapshot.key];
     removeFriendElement(snapshot.key);
     removeFriendElement(snapshot.key + '-manager');
-  })
+  });
 }
 
 function addFriendManagerElement(id, name) {
