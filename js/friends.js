@@ -11,11 +11,11 @@ function getFriendsList() {
     }
     friendsList[id] = true;
 
-    ref.on("value", function (snapshot) {
+    ref.once('value').then(function (snapshot) {
         friendName = (snapshot.val() && snapshot.val().name);
         addFriendElement(id, friendName);
         addFriendManagerElement(id, friendName);
-    }, function (error) {
+    }).catch(function (error) {
         console.log(error.code);
     });
 
@@ -95,11 +95,11 @@ function getFriendRequests() {
     var id = snapshot.key;
     var isOutgoing = snapshot.val().outgoing;
     var ref = firebase.database().ref('/users/' + id);
-    ref.on("value", function (snapshot) {
+    ref.once('value').then(function (snapshot) {
       var name = (snapshot.val() && snapshot.val().name);
       pendingList[id] = true;
       addRequestElement(id, name, isOutgoing);
-    })
+    });
   });
 
   friendRequestRef.on("child_removed", function (snapshot) {

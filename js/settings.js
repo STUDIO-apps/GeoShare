@@ -148,8 +148,6 @@ function updateSettings(setting) {
         }
         //Pending currentUid
         firebase.database().ref('pending/' + currentUid).remove();
-        //users
-        firebase.database().ref('users/' + currentUid).remove();
         //settings
         firebase.database().ref('settings/' + currentUid).remove();
         //current_location currentUid
@@ -166,6 +164,8 @@ function updateSettings(setting) {
         }
         //Friends currentUid
         firebase.database().ref('friends/' + currentUid).remove();
+        //users
+        firebase.database().ref('users/' + currentUid).remove();
 
         var storageRef = firebase.storage().ref();
 
