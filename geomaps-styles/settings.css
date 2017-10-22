@@ -271,6 +271,7 @@
   background-color: #ff9800;
   margin-top: 32px;
   margin-left: calc((100% - 312px)/2);
+  position: static;
 }
 
 .nearby-slider {

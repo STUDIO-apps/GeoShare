@@ -17,6 +17,7 @@
     <script src="https://apis.google.com/js/platform.js" async defer></script>
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular.min.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.0rc1/angular-route.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 
     <script type="text/javascript" src="js/main.js"></script>
     <script type="text/javascript" src="js/friends.js"></script>
@@ -441,13 +442,25 @@
 
     var cropCanvas = document.getElementById("profile-canvas");
 
-    cropCanvas.addEventListener('mousedown', handleMouseDown, false);
-    cropCanvas.addEventListener('mouseup', handleMouseUp, false);
-    cropCanvas.addEventListener('mouseout', handleMouseOut, false);
-    cropCanvas.addEventListener('mousemove', handleMouseMove, false);
+    // cropCanvas.addEventListener('mousedown', handleMouseDown, false);
+    // cropCanvas.addEventListener('mouseup', handleMouseUp, false);
+    // //cropCanvas.addEventListener('mouseout', handleMouseOut, false);
+    // cropCanvas.addEventListener('mousemove', handleMouseMove, false);
 
     var ctx = cropCanvas.getContext("2d");
     ctx.imageSmoothingQuality = 'high';
+
+    var offsetX;
+    var offsetY;
+
+    cropCanvas.onmousemove = function(e) {
+      var canvasOffset = cropCanvas.getBoundingClientRect();
+      offsetX = canvasOffset.left;
+      offsetY = canvasOffset.top;
+    };
+
+    var lastX = 0;
+    var lastY = 0;
 
     var convCanvas = document.createElement("canvas");
     var convCtx = convCanvas.getContext("2d");
@@ -455,15 +468,9 @@
     convCanvas.height = 128;
     convCtx.imageSmoothingQuality = 'high';
 
-    var offsetX;
-    var offsetY;
-
     var newProfile;
 
     var ratio;
-
-    var startX;
-    var startY;
 
     var isDragging = false;
 
@@ -502,38 +509,64 @@
     }
 
     function handleMouseDown(e) {
-      startX = parseInt(e.clientX - cropCanvas.offsetLeft);
-      startY = parseInt(e.clientY - cropCanvas.offsetTop);
+      mouseX = parseInt(e.clientX - offsetX);
+      mouseY = parseInt(e.clientY - offsetY);
+
+      // lastX = mouseX;
+      // lastY = mouseY;
 
       isDragging = true;
     }
 
     function handleMouseUp(e) {
-      startX = parseInt(e.clientX - cropCanvas.offsetLeft);
-      startY = parseInt(e.clientY - cropCanvas.offsetTop);
+      // startX = parseInt(e.clientX - offsetX);
+      // startY = parseInt(e.clientY - offsetY);
 
       isDragging = false;
     }
 
     function handleMouseOut(e) {
-      startX = parseInt(e.clientX - cropCanvas.offsetLeft);
-      startY = parseInt(e.clientY - cropCanvas.offsetTop);
+      // startX = parseInt(e.clientX - offsetX);
+      // startY = parseInt(e.clientY - offsetY);
 
       isDragging = false;
     }
 
     function handleMouseMove(e) {
-      startX = parseInt(e.clientX - cropCanvas.offsetLeft);
-      startY = parseInt(e.clientY - cropCanvas.offsetTop);
-
-      if (isDragging) {
-        ctx.clearRect(0, 0, 312, 172);
-        ctx.drawImage(newProfile, startX - (128 * ratio), startY - 128/2, 128 * ratio, 128);
+      if (!isDragging) {
+        return;
       }
 
-      // startX = canMouseX;
-      // startY = canMouseY;
+      mouseX = parseInt(e.clientX - offsetX);
+      mouseY = parseInt(e.clientY - offsetY);
+
+      var dx = mouseX - lastX;
+      var dy = mouseY - lastY;
+
+      console.log("Mouse X: " + mouseX);
+      console.log("Offset: " + offsetX);
+
+      ctx.clearRect(0, 0, 312, 172);
+      //ctx.drawImage(newProfile, dx, dy, 128 * ratio, 128);
+      ctx.drawImage(newProfile, mouseX - (128*ratio)/2, mouseY - 128/2, 128 * ratio, 128);
+
+      lastX = mouseX;
+      lastY = mouseY;
     }
+
+    $("#profile-canvas").mousedown(function(e){
+      handleMouseDown(e);
+    });
+
+    $("#profile-canvas").mousemove(function(e){
+      handleMouseMove(e);
+    });
+    $("#profile-canvas").mouseup(function(e){
+      handleMouseUp(e);
+    });
+    $("#profile-canvas").mouseout(function(e){
+      handleMouseOut(e);
+    });
 
     // Image scale
 
