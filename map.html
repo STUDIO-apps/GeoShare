@@ -211,11 +211,16 @@
           </div>
 
           <div class="content-view hidden" id="profile-picture-content" style="background-image: url(img/profile.png)">
-            <h2>Profile picture</h2>
+            <!-- <h2>Profile picture</h2> -->
             <input type="file" id="file" class="profile-picture-file" name="datafile">
             <label for="file">
               <span>Choose a file...</span>
             </label>
+            <div class="">
+              <div class="crop-area-outline"></div>
+              <div class="crop-area"></div>
+              <canvas class="profile-canvas" id="profile-canvas" width="312" height="172"></canvas>
+            </div>
             <div class="button" onclick="imageUpload()">
               <h2>UPLOAD PROFILE PICTURE</h2>
             </div>
@@ -265,7 +270,6 @@
     var currentUid = null;
     var user = null;
 
-    var customLogout = false;
     var currentMode = null;
     var currentSelection = null;
     var isShowingManager = false;
@@ -354,18 +358,13 @@
             setup();
         } else {
             currentUid = null;
-            console.log("No user signed in!");
-            if (!customLogout) {
-                window.location.replace('/auth/action?mode=signin');
-            } else {
-                window.location.replace('/auth/action?signedOut=success')
-            }
+            window.location.replace('/auth/action?signedOut=success')
         }
     });
 
     function logout() {
         firebase.auth().signOut().then(function () {
-            customLogout = true;
+
         }).catch(function () {
             window.location.replace('/auth/action?signedOut=failed')
         });
@@ -440,8 +439,33 @@
     	});
     });
 
+    var cropCanvas = document.getElementById("profile-canvas");
+
+    cropCanvas.addEventListener('mousedown', handleMouseDown, false);
+    cropCanvas.addEventListener('mouseup', handleMouseUp, false);
+    cropCanvas.addEventListener('mouseout', handleMouseOut, false);
+    cropCanvas.addEventListener('mousemove', handleMouseMove, false);
+
+    var ctx = cropCanvas.getContext("2d");
+    ctx.imageSmoothingQuality = 'high';
+
     var convCanvas = document.createElement("canvas");
-    var ctx = convCanvas.getContext("2d");
+    var convCtx = convCanvas.getContext("2d");
+    convCanvas.width = 128;
+    convCanvas.height = 128;
+    convCtx.imageSmoothingQuality = 'high';
+
+    var offsetX;
+    var offsetY;
+
+    var newProfile;
+
+    var ratio;
+
+    var startX;
+    var startY;
+
+    var isDragging = false;
 
     var inputFile = document.getElementById('file');
     inputFile.addEventListener('change', imageConverter, false);
@@ -450,11 +474,12 @@
       var reader = new FileReader();
 
       reader.onload = function(event) {
-        var newProfile = new Image();
+        newProfile = new Image();
         newProfile.onload = function() {
-          convCanvas.width = 128;
-          convCanvas.height = 128;
-          ctx.drawImage(newProfile, 0, 0, 128, 128);
+          ratio = newProfile.width / newProfile.height;
+          cropCanvas.width = 312;
+          cropCanvas.height = 172;
+          ctx.drawImage(newProfile, 0, 0, 128 * ratio, 128);
         }
         newProfile.src = event.target.result;
       }
@@ -462,6 +487,7 @@
     }
 
     function imageUpload() {
+      convCtx.drawImage(cropCanvas, -92, -22);
       convCanvas.toBlob(function(blob) {
         //blob.name = currentUid + ".png";
 
@@ -473,6 +499,40 @@
           console.log("File uploaded!");
         });
       })
+    }
+
+    function handleMouseDown(e) {
+      startX = parseInt(e.clientX - cropCanvas.offsetLeft);
+      startY = parseInt(e.clientY - cropCanvas.offsetTop);
+
+      isDragging = true;
+    }
+
+    function handleMouseUp(e) {
+      startX = parseInt(e.clientX - cropCanvas.offsetLeft);
+      startY = parseInt(e.clientY - cropCanvas.offsetTop);
+
+      isDragging = false;
+    }
+
+    function handleMouseOut(e) {
+      startX = parseInt(e.clientX - cropCanvas.offsetLeft);
+      startY = parseInt(e.clientY - cropCanvas.offsetTop);
+
+      isDragging = false;
+    }
+
+    function handleMouseMove(e) {
+      startX = parseInt(e.clientX - cropCanvas.offsetLeft);
+      startY = parseInt(e.clientY - cropCanvas.offsetTop);
+
+      if (isDragging) {
+        ctx.clearRect(0, 0, 312, 172);
+        ctx.drawImage(newProfile, startX - (128 * ratio), startY - 128/2, 128 * ratio, 128);
+      }
+
+      // startX = canMouseX;
+      // startY = canMouseY;
     }
 
     // Image scale

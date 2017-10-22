@@ -239,7 +239,38 @@
   overflow: hidden;
   padding: 0.625rem 1.25rem;
   margin-left: calc((100% - 36% - 2.5rem)/2);
-  margin-top: 24px;
+  margin-top: 230px;
+}
+
+.crop-area {
+  width: 128px;
+  height: 128px;
+  position: absolute;
+  margin-left: 107px;
+  margin-top: 50px;
+  border: 4px white solid;
+  pointer-events: none;
+}
+
+.crop-area-outline {
+  position: absolute;
+  width: 128px;
+  height: 128px;
+  margin-top: 32px;
+  margin-left: 19px;
+  border-left: 92px;
+  border-right: 92px;
+  border-top: 22px;
+  border-bottom: 22px;
+  border-style: solid;
+  border-color: rgba(0, 0, 0, 0.2);
+  pointer-events: none;
+}
+
+.profile-canvas {
+  background-color: #ff9800;
+  margin-top: 32px;
+  margin-left: calc((100% - 312px)/2);
 }
 
 .nearby-slider {
