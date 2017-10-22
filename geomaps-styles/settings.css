@@ -274,6 +274,55 @@
   position: static;
 }
 
+.zoom {
+  height: 1px;
+  position: absolute;
+  width: 312px;
+  margin-right: 19px;
+  margin-top: 204px;
+  right: 0;
+  color: #4caf50;
+  outline: none;
+  -webkit-appearance: none;
+}
+
+.zoom::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 25px;
+  height: 25px;
+  background-image: url(../img/zoom.png);
+  background-color: white;
+  border: 0px;
+  border-radius: 50%;
+  cursor: pointer;
+}
+
+.zoom::-moz-range-thumb {
+  width: 25px;
+  height: 25px;
+  background-image: url(../img/zoom.png);
+  background-color: white;
+  border: 0px;
+  border-radius: 50%;
+  cursor: pointer;
+}
+
+.zoom::-ms-track {
+  width: 25px;
+  height: 25px;
+  background-image: url(../img/zoom.png);
+  background-color: white;
+  border: 0px;
+  border-radius: 50%;
+  cursor: pointer;
+
+  /* Hides the slider so custom styles can be added */
+  background: transparent;
+  border-color: transparent;
+  color: transparent;
+}
+
 .nearby-slider {
     -webkit-appearance: none;
     position: absolute;
