@@ -451,17 +451,22 @@
     var ctx = cropCanvas.getContext("2d");
     ctx.imageSmoothingQuality = 'high';
 
-    var offsetX;
-    var offsetY;
+    var offsetX = 0;
+    var offsetY = 0;
+
+    var deltaX;
+    var deltaY;
+
+    var ix = 0;
+    var iy = 0;
+
+    var rect;
 
     cropCanvas.onmousemove = function(e) {
       var canvasOffset = cropCanvas.getBoundingClientRect();
       offsetX = canvasOffset.left;
       offsetY = canvasOffset.top;
     };
-
-    var lastX = 0;
-    var lastY = 0;
 
     var zoom = 1;
 
@@ -487,9 +492,12 @@
         newProfile = new Image();
         newProfile.onload = function() {
           ratio = newProfile.width / newProfile.height;
+
+          rect = [312 * 0.5 - (128*ratio) * 0.5, 172 * 0.5 - 128 * 0.5, 128 * ratio, 128];
+
           cropCanvas.width = 312;
           cropCanvas.height = 172;
-          ctx.drawImage(newProfile, 0, 0, 128 * ratio * zoom, 128 * zoom);
+          ctx.drawImage(newProfile, rect[0], rect[1], 128 * ratio * zoom, 128 * zoom);
         }
         newProfile.src = event.target.result;
       }
@@ -512,11 +520,14 @@
     }
 
     function handleMouseDown(e) {
-      mouseX = parseInt(e.clientX - offsetX);
-      mouseY = parseInt(e.clientY - offsetY);
+      // mouseX = parseInt(e.clientX - offsetX);
+      // mouseY = parseInt(e.clientY - offsetY);
+      //
+      // lastX = mouseX;
+      // lastY = mouseY;
 
-      lastX = mouseX;
-      lastY = mouseY;
+      deltaX = e.clientX;
+      deltaY = e.clientY;
 
       isDragging = true;
     }
@@ -524,6 +535,11 @@
     function handleMouseUp(e) {
       // startX = parseInt(e.clientX - offsetX);
       // startY = parseInt(e.clientY - offsetY);
+
+      ix += offsetX;
+      iy += offsetY;
+
+      offsetX = offsetY = 0;
 
       isDragging = false;
     }
@@ -540,27 +556,27 @@
         return;
       }
 
-      mouseX = parseInt(e.clientX - offsetX);
-      mouseY = parseInt(e.clientY - offsetY);
+      offsetX = e.clientX - deltaX;
+      offsetY = e.clientY - deltaY;
 
-      var dx = mouseX - lastX;
-      var dy = mouseY - lastY;
-
-      console.log("Mouse X: " + mouseX);
-      console.log("Offset: " + offsetX);
+      if (ix + offsetX > rect[0]) {
+        ix = rect[0] - offsetX;
+      }
+      if (iy + offsetY > rect[1]) {
+        iy = rect[1] - offsetY;
+      }
 
       ctx.clearRect(0, 0, 312, 172);
       //ctx.drawImage(newProfile, dx, dy, 128 * ratio, 128);
-      ctx.drawImage(newProfile, mouseX - (128*ratio*zoom)/2, mouseY - (128*zoom)/2, 128 * ratio * zoom, 128 * zoom);
-
-      lastX = mouseX;
-      lastY = mouseY;
+      // ctx.drawImage(newProfile, -ix - offsetX + (128*ratio*zoom)/2, -iy - offsetY + (128*zoom)/2, 128 * ratio * zoom, 128 * zoom);
+      ctx.drawImage(newProfile, ix + offsetX + rect[0], iy + offsetY + rect[1], 128 * ratio * zoom, 128 * zoom);
     }
 
     function imageZoom(value) {
       zoom = value;
       ctx.clearRect(0, 0, 312, 172);
-      ctx.drawImage(newProfile, lastX - (128*ratio)/2, lastY - 128/2, 128 * ratio * value, 128 * value);
+      // ctx.drawImage(newProfile, lastX - (128*ratio)/2, lastY - 128/2, 128 * ratio * value, 128 * value);
+      ctx.drawImage(newProfile, 312 * 0.5 - (128*ratio*value) * 0.5, 172 * 0.5 - (128*value) * 0.5, 128 * ratio * value, 128 * value);
     }
 
     $("#profile-canvas").mousedown(function(e){
