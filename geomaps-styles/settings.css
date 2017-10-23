@@ -247,7 +247,7 @@
   height: 128px;
   position: absolute;
   margin-left: 107px;
-  margin-top: 50px;
+  margin-top: 34px;
   border: 4px white solid;
   pointer-events: none;
 }
@@ -256,7 +256,7 @@
   position: absolute;
   width: 128px;
   height: 128px;
-  margin-top: 32px;
+  margin-top: 16px;
   margin-left: 19px;
   border-left: 92px;
   border-right: 92px;
@@ -269,7 +269,7 @@
 
 .profile-canvas {
   background-color: #ff9800;
-  margin-top: 32px;
+  margin-top: 16px;
   margin-left: calc((100% - 312px)/2);
   position: static;
 }
@@ -277,9 +277,9 @@
 .zoom {
   height: 1px;
   position: absolute;
-  width: 312px;
-  margin-right: 19px;
-  margin-top: 204px;
+  width: 337px;
+  margin-right: calc(19px - (25px/2));
+  margin-top: 188px;
   right: 0;
   color: #4caf50;
   outline: none;
@@ -291,7 +291,7 @@
   appearance: none;
   width: 25px;
   height: 25px;
-  background-image: url(../img/zoom.png);
+  background-image: url(../img/add.png);
   background-color: white;
   border: 0px;
   border-radius: 50%;

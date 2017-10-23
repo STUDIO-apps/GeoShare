@@ -221,7 +221,7 @@
               <div class="crop-area-outline"></div>
               <div class="crop-area"></div>
               <canvas class="profile-canvas" id="profile-canvas" width="312" height="172"></canvas>
-              <input class="zoom" type="range" name="zoom" value="1.0" min="1.0" max="2.0" step="0.1" orient="vertical" oninput="imageZoom(value)">
+              <input class="zoom" type="range" name="zoom" value="1.0" min="1.0" max="3.0" step="0.001" orient="vertical" oninput="imageZoom(value)">
             </div>
             <div class="button" onclick="imageUpload()">
               <h2>UPLOAD PROFILE PICTURE</h2>
@@ -443,11 +443,6 @@
 
     var cropCanvas = document.getElementById("profile-canvas");
 
-    // cropCanvas.addEventListener('mousedown', handleMouseDown, false);
-    // cropCanvas.addEventListener('mouseup', handleMouseUp, false);
-    // //cropCanvas.addEventListener('mouseout', handleMouseOut, false);
-    // cropCanvas.addEventListener('mousemove', handleMouseMove, false);
-
     var ctx = cropCanvas.getContext("2d");
     ctx.imageSmoothingQuality = 'high';
 
@@ -514,18 +509,12 @@
         var profileRef = storageRef.child('profile_pictures/' + currentUid + ".png");
 
         profileRef.put(blob).then(function(snapshot) {
-          console.log("File uploaded!");
+          window.location.replace('map');
         });
       })
     }
 
     function handleMouseDown(e) {
-      // mouseX = parseInt(e.clientX - offsetX);
-      // mouseY = parseInt(e.clientY - offsetY);
-      //
-      // lastX = mouseX;
-      // lastY = mouseY;
-
       deltaX = e.clientX;
       deltaY = e.clientY;
 
@@ -533,9 +522,6 @@
     }
 
     function handleMouseUp(e) {
-      // startX = parseInt(e.clientX - offsetX);
-      // startY = parseInt(e.clientY - offsetY);
-
       ix += offsetX;
       iy += offsetY;
 
@@ -545,9 +531,6 @@
     }
 
     function handleMouseOut(e) {
-      // startX = parseInt(e.clientX - offsetX);
-      // startY = parseInt(e.clientY - offsetY);
-
       isDragging = false;
     }
 
@@ -559,23 +542,23 @@
       offsetX = e.clientX - deltaX;
       offsetY = e.clientY - deltaY;
 
-      if (ix + offsetX > rect[0]) {
-        ix = rect[0] - offsetX;
-      }
-      if (iy + offsetY > rect[1]) {
-        iy = rect[1] - offsetY;
-      }
+      // if (ix + offsetX > rect[0]) {
+      //   ix = rect[0] - offsetX;
+      // }
+      // if (iy + offsetY > rect[1]) {
+      //   iy = rect[1] - offsetY;
+      // }
 
       ctx.clearRect(0, 0, 312, 172);
-      //ctx.drawImage(newProfile, dx, dy, 128 * ratio, 128);
-      // ctx.drawImage(newProfile, -ix - offsetX + (128*ratio*zoom)/2, -iy - offsetY + (128*zoom)/2, 128 * ratio * zoom, 128 * zoom);
-      ctx.drawImage(newProfile, ix + offsetX + rect[0], iy + offsetY + rect[1], 128 * ratio * zoom, 128 * zoom);
+      ctx.drawImage(newProfile, ix + offsetX + (312 * 0.5 - (128*ratio*zoom) * 0.5), iy + offsetY + (172 * 0.5 - (128*zoom) * 0.5), 128 * ratio * zoom, 128 * zoom);
     }
 
     function imageZoom(value) {
       zoom = value;
+
+      ix = iy = 0;
+
       ctx.clearRect(0, 0, 312, 172);
-      // ctx.drawImage(newProfile, lastX - (128*ratio)/2, lastY - 128/2, 128 * ratio * value, 128 * value);
       ctx.drawImage(newProfile, 312 * 0.5 - (128*ratio*value) * 0.5, 172 * 0.5 - (128*value) * 0.5, 128 * ratio * value, 128 * value);
     }
 
