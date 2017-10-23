@@ -360,15 +360,13 @@
             setup();
         } else {
             currentUid = null;
-            window.location.replace('/auth/action?signedOut=success')
+            window.location.replace('/auth/action?mode=signin');
         }
     });
 
     function logout() {
-        firebase.auth().signOut().then(function () {
+        firebase.auth().signOut().catch(function () {
 
-        }).catch(function () {
-            window.location.replace('/auth/action?signedOut=failed')
         });
     }
 
