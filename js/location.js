@@ -27,7 +27,7 @@ function shareCurrentLocation(id, dialog) {
         firebase.database().ref('/current_location/' + id + "/" + currentUid).set({
           lat: position.coords.latitude,
           longitude: position.coords.longitude,
-          timestamp: Date.now()
+          timeStamp: Date.now()
         }).then(function(event) {
           dialog.remove();
         }).catch(function (error) {
