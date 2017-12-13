@@ -1,0 +1,68 @@
+html, body {
+  max-width: 1020px;
+  margin: auto;
+  font: 18px 'Roboto', sans-serif;
+}
+
+.nav-bar {
+  display: flex;
+  width: 100%;
+  border-bottom: 1px rgba(0, 0, 0, 0.08) solid;
+}
+
+.logo-container {
+  display: flex;
+  float: left;
+}
+
+.logo-container img {
+  width: 72px;
+  height: 72px;
+  float: left;
+}
+
+.logo-container h1 {
+  margin: auto;
+  font-weight: normal;
+}
+
+.button-bar {
+  display: inline-block;
+  margin: auto;
+  margin-right: 0;
+  float: right;
+}
+
+.button-bar a {
+  font-size: 13px;
+  text-decoration: none;
+  letter-spacing: 2px;
+  color: rgba(0, 0, 0, 0.8);
+}
+
+.button-bar a:hover {
+  transition: color .1s 0s ease-in-out;
+  color: rgba(0, 0, 0, 1);
+}
+
+.main h1 {
+  font-weight: normal;
+}
+
+.main h2 {
+  font-weight: normal;
+  font-size: 1.3em;
+}
+
+.main h3 {
+  font-size: 1em;
+}
+
+.main ul {
+  list-style: lower-roman;
+}
+
+.main p {
+  font-weight: normal;
+  font-size: 1em;
+}
