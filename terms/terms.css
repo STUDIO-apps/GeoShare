@@ -81,6 +81,10 @@ html, body {
   font-size: 1em;
 }
 
+.main a {
+  color: #4caf50;
+}
+
 .footer {
   background-color: #4caf50;
   border-top: 1px rgba(0, 0, 0, 0.08) solid;
