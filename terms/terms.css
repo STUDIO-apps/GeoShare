@@ -59,12 +59,14 @@ html, body {
 }
 
 .main h1 {
-  font-weight: normal;
+  font-weight: bold;
+  color: #43a047;
 }
 
 .main h2 {
   font-weight: normal;
   font-size: 1.3em;
+  color: #4caf50;
 }
 
 .main h3 {
