@@ -138,37 +138,7 @@ function updateSettings(setting) {
         password
       );
       user.reauthenticateWithCredential(creds).then(function() {
-        //Pending under pending friends
-        while (Object.keys(pendingList).length > 0) {
-          var friendId = Object.keys(pendingList)[0];
-
-          firebase.database().ref('pending/' + friendId + "/" + currentUid).remove();
-
-          delete pendingList[friendId];
-        }
-        //Pending currentUid
-        firebase.database().ref('pending/' + currentUid).remove();
-        //settings
-        firebase.database().ref('settings/' + currentUid).remove();
-        //current_location currentUid
-        firebase.database().ref('current_location/' + currentUid).remove();
-        //current_location under friends && Friends under friends id
-        while (Object.keys(friendsList).length > 0) {
-          var friendId = Object.keys(friendsList)[0];
-
-          firebase.database().ref('current_location/' + friendId + "/" + currentUid).remove();
-          firebase.database().ref('current_location/' + friendId + "/tracking/" + currentUid).remove();
-          firebase.database().ref('friends/' + friendId + "/" + currentUid).remove();
-
-          delete friendsList[friendId];
-        }
-        //Friends currentUid
-        firebase.database().ref('friends/' + currentUid).remove();
-        //users
-        firebase.database().ref('users/' + currentUid).remove();
-
         var storageRef = firebase.storage().ref();
-
         var profileRef = storageRef.child('profile_pictures/' + currentUid + ".png");
 
         profileRef.delete().then(function() {
