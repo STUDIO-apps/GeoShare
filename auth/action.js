@@ -17,14 +17,18 @@ function handleSignIn(email, password) {
 }
 
 function handleSignUp(name, email, password) {
-    firebase.auth().createUserWithEmailAndPassword(email, password).then(function (user) {
-        isNewUser = true;
-        newName = name;
-        newEmail = email;
-    }).catch(function (error) {
-        console.log(error.message);
-        document.getElementById('errorMessage').innerHTML = error.message;
-    });
+    if (document.getElementById('checkbox_terms').checked) {
+      firebase.auth().createUserWithEmailAndPassword(email, password).then(function (user) {
+          isNewUser = true;
+          newName = name;
+          newEmail = email;
+      }).catch(function (error) {
+          console.log(error.message);
+          document.getElementById('errorMessage').innerHTML = error.message;
+      });
+    } else {
+        document.getElementById('errorMessage').innerHTML = "You have not agreed to the Terms of Service";
+    }
 }
 
 function getParameterByName(name) {

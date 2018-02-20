@@ -53,6 +53,15 @@ h2 {
     font: 16px 'Roboto', sans-serif;
 }
 
+h3 {
+    color: white;
+    font: 13px 'Roboto', sans-serif;
+}
+
+h3 a {
+    color: #4caf50;
+}
+
 .form {
     width: 100%;
     margin: 0;
@@ -100,6 +109,18 @@ h2 {
     -webkit-input-placeholder: #FFF;
     outline: none;
     transition: background .1s ease-in;
+}
+
+.checkbox {
+    display: inline-flex;
+}
+
+.checkbox input {
+    margin: auto;
+    margin-left: 24px;
+    margin-right: 4px;
+    border: solid #4caf50 1px;
+    background: transparent;
 }
 
 .login input {

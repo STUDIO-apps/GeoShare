@@ -135,6 +135,12 @@
                     <input id="password" type="password" name="password" placeholder="Password" onkeypress="return enterPressed(event, 'buttonSignup')" required>
                 </div>
             </div>
+            <div id="terms">
+                <div class="checkbox">
+                    <input id="checkbox_terms" type="checkbox" name="terms" required>
+                    <h3>I agree to the <a href="../terms" target="_blank">Privacy Policy</a></h3>
+                </div>
+            </div>
             <div id="login">
                 <div class="button login">
                     <input id="buttonSignup" type="button" name="mode" value="CREATE NEW ACCOUNT" onclick="handleSignUp(this.form.name.value.toString(),  this.form.email.value.toString(), this.form.password.value.toString())">
