@@ -66,6 +66,13 @@ function updateFriendMarker(id, lat, long) {
   marker.setPosition(latLong);
 }
 
+function friendMarkerVisibility(id, state) {
+  var marker = friendMarker[id];
+  if (marker != null) {
+    marker.setVisible(state)
+  }
+}
+
 function removeFriendMarker(id) {
   var marker = friendMarker[id];
   if (marker != null) {

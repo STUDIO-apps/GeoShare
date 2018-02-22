@@ -383,7 +383,7 @@ function addFriendElement(id, name) {
 
       var friendOptionsShowCheckbox = document.createElement("INPUT");
       friendOptionsShowCheckbox.setAttribute("type", "checkbox");
-      isShowingOnMap(id, friendOptionsShowCheckbox);
+      friendOptionsShowCheckbox.checked = true;
 
       friendOptionsShow.appendChild(friendOptionsShowText);
       friendOptionsShowContainer.appendChild(friendOptionsShow);
@@ -392,12 +392,12 @@ function addFriendElement(id, name) {
       friendOptionsShowContainer.onclick = function(event) {
         event.stopPropagation();
         friendOptionsShowCheckbox.checked = !friendOptionsShowCheckbox.checked;
-        updateShowOnMap(id, friendOptionsShowCheckbox.checked);
+        friendMarkerVisibility(id, friendOptionsShowCheckbox.checked);
       }
 
       friendOptionsShowCheckbox.onclick = function(event) {
         event.stopPropagation();
-        updateShowOnMap(id, friendOptionsShowCheckbox.checked);
+        friendMarkerVisibility(id, friendOptionsShowCheckbox.checked);
       }
 
       //Append children to parent container

@@ -5,21 +5,8 @@ function getTrackingInfo() {
 
     if (snapshot.val().tracking != null) {
       if (snapshot.val().tracking) {
-        if (snapshot.val().showOnMap != null) {
-          if (snapshot.val().showOnMap) {
-            showTrackingFriends(id);
-            nearbyFriends();
-          }
-        } else {
-          showTrackingFriends(id);
-          nearbyFriends();
-        }
-      }
-    }
-
-    if (snapshot.val().showOnMap != null) {
-      if (!snapshot.val().showOnMap) {
-        removeFriendMarker(id);
+        showTrackingFriends(id);
+        nearbyFriends();
       }
     }
   });
@@ -28,18 +15,10 @@ function getTrackingInfo() {
     var id = snapshot.key;
 
     if (snapshot.val().tracking != null) {
-      if (snapshot.val().showOnMap != null) {
-        if (snapshot.val().tracking && snapshot.val().showOnMap) {
-          showTrackingFriends(id);
-        } else {
-          removeFriendMarker(id);
-        }
+      if (snapshot.val().tracking) {
+        showTrackingFriends(id);
       } else {
-        if (snapshot.val().tracking) {
-          showTrackingFriends(id);
-        } else {
-          removeFriendMarker(id);
-        }
+        removeFriendMarker(id);
       }
     }
   });
@@ -57,20 +36,6 @@ function showTrackingFriends(id) {
     var long = snapshot.val().longitude;
 
     addFriendMarker(id, lat, long);
-  });
-}
-
-function isShowingOnMap(id, checkbox) {
-  var showOnMapRef = firebase.database().ref('/current_location/' + currentUid + '/tracking/' + id);
-  showOnMapRef.once("value").then(function (snapshot) {
-    var exists = snapshot.val();
-    if (exists == null) {
-      checkbox.setAttribute("checked", "");
-    } else {
-      if (snapshot.val().showOnMap || snapshot.val().showOnMap == null) {
-        checkbox.setAttribute("checked", "");
-      }
-    }
   });
 }
 
@@ -108,8 +73,4 @@ function getSharedLocations() {
       nearbyFriends();
     }
   });
-}
-
-function updateShowOnMap(id, state) {
-  firebase.database().ref("/current_location/" + currentUid + "/tracking/" + id + "/showOnMap").set(state);
 }
