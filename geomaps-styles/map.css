@@ -8,7 +8,7 @@
 .center-map-container {
   width: 72px;
   height: 72px;
-  background-color: #ff9800;
+  background-color: white;
   border-radius: 50%;
   display: flex;
   cursor: pointer;
@@ -16,23 +16,6 @@
 }
 
 .center-map-container img {
-  width: 36px;
-  height: 36px;
-  margin: auto;
-}
-
-.show-share-container {
-  width: 72px;
-  height: 72px;
-  background-color: #4caf50;
-  border-radius: 50%;
-  margin-bottom: 8px;
-  display: flex;
-  cursor: pointer;
-  box-shadow: 5px 3px 5px rgba(0, 0, 0, 0.3);
-}
-
-.show-share-container img {
   width: 36px;
   height: 36px;
   margin: auto;

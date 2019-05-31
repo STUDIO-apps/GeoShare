@@ -48,12 +48,6 @@
         var auth = firebase.auth();
 
         switch (mode) {
-            case 'resetPassword':
-                handleResetPassword(auth, getParameterByName('oobCode'));
-                break;
-            case 'recoverEmail':
-                handleRecoverEmail();
-                break;
             case 'signin':
                 showSignin();
                 break;
@@ -148,37 +142,6 @@
             </div>
         </form>
 
-        <form class="form" id="getResetPasswordForm" method="post" autocomplete="on">
-            <div id="email">
-                <div class="field">
-                    <input id="email" type="email" name="email" placeholder="Email" onkeypress="return enterPressed(event, 'buttonSubmitReset')" required>
-                </div>
-            </div>
-            <div id="login">
-                <div class="button login">
-                    <input id="buttonSubmitReset" type="button" name="mode" value="DONE" onclick="sendPasswordResetEmail(this.form.email.value.toString())">
-                </div>
-            </div>
-        </form>
-
-        <form class="form" id="resetPasswordForm" method="post" action="#" autocomplete="on">
-            <div id="email">
-                <div class="field">
-                    <input id="resetEmail" type="email" name="email" disabled>
-                </div>
-            </div>
-            <div id="password">
-                <div class="field">
-                    <input id="password" type="password" name="password" placeholder="New Password" onkeypress="return enterPressed(event, 'buttonReset')" required>
-                </div>
-            </div>
-            <div id="login">
-                <div class="button login">
-                    <input id="buttonReset" type="button" name="mode" value="RESET PASSWORD" onclick="resetPassword(this.form.email.value.toString(), this.form.password.value.toString())">
-                </div>
-            </div>
-        </form>
-
         <div class="new-account-container" id="new-account">
             <div class="button new-account">
                 <a href="?mode=signup">
@@ -188,15 +151,8 @@
         </div>
         <div class="forgot-password-container" id="forgot-password">
             <div class="button forgot-password">
-                <a href="?mode=resetPassword">
+                <a href="password_reset?mode=resetPassword">
                     <button onclick="">FORGOT PASSWORD?</button>
-                </a>
-            </div>
-        </div>
-        <div class="back-container" id="back">
-            <div class="button back">
-                <a href="?mode=signin">
-                    <button onclick="">BACK</button>
                 </a>
             </div>
         </div>

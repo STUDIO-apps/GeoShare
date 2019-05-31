@@ -22,7 +22,7 @@
     <script type="text/javascript" src="js/main.js"></script>
     <script type="text/javascript" src="js/friends.js"></script>
     <script type="text/javascript" src="js/markers.js"></script>
-    <script type="text/javascript" src="js/tracking.js"></script>
+    <script type="text/javascript" src="js/sharing.js"></script>
     <script type="text/javascript" src="js/location.js"></script>
     <script type="text/javascript" src="js/nearby.js"></script>
     <script type="text/javascript" src="js/settings.js"></script>
@@ -47,28 +47,51 @@
 <body>
 
 <div class="left-nav">
-    <div class="header" id="header">
-        <div class="header-image">
-            <img src="img/header.jpg"/>
-            <div class="user-info">
-                <img id="profile-picture" src="img/dummy-profile.png"/>
-                <h2 id="profile-name">Welcome, user</h2>
+    <div class="left-container">
+        <div class="nav-control-container">
+            <img src="img/menu_black.png">
+        </div>
+
+        <div class="header" id="header">
+            <div class="header-image">
+                <img src="img/logo_white_green.png"/>
             </div>
         </div>
 
+        <div class="nav-items" id="nav-items">
+            <div class="list_item selected" id="list-item-maps">
+                <img src="img/map_white.png"/>
+                <a>GeoMaps</a>
+            </div>
+
+            <div class="list_item" id="list-item-friend-manager" onclick="showFriendsManager()">
+                <img src="img/people_outline_grey.png" id="image-friends-manager"/>
+                <a>Friends</a>
+            </div>
+
+            <div class="list_item" id="list-item-friend-manager" onclick="showFriendsManager()">
+                <img src="img/share_grey.png" id="image-friends-manager"/>
+                <a>Share location</a>
+            </div>
+
+        </div>
+
+        <div class="nav-settings">
+          <div class="nav-settings-container">
+            <div class="nav-settings-item">
+              <a onclick="showSettings(true)">Account</a>
+            </div>
+            <div class="nav-settings-item">
+              <a href="#">Theme</a>
+            </div>
+            <div class="nav-settings-item">
+              <a onclick="logout()">Log Out</a>
+            </div>
+          </div>
+        </div>
     </div>
 
-    <div class="nav-items" id="nav-items">
-        <div class="list_item selected" id="list-item-maps">
-            <img src="img/map.png"/>
-            <a>GeoMaps</a>
-        </div>
-
-        <div class="list_item" id="list-item-friend-manager" onclick="showFriendsManager()">
-            <img src="img/people.png" id="image-friends-manager"/>
-            <a>Friends Manager</a>
-        </div>
-
+    <!-- <div class="right-container">
         <div class="friend-manager-container" id="friend-manager-container">
           <div class="manager-item">
             <img src="img/back.png" onclick="showFriendsManager()"/>
@@ -97,34 +120,17 @@
             </div>
           </div>
         </div>
-
-    </div>
-
-    <div class="nav-settings-bar">
-        <div class="settings-wrapper">
-            <button id="settings" type="image" onclick="showSettings(true)"/>
-            <button id="lock" type="image" onclick="logout()"/>
-        </div>
-    </div>
+    </div> -->
 
 </div>
 
 <div class="map-container">
     <div class="controls-container" id="controls-container">
-      <div class="show-share-container" onclick="showRightNav()">
-        <img src="img/share-white.png">
-      </div>
       <div class="center-map-container" onclick="centerMyLocation()">
-        <img src="img/gps-white.png">
+        <img src="img/gps-green.png">
       </div>
     </div>
     <div id="map"></div>
-</div>
-
-<div class="right-nav" id="right-nav">
-  <div class="friendsWrapper" id="friendsWrapper">
-
-  </div>
 </div>
 
 <div class="friend-search">
@@ -805,7 +811,7 @@
 
 </script>
 
-<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAiUunq8k3vZd9iQenenLA9WwyTWA82Bc4&&libraries=geometry&callback=initMap" async defer></script>
+<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyB0qVrVXRE5f5Vm8XKIVIDHvesQeCJZbWg&libraries=geometry&callback=initMap" async defer></script>
 
 </body>
 

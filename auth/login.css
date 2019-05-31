@@ -173,10 +173,6 @@ h3 a {
     transition: all .15s ease-out;
 }
 
-.forgot-password-container {
-    display: none;
-}
-
 .forgot-password button {
     height: 48px;
     width: 100%;

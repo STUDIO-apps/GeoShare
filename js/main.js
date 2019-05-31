@@ -35,19 +35,11 @@ function showFriendsManager() {
 }
 
 function showManager() {
-  document.getElementById('list-item-maps').style.display = 'none';
-  document.getElementById('list-item-friend-manager').style.display = 'none';
-  document.getElementById('header').style.display = 'none';
-  document.getElementById('nav-items').style.height = 'calc(100% - 56px)';
   document.getElementById('friend-manager-container').style.display = 'inline-block';
   history.pushState('settings', 'Settings - GeoShare', 'map?mode=manager');
 }
 
 function hideManager() {
-  document.getElementById('list-item-maps').style.display = '';
-  document.getElementById('list-item-friend-manager').style.display = '';
-  document.getElementById('header').style.display = '';
-  document.getElementById('nav-items').style.height = 'calc(100% - 277px - 56px)';
   document.getElementById('friend-manager-container').style.display = 'none';
   window.history.pushState('map', 'Map - GeoShare', 'map');
 }

@@ -6,18 +6,9 @@ html, body {
   max-height: 100%;
 }
 
-.left-nav {
-  position: absolute;
-  width: 416px;
-  height: 100%;
-  min-height: 570px;
-  max-height: 100%;
-  margin: 0;
-}
-
 .map-container {
   position: absolute;
-  width: calc(100% - 416px);
+  width: calc(100% - 256px);
   height: 100%;
   min-height: 570px;
   max-height: 100%;
@@ -29,33 +20,6 @@ html, body {
   width: calc(100% - 320px);
   height: 100%;
   padding-right: 320px;
-}
-
-.right-nav {
-  position: fixed;
-  height: 100%;
-  margin: 0;
-  right: -320px;
-  top: 0;
-  overflow-y: auto;
-
-  background: white; /* For browsers that do not support gradients */
-  background: -webkit-linear-gradient(left, transparent, white); /* For Safari 5.1 to 6.0 */
-  background: -o-linear-gradient(right, transparent, white); /* For Opera 11.1 to 12.0 */
-  background: -moz-linear-gradient(right, transparent, white); /* For Firefox 3.6 to 15 */
-  background: linear-gradient(to right, transparent, white);
-}
-
-.right-nav.open {
-  -webkit-transform: translateX(-320px);
-  transform: translateX(-320px);
-  transition-duration: 0.3s;
-}
-
-.right-nav.closed {
-  -webkit-transform: translateX(0px);
-  transform: translateX(0px);
-  transition-duration: 0.3s;
 }
 
 .shareDialogContainer {
